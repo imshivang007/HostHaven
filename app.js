@@ -10,6 +10,7 @@ const path = require("path");
 const methodOverride =require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError=require("./utils/ExpressError");
+const homeRouter=require("./routes/home")
 const listingRouter=require("./routes/listing");
 const reviewRouter=require("./routes/review");
 const userRouter=require("./routes/user");
@@ -96,9 +97,10 @@ app.use((req,res,next)=>{
 //     res.send(registeredUser);
 // })
 
-app.use("/",userRouter);
+app.use("/",homeRouter);
 app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews",reviewRouter);
+app.use("/",userRouter);
 
 
 
