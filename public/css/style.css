@@ -19,6 +19,10 @@ body{
     color: #222222 !important;
 }
 
+.navbar-nav {
+    background-color: white;
+}
+
 /* Footer */
 .f-info-links a{
     text-decoration: none;
