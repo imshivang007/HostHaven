@@ -1,9 +1,67 @@
 const Listing = require("../models/listing");
+// const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const ExpressError = require("../utils/ExpressError");
+// const mapToken=process.env.MAP_TOKEN;
+// const geocodingClient = mbxGeocoding({ accessToken: mapToken});
+
+
+// const addCoordinates = async (listing) => {
+//     let response = await geocodingClient
+//       .forwardGeocode({
+//         query: listing.location,
+//         limit: 1,
+//       })
+//       .send();
+  
+//     listing.geometry = response.body.features[0].geometry;
+//     return listing;
+//   };
 
 module.exports.index=async (req,res)=>{
-    let allListings=await Listing.find({});
-    res.render("listings/index.ejs",{allListings});
+    let search = req.query.search || "";
+    let category = req.query.category || "";
+    let allListings = [];
+    if (category != "") {
+        allListings = await Listing.find({ category: `${category}` });
+      } else if (search !== "") {
+        // allListings = await Listing.find({ title: { $regex: `\\b${search}`, $options: 'i' } }).populate("owner");
+        // allListings = await Listing.find({
+        //     $or: [
+        //       { title: { $regex: `\\b${search}`, $options: 'i' } },
+        //       { location: { $regex: `\\b${search}`, $options: 'i' } },
+        //       { country: { $regex: `\\b${search}`, $options: 'i' } },
+        //       { 'owner.username': { $regex: `\\b${search}`, $options: 'i' } }
+        //     ]
+        //   }).populate("owner").populate("reviews");
+        allListings = await Listing.aggregate([
+          {
+            $lookup: {
+              from: "users",
+              localField: "owner",
+              foreignField: "_id",
+              as: "result",
+            },
+          },
+          {
+            $match: {
+              $or: [
+                { title: { $regex: `\\b${search}`, $options: "i" } },
+                { location: { $regex: `\\b${search}`, $options: "i" } },
+                { country: { $regex: `\\b${search}`, $options: "i" } },
+                { "result.username": { $regex: `\\b${search}`, $options: "i" } },
+                { category: { $regex: `\\b${search}`, $options: "i" } },
+              ],
+            },
+          },
+        ]);
+        if (allListings.length === 0) {
+          throw new ExpressError(404, "No match found");
+        }
+      } else {
+        allListings = await Listing.find({});
+      }
     
+      res.render("listings/index.ejs", { allListings });
 };
 
 module.exports.renderNewForm=(req,res)=>{
@@ -26,15 +84,27 @@ module.exports.showListing=async (req,res)=>{
         res.redirect("/listings");
     }
     res.render("listings/show.ejs",{listing});
-    console.log(listing);
 }
 
 module.exports.createListing=async (req,res,next)=>{
+
+    // let response=await geocodingClient
+    //     .forwardGeocode({
+    //     query: req.body.listing.location,
+    //     limit: 1
+    // })
+    //     .send()
+
     let url=req.file.path;
     let filename=req.file.filename;
     let newListing = new Listing(req.body.listing);
     newListing.owner=req.user._id;
     newListing.image={url,filename};
+
+    // newListing.geometry=response.body.features[0].geometry;
+
+    // let savedListing=await newListing.save();
+    // console.log(savedListing);
     await newListing.save();
     req.flash("success","New Listing Created!");
     res.redirect("/listings");

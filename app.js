@@ -31,11 +31,11 @@ app.engine("ejs",ejsMate);
 app.use(express.static(path.join(__dirname,"public")));
 
 
-// const MONGO_URL="mongodb://localhost:27017/HostHaven";
-const dbUrl=process.env.ATLASDB_URL;
+const MONGO_URL="mongodb://localhost:27017/HostHaven";
+//const dbUrl=process.env.ATLASDB_URL;
 
 async function main(){
-    await mongoose.connect(dbUrl);
+    await mongoose.connect(MONGO_URL);
 }
 main()
 .then((res)=>{
@@ -46,7 +46,7 @@ main()
 })
 
 const store=MongoStore.create({
-    mongoUrl:dbUrl,
+    mongoUrl:MONGO_URL,
     crypto:{
         secret:process.env.SECRET,
     },
@@ -95,6 +95,8 @@ app.use((req,res,next)=>{
 //     let registeredUser=await User.register(fakeUser,"1234");
 //     res.send(registeredUser);
 // })
+
+app.get("/", (req, res) => { res.redirect("/listings"); });
 
 app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews",reviewRouter);

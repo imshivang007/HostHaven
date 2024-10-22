@@ -21,11 +21,29 @@
                 Please enter a short description
             </div>
         </div>
-        
-    <div class="mb-3">
-            <label for="image" class="form-label">Upload Image</label>
-            <input type="file" name="listing[image]" class="form-control" >
+
+        <div class="row">
+            <div class="mb-3">
+                <label for="image" class="form-label">Upload Image</label>
+                <input type="file" name="listing[image]" class="form-control" >
+            </div>
+            <div class="mb-3 col-md-4">
+                <label for="category" class="form-label">Category</label>
+                <select class="form-select" id="category" name="listing[category]">
+                    <option selected>Rooms</option>
+                    <option value="Iconic_Cities">Iconic Cities</option>
+                    <option value="Mountains">Mountains</option>
+                    <option value="Castles">Castles</option>
+                    <option value="Amazing_Pool">Amazing Pool</option>
+                    <option value="Camping">Camping</option>
+                    <option value="Farms">Farms</option>
+                    <option value="Arctic">Arctic</option>
+                    <option value="Domes">Domes</option>
+                    <option value="House_Boats">House Boats</option>
+                </select>
+            </div>
         </div>
+    
 
         
 <div class="row">
