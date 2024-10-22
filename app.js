@@ -31,11 +31,11 @@ app.engine("ejs",ejsMate);
 app.use(express.static(path.join(__dirname,"public")));
 
 
-const MONGO_URL="mongodb://localhost:27017/HostHaven";
-//const dbUrl=process.env.ATLASDB_URL;
+//const MONGO_URL="mongodb://localhost:27017/HostHaven";
+const dbUrl=process.env.ATLASDB_URL;
 
 async function main(){
-    await mongoose.connect(MONGO_URL);
+    await mongoose.connect(dbUrl);
 }
 main()
 .then((res)=>{
@@ -46,7 +46,7 @@ main()
 })
 
 const store=MongoStore.create({
-    mongoUrl:MONGO_URL,
+    mongoUrl:dbUrl,
     crypto:{
         secret:process.env.SECRET,
     },
