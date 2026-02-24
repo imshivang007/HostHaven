@@ -13,7 +13,7 @@
 * **Leave a Review:** After your stay, leave a review to help future guests.
 
 # **Contact**
-* **URL:** https://hosthaven.onrender.com/listings
+* **URL:** https://hosthaven.onrender.com
 * **Email:** imshivang007@gmail.com
 *  **Phone:** +91 8795671049
 
