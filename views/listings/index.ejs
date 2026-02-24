@@ -35,6 +35,27 @@
         display: flex;
         align-items: center;
     }
+    .search-bar {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    .search-bar input {
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        padding: 8px 15px;
+        width: 300px;
+    }
+    .search-bar button {
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        padding: 8px 15px;
+        margin-left: 5px;
+        background: white;
+        cursor: pointer;
+    }
+    .search-bar button:hover {
+        background: #f0f0f0;
+    }
     .pagination {
         display: flex;
         justify-content: center;
@@ -163,7 +184,11 @@
                     <div class="card-body">
                     <p class="card-text">
                         <b><%= listing.title %></b><br>
-                        &#8377;<%= listing.price.toLocaleString("en-IN") %>/night
+                        <% if(listing.price) { %>
+                            &#8377;<%= listing.price.toLocaleString("en-IN") %>/night
+                        <% } else { %>
+                            Price not available
+                        <% } %>
                         <i class="tax-info"> &nbsp;  &nbsp;+18% GST</i>
             
                     

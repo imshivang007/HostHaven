@@ -43,16 +43,16 @@ const scriptSrcUrls = [
 const styleSrcUrls = [
     "https://api.tiles.mapbox.com",
     "https://api.mapbox.com",
-    "https://cdn.jsdelivr.net"
+    "https://cdn.jsdelivr.net",
+    "https://cdnjs.cloudflare.com"
 ];
 const connectSrcUrls = [
     "https://api.mapbox.com",
-    "https://*.tiles.mapbox.com",
-    "https://events.mapbox.com"
+    "*.tiles.mapbox.com",
+    "events.mapbox.com"
 ];
-const fontSrcUrls = ["https://cdnjs.cloudflare.com"];
+const fontSrcUrls = ["cdnjs.cloudflare.com", "fonts.gstatic.com", "fonts.googleapis.com", "'self'", "'unsafe-eval'"];
 
-app.set("views", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));

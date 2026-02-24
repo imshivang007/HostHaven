@@ -1,9 +1,7 @@
 const express = require("express");
 const router= express.Router({mergeParams:true});
 const wrapAsync = require("../utils/wrapAsync");
-const Listing = require("../models/listing");
 const {isLoggedIn,isOwner,validateListing}= require("../middleware");
-const { populate } = require("../models/review");
 
 const multer=require("multer");
 const {storage}=require("../cloudConfig");
