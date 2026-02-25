@@ -109,8 +109,46 @@
     .availability-badge.available { background: #d4edda; color: #155724; }
     .availability-badge.unavailable { background: #f8d7da; color: #721c24; }
     
-    .edit-delete-btns { display: flex; gap: 1rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #eee; }
-    .edit-delete-btns .btn { border-radius: 50px; padding: 0.6rem 1.5rem; font-weight: 600; }
+    .edit-delete-btns { display: flex; gap: 1rem; margin-top: 1.5rem; padding-top: 1.5rem; padding-bottom: 1.5rem; border-top: 1px solid #eee; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .edit-delete-btns .btn { border-radius: 50px; padding: 0.75rem 1.75rem; font-weight: 600; font-size: 0.95rem; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 0.5rem; }
+    
+    /* Edit Listing Button - Gradient Style (matching style.css add-btn, edit-btn colors) */
+    .edit-delete-btns .btn-edit-listing {
+        background: linear-gradient(135deg, #D62828, #F77F00) !important;
+        border: none !important;
+        color: white !important;
+        box-shadow: 0 4px 12px rgba(214, 40, 40, 0.25);
+    }
+    .edit-delete-btns .btn-edit-listing:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(247, 127, 0, 0.4);
+    }
+    
+    /* Delete Button - Outline Style (using project's red color) */
+    .edit-delete-btns .btn-delete-listing {
+        background: transparent !important;
+        border: 2px solid #D62828 !important;
+        color: #D62828 !important;
+        font-weight: 600 !important;
+    }
+    .edit-delete-btns .btn-delete-listing:hover {
+        background: #D62828 !important;
+        color: white !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(214, 40, 40, 0.35);
+    }
+    
+    /* Confirmation dialog styling */
+    .edit-delete-btns .btn-delete-listing.confirm-delete {
+        background: #D62828 !important;
+        color: white !important;
+        animation: pulse 0.5s ease infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
     
     .thumbnail-container { display: flex; gap: 8px; padding: 0.75rem 0; overflow-x: auto; }
     .thumbnail-container::-webkit-scrollbar { height: 6px; }
@@ -314,8 +352,10 @@ if (listing.owner && listing.owner.createdAt) {
                 
                 <% if(currUser && listing.owner && listing.owner._id.equals(currUser._id)){ %>
                     <div class="edit-delete-btns">
-                        <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark"><i class="fas fa-edit"></i> Edit Listing</a>
-                        <form method="post" action="/listings/<%= listing._id %>?_method=DELETE" class="d-inline"><button class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button></form>
+                        <a href="/listings/<%= listing._id %>/edit" class="btn btn-edit-listing"><i class="fas fa-edit"></i> Edit Listing</a>
+                        <form method="post" action="/listings/<%= listing._id %>?_method=DELETE" class="d-inline" id="deleteForm">
+                            <button type="submit" class="btn btn-delete-listing" onclick="confirmDelete(event, this)"><i class="fas fa-trash"></i> Delete</button>
+                        </form>
                     </div>
                 <% } %>
             </div>
@@ -385,6 +425,24 @@ if (listing.owner && listing.owner.createdAt) {
         thumbnail.classList.add('active');
     }
     function openGallery(index) { console.log('Open gallery at index:', index); }
+    
+    // Delete confirmation function
+    function confirmDelete(event, button) {
+        event.preventDefault();
+        if (button.classList.contains('confirm-delete')) {
+            // Second click - submit the form
+            button.closest('form').submit();
+        } else {
+            // First click - ask for confirmation
+            button.classList.add('confirm-delete');
+            button.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Confirm Delete';
+            // Reset after 3 seconds if not clicked again
+            setTimeout(() => {
+                button.classList.remove('confirm-delete');
+                button.innerHTML = '<i class="fas fa-trash"></i> Delete';
+            }, 3000);
+        }
+    }
     
     const bookingForm = document.getElementById('bookingForm');
     if (bookingForm) {

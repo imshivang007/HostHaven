@@ -14,6 +14,10 @@ const reviewSchema = new mongoose.Schema({
     author:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
+    },
+    listing:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Listing"
     }
 });
 
