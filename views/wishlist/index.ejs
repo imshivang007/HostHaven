@@ -1,36 +1,265 @@
 <% layout("/layouts/boilerplate") %>
 
 <style>
+    /* Full Page Layout Styles */
+    .page-wrapper {
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .full-width-container {
+        max-width: 100%;
+        padding: 2rem 3rem;
+        background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+        min-height: calc(100vh - 80px);
+    }
+    
+    /* Hero Header Section */
+    .page-header {
+        background: linear-gradient(135deg, #003049 0%, #1a5276 50%, #003049 100%);
+        padding: 3rem 3rem;
+        margin: -2rem -3rem 2rem -3rem;
+        border-radius: 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .page-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/></svg>');
+        background-size: 200px 200px;
+        opacity: 0.5;
+    }
+    
+    .page-header h1 {
+        color: white;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .page-header p {
+        color: rgba(255,255,255,0.85);
+        font-size: 1.1rem;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .header-icon {
+        position: absolute;
+        right: 3rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 8rem;
+        color: rgba(255,255,255,0.1);
+    }
+    
+    /* Wishlist Card */
     .wishlist-card {
-        transition: transform 0.2s;
+        background: white;
+        border: none;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        position: relative;
     }
+    
     .wishlist-card:hover {
-        transform: translateY(-5px);
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.12);
     }
+    
+    .wishlist-card .card-img-top {
+        height: 220px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    
+    .wishlist-card:hover .card-img-top {
+        transform: scale(1.05);
+    }
+    
     .remove-btn {
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: 15px;
+        right: 15px;
         z-index: 100;
         background: white;
         border: none;
         border-radius: 50%;
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
         cursor: pointer;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
+    
     .remove-btn:hover {
-        background: #dc3545;
+        background: #D62828;
         color: white;
+        transform: scale(1.1);
+    }
+    
+    .remove-btn i {
+        color: #D62828;
+        font-size: 1rem;
+    }
+    
+    .remove-btn:hover i {
+        color: white;
+    }
+    
+    .card-title {
+        font-weight: 700;
+        color: #003049;
+        margin-bottom: 0.3rem;
+    }
+    
+    .card-location {
+        color: #666;
+        font-size: 0.9rem;
+    }
+    
+    .card-location i {
+        color: #D62828;
+    }
+    
+    .card-price {
+        color: #D62828;
+        font-weight: 700;
+        font-size: 1.2rem;
+    }
+    
+    .card-rating {
+        color: #F77F00;
+    }
+    
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 5rem 3rem;
+        background: white;
+        border-radius: 24px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+    
+    .empty-state i {
+        font-size: 5rem;
+        background: linear-gradient(135deg, #EAE2B7, #FCBF49);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1.5rem;
+    }
+    
+    .empty-state h4 {
+        color: #003049;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+    
+    .empty-state p {
+        color: #666;
+        margin-bottom: 2rem;
+    }
+    
+    .btn-browse {
+        background: linear-gradient(135deg, #D62828 0%, #F77F00 100%);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 0.8rem 2.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+    
+    .btn-browse:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(214, 40, 40, 0.4);
+        color: white;
+    }
+    
+    /* Animation */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .wishlist-card {
+        animation: fadeInUp 0.5s ease forwards;
+    }
+    
+    /* Responsive */
+    @media (max-width: 992px) {
+        .full-width-container {
+            padding: 1.5rem;
+        }
+        
+        .page-header {
+            padding: 2rem 1.5rem;
+            margin: -1.5rem -1.5rem 1.5rem -1.5rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2rem;
+        }
+        
+        .header-icon {
+            display: none;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .page-header h1 {
+            font-size: 1.5rem;
+        }
+        
+        .wishlist-card .card-img-top {
+            height: 180px;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .full-width-container {
+            padding: 1rem;
+        }
+        
+        .empty-state {
+            padding: 3rem 1.5rem;
+        }
     }
 </style>
 
-<div class="container mt-4">
-    <h2 class="mb-4"><i class="fas fa-heart text-danger"></i> My Wishlist</h2>
+<div class="bg-pattern" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; background-image: radial-gradient(circle at 20% 80%, rgba(214, 40, 40, 0.03) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(0, 48, 73, 0.03) 0%, transparent 50%);"></div>
+
+<div class="full-width-container">
+    <!-- Hero Header -->
+    <div class="page-header">
+        <i class="fas fa-heart header-icon"></i>
+        <h1><i class="fas fa-heart"></i> My Wishlist</h1>
+        <p>Your saved favorite listings</p>
+    </div>
     
     <% if(listings.length > 0) { %>
-        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             <% for(let listing of listings) { %>
                 <div class="col mb-4">
                     <div class="card wishlist-card h-100">
@@ -41,19 +270,17 @@
                             </button>
                         </form>
                         
-                        <a href="/listings/<%= listing._id %>">
-                            <img src="<%= listing.image.url %>" class="card-img-top" alt="listing" style="height: 200px; object-fit: cover;">
+                        <a href="/listings/<%= listing._id %>" style="text-decoration: none;">
+                            <img src="<%= listing.image.url %>" class="card-img-top" alt="listing">
                             <div class="card-body">
                                 <h5 class="card-title"><%= listing.title %></h5>
-                                <p class="card-text text-muted">
+                                <p class="card-location">
                                     <i class="fas fa-map-marker-alt"></i> <%= listing.location %>, <%= listing.country %>
                                 </p>
-                                <p class="card-text">
-                                    <strong>₹<%= listing.price ? listing.price.toLocaleString() : 0 %></strong> / night
-                                </p>
+                                <p class="card-price">₹<%= listing.price ? listing.price.toLocaleString() : 0 %> / night</p>
                                 <% if(listing.avgRating > 0) { %>
-                                    <small class="text-muted">
-                                        <i class="fas fa-star text-warning"></i> <%= listing.avgRating.toFixed(1) %> (<%= listing.reviews.length %> reviews)
+                                    <small class="card-rating">
+                                        <i class="fas fa-star"></i> <%= listing.avgRating.toFixed(1) %> (<%= listing.reviews.length %> reviews)
                                     </small>
                                 <% } %>
                             </div>
@@ -63,11 +290,13 @@
             <% } %>
         </div>
     <% } else { %>
-        <div class="text-center py-5">
-            <i class="fas fa-heart-broken fa-4x text-muted mb-3"></i>
+        <div class="empty-state">
+            <i class="fas fa-heart-broken"></i>
             <h4>Your wishlist is empty</h4>
-            <p class="text-muted">Start adding listings you like to your wishlist!</p>
-            <a href="/listings" class="btn btn-primary">Browse Listings</a>
+            <p>Start adding listings you like to your wishlist!</p>
+            <a href="/listings" class="btn btn-browse">
+                <i class="fas fa-compass"></i> Browse Listings
+            </a>
         </div>
     <% } %>
 </div>

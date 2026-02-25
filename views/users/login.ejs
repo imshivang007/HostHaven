@@ -1,107 +1,173 @@
 <% layout("/layouts/boilerplate") %>
 
 <style>
+    /* Full Page Layout Styles */
+    .page-wrapper {
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .full-width-container {
+        max-width: 100%;
+        padding: 2rem 3rem;
+        background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+        min-height: calc(100vh - 80px);
+    }
+    
+    /* Hero Header Section */
+    .page-header {
+        background: linear-gradient(135deg, #003049 0%, #1a5276 50%, #003049 100%);
+        padding: 3rem 3rem;
+        margin: -2rem -3rem 2rem -3rem;
+        border-radius: 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .page-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/></svg>');
+        background-size: 200px 200px;
+        opacity: 0.5;
+    }
+    
+    .page-header h1 {
+        color: white;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .page-header p {
+        color: rgba(255,255,255,0.85);
+        font-size: 1.1rem;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .header-icon {
+        position: absolute;
+        right: 3rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 8rem;
+        color: rgba(255,255,255,0.1);
+    }
+    
+    /* Auth Container */
     .auth-container {
         max-width: 450px;
-        margin: 2rem auto;
+        margin: 0 auto;
         background: white;
         padding: 2.5rem;
-        border-radius: 16px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
     }
+    
+    .brand-icon {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+    
+    .brand-icon i {
+        font-size: 3.5rem;
+        background: linear-gradient(135deg, #D62828, #F77F00);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
     .auth-title {
         font-size: 1.8rem;
         font-weight: 700;
-        color: #222222;
+        color: #003049;
         text-align: center;
         margin-bottom: 0.5rem;
     }
+    
     .auth-subtitle {
         text-align: center;
-        color: #003049;
+        color: #666;
         margin-bottom: 2rem;
     }
+    
     .form-label {
         font-weight: 600;
-        color: #222222;
+        color: #003049;
         margin-bottom: 0.5rem;
     }
+    
     .form-control {
         border-radius: 12px;
-        border: 1px solid #e0e0e0;
-        padding: 0.75rem 1rem;
+        border: 2px solid #e8e8e8;
+        padding: 0.85rem 1.1rem;
         transition: all 0.3s ease;
     }
+    
     .form-control:focus {
         border-color: #003049;
-        box-shadow: 0 0 0 3px rgba(0, 48, 73, 0.2);
+        box-shadow: 0 0 0 4px rgba(0, 48, 73, 0.15);
     }
+    
+    .form-check-input:checked {
+        background-color: #D62828;
+        border-color: #D62828;
+    }
+    
     .submit-btn {
-        background-color: #D62828 !important;
+        background: linear-gradient(135deg, #D62828, #F77F00) !important;
         border: none !important;
         border-radius: 12px;
-        padding: 0.8rem 2rem;
+        padding: 0.9rem 2rem;
         font-weight: 600;
         font-size: 1rem;
         width: 100%;
         transition: all 0.3s ease;
         margin-top: 1rem;
     }
+    
     .submit-btn:hover {
-        background-color: #F77F00 !important;
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(247, 127, 0, 0.4);
+        box-shadow: 0 6px 20px rgba(214, 40, 40, 0.4);
     }
-    .auth-footer {
-        text-align: center;
-        margin-top: 1.5rem;
-        color: #003049;
-    }
-    .auth-footer a {
-        color: #D62828;
-        font-weight: 600;
-        text-decoration: none;
-        transition: all 0.3s ease;
-    }
-    .auth-footer a:hover {
-        color: #F77F00;
-        text-decoration: underline;
-    }
-    .brand-icon {
-        text-align: center;
-        margin-bottom: 1rem;
-    }
-    .brand-icon i {
-        font-size: 3rem;
-        color: #003049;
-    }
+    
     .divider {
         display: flex;
         align-items: center;
         text-align: center;
         margin: 1.5rem 0;
     }
+    
     .divider::before,
     .divider::after {
         content: '';
         flex: 1;
-        border-bottom: 1px solid #e0e0e0;
+        border-bottom: 1px solid #e8e8e8;
     }
+    
     .divider span {
         padding: 0 1rem;
-        color: #003049;
+        color: #666;
         font-size: 0.9rem;
     }
+    
     .social-login {
         display: flex;
         gap: 1rem;
-        justify-content: center;
     }
+    
     .social-btn {
         width: 100%;
-        padding: 0.6rem;
+        padding: 0.7rem;
         border-radius: 12px;
-        border: 1px solid #e0e0e0;
+        border: 2px solid #e8e8e8;
         background: white;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -109,14 +175,102 @@
         align-items: center;
         justify-content: center;
         gap: 0.5rem;
+        font-weight: 500;
+        color: #003049;
     }
+    
     .social-btn:hover {
         border-color: #D62828;
         background: #EAE2B7;
     }
+    
+    .auth-footer {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: #666;
+    }
+    
+    .auth-footer a {
+        color: #D62828;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    
+    .auth-footer a:hover {
+        color: #F77F00;
+        text-decoration: underline;
+    }
+    
+    .valid-feedback {
+        color: #28a745;
+    }
+    
+    .invalid-feedback {
+        color: #dc3545;
+    }
+    
+    /* Animation */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .auth-container {
+        animation: fadeInUp 0.5s ease forwards;
+    }
+    
+    /* Responsive */
+    @media (max-width: 992px) {
+        .full-width-container {
+            padding: 1.5rem;
+        }
+        
+        .page-header {
+            padding: 2rem 1.5rem;
+            margin: -1.5rem -1.5rem 1.5rem -1.5rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2rem;
+        }
+        
+        .header-icon {
+            display: none;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .full-width-container {
+            padding: 1rem;
+        }
+        
+        .auth-container {
+            padding: 1.5rem;
+        }
+        
+        .social-login {
+            flex-direction: column;
+        }
+    }
 </style>
 
-<div class="row mt-3">
+<div class="bg-pattern" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; background-image: radial-gradient(circle at 20% 80%, rgba(214, 40, 40, 0.03) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(0, 48, 73, 0.03) 0%, transparent 50%);"></div>
+
+<div class="full-width-container">
+    <!-- Hero Header -->
+    <div class="page-header">
+        <i class="fas fa-compass header-icon"></i>
+        <h1><i class="fas fa-sign-in-alt"></i> Welcome Back</h1>
+        <p>Log in to continue to HostHaven</p>
+    </div>
+
     <div class="auth-container">
         <div class="brand-icon">
             <i class="fa-solid fa-compass"></i>
@@ -142,7 +296,9 @@
                 <label class="form-check-label" for="rememberMe">Remember me</label>
             </div>
             
-            <button class="btn btn-primary submit-btn">Log in</button>
+            <button class="btn btn-primary submit-btn">
+                <i class="fas fa-sign-in-alt me-2"></i> Log in
+            </button>
         </form>
         
         <div class="divider">

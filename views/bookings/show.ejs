@@ -1,140 +1,485 @@
 <% layout("/layouts/boilerplate") %>
 
 <style>
-    .booking-details {
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    /* Full Page Layout Styles */
+    .page-wrapper {
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
     }
-    .status-badge {
-        padding: 0.5rem 1rem;
+    
+    .full-width-container {
+        max-width: 100%;
+        padding: 2rem 3rem;
+        background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+        min-height: calc(100vh - 80px);
+    }
+    
+    /* Hero Header Section */
+    .page-header {
+        background: linear-gradient(135deg, #003049 0%, #1a5276 50%, #003049 100%);
+        padding: 3rem 3rem;
+        margin: -2rem -3rem 2rem -3rem;
+        border-radius: 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .page-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/></svg>');
+        background-size: 200px 200px;
+        opacity: 0.5;
+    }
+    
+    .page-header h1 {
+        color: white;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .page-header p {
+        color: rgba(255,255,255,0.85);
+        font-size: 1.1rem;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .header-icon {
+        position: absolute;
+        right: 3rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 8rem;
+        color: rgba(255,255,255,0.1);
+    }
+    
+    /* Back Button */
+    .btn-back {
+        background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+        border: none;
+        border-radius: 12px;
+        padding: 0.6rem 1.2rem;
+        color: #003049;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .btn-back:hover {
+        background: #EAE2B7;
+        color: #003049;
+        transform: translateX(-3px);
+    }
+    
+    /* Card Styles */
+    .info-card {
+        background: white;
+        border: none;
         border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+    
+    .info-card-header {
+        padding: 1.5rem 2rem;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .listing-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #003049;
+        margin: 0;
+    }
+    
+    .listing-location {
+        color: #666;
+        margin: 0.3rem 0 0 0;
+    }
+    
+    .listing-location i {
+        color: #D62828;
+    }
+    
+    .status-badge {
+        padding: 0.5rem 1.2rem;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+    
+    .status-confirmed { 
+        background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        color: #155724;
+    }
+    
+    .status-pending { 
+        background: linear-gradient(135deg, #fff3cd, #ffeeba);
+        color: #856404;
+    }
+    
+    .status-cancelled { 
+        background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+        color: #721c24;
+    }
+    
+    .status-completed { 
+        background: linear-gradient(135deg, #cce5ff, #b8daff);
+        color: #004085;
+    }
+    
+    .info-card-body {
+        padding: 2rem;
+    }
+    
+    .section-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #003049;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .section-title i {
+        color: #D62828;
+    }
+    
+    .info-label {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 0.3rem;
+    }
+    
+    .info-value {
+        font-weight: 600;
+        color: #003049;
         font-size: 1rem;
     }
-    .status-confirmed { background: #d4edda; color: #155724; }
-    .status-pending { background: #fff3cd; color: #856404; }
-    .status-cancelled { background: #f8d7da; color: #721c24; }
-    .status-completed { background: #cce5ff; color: #004085; }
-    .info-label {
-        color: #6c757d;
-        font-size: 0.9rem;
+    
+    .info-value i {
+        color: #F77F00;
+        margin-right: 0.5rem;
     }
-    .info-value {
-        font-weight: 500;
+    
+    .detail-card {
+        background: linear-gradient(135deg, #f8f9fa, #fff);
+        border-radius: 16px;
+        padding: 1.5rem;
+        border: 1px solid #eee;
+    }
+    
+    /* Listing Image Card */
+    .listing-image-card {
+        background: white;
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+    
+    .listing-image-card img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+    }
+    
+    .listing-image-card .card-body {
+        padding: 1.5rem;
+    }
+    
+    /* Buttons */
+    .btn-view-listing {
+        background: linear-gradient(135deg, #D62828, #F77F00);
+        border: none;
+        border-radius: 12px;
+        padding: 0.7rem 1.5rem;
+        font-weight: 600;
+        color: white;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+    
+    .btn-view-listing:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(214, 40, 40, 0.4);
+        color: white;
+    }
+    
+    .btn-cancel {
+        border: 2px solid #dc3545;
+        color: #dc3545;
+        background: transparent;
+        border-radius: 12px;
+        padding: 0.7rem 1.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-cancel:hover {
+        background: #dc3545;
+        color: white;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #D62828, #F77F00) !important;
+        border: none !important;
+        border-radius: 12px;
+        padding: 0.7rem 1.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(214, 40, 40, 0.4);
+    }
+    
+    /* Animation */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .info-card, .listing-image-card {
+        animation: fadeInUp 0.5s ease forwards;
+    }
+    
+    /* Responsive */
+    @media (max-width: 992px) {
+        .full-width-container {
+            padding: 1.5rem;
+        }
+        
+        .page-header {
+            padding: 2rem 1.5rem;
+            margin: -1.5rem -1.5rem 1.5rem -1.5rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2rem;
+        }
+        
+        .header-icon {
+            display: none;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .page-header h1 {
+            font-size: 1.5rem;
+        }
+        
+        .info-card-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .listing-image-card img {
+            height: 180px;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .full-width-container {
+            padding: 1rem;
+        }
+        
+        .info-card-body {
+            padding: 1.5rem;
+        }
     }
 </style>
 
-<div class="container mt-4">
+<div class="bg-pattern" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; background-image: radial-gradient(circle at 20% 80%, rgba(214, 40, 40, 0.03) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(0, 48, 73, 0.03) 0%, transparent 50%);"></div>
+
+<div class="full-width-container">
+    <!-- Hero Header -->
+    <div class="page-header">
+        <i class="fas fa-calendar-check header-icon"></i>
+        <h1><i class="fas fa-ticket-alt"></i> Booking Details</h1>
+        <p>View your booking information and details</p>
+    </div>
+    
+    <a href="<%= isGuest ? '/my-bookings' : '/host-bookings' %>" class="btn-back mb-4 d-inline-flex">
+        <i class="fas fa-arrow-left"></i> Back to Bookings
+    </a>
+
     <div class="row">
-        <div class="col-md-8">
-            <div class="booking-details p-4">
-                <div class="d-flex justify-content-between align-items-start mb-4">
+        <!-- Main Content -->
+        <div class="col-lg-8 mb-4">
+            <div class="info-card">
+                <div class="info-card-header">
                     <div>
-                        <h2><%= booking.listing.title %></h2>
-                        <p class="text-muted mb-0">
+                        <h2 class="listing-title"><%= booking.listing.title %></h2>
+                        <p class="listing-location">
                             <i class="fas fa-map-marker-alt"></i> 
                             <%= booking.listing.location %>, <%= booking.listing.country %>
                         </p>
                     </div>
-                    <span class="status-badge status-<%= booking.status %>"><%= booking.status %></span>
+                    <span class="status-badge status-<%= booking.status %>">
+                        <i class="fas fa-<%= booking.status === 'confirmed' ? 'check-circle' : booking.status === 'pending' ? 'clock' : booking.status === 'cancelled' ? 'times-circle' : 'check-double' %>"></i>
+                        <%= booking.status.charAt(0).toUpperCase() + booking.status.slice(1) %>
+                    </span>
                 </div>
-
-                <hr>
-
-                <h4 class="mb-3">Booking Details</h4>
-                <div class="row">
-                    <div class="col-md-6">
-                        <p class="info-label">Check-in</p>
-                        <p class="info-value">
-                            <i class="fas fa-sign-in-alt"></i> 
-                            <%= new Date(booking.checkIn).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %>
-                        </p>
+                
+                <div class="info-card-body">
+                    <!-- Booking Details -->
+                    <h4 class="section-title">
+                        <i class="fas fa-calendar-alt"></i> Booking Details
+                    </h4>
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-3">
+                            <div class="detail-card">
+                                <p class="info-label">Check-in</p>
+                                <p class="info-value">
+                                    <i class="fas fa-sign-in-alt"></i> 
+                                    <%= new Date(booking.checkIn).toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="detail-card">
+                                <p class="info-label">Check-out</p>
+                                <p class="info-value">
+                                    <i class="fas fa-sign-out-alt"></i> 
+                                    <%= new Date(booking.checkOut).toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %>
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <p class="info-label">Check-out</p>
-                        <p class="info-value">
-                            <i class="fas fa-sign-out-alt"></i> 
-                            <%= new Date(booking.checkOut).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %>
-                        </p>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-3">
+                            <div class="detail-card">
+                                <p class="info-label">Number of Guests</p>
+                                <p class="info-value"><i class="fas fa-users"></i> <%= booking.guests %> <%= booking.guests === 1 ? 'guest' : 'guests' %></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="detail-card">
+                                <p class="info-label">Total Price</p>
+                                <p class="info-value" style="color: #D62828; font-size: 1.3rem;">
+                                    <i class="fas fa-rupee-sign"></i> ₹<%= booking.totalPrice ? booking.totalPrice.toLocaleString('en-IN') : 0 %>
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <p class="info-label">Number of Guests</p>
-                        <p class="info-value"><i class="fas fa-users"></i> <%= booking.guests %> guests</p>
+                    
+                    <hr style="margin: 2rem 0;">
+                    
+                    <!-- Guest Information -->
+                    <h4 class="section-title">
+                        <i class="fas fa-user"></i> Guest Information
+                    </h4>
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-3">
+                            <div class="detail-card">
+                                <p class="info-label">Name</p>
+                                <p class="info-value"><%= booking.guestName %></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="detail-card">
+                                <p class="info-label">Email</p>
+                                <p class="info-value"><%= booking.guestEmail %></p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <p class="info-label">Total Price</p>
-                        <p class="info-value"><i class="fas fa-rupee-sign"></i> ₹<%= booking.totalPrice ? booking.totalPrice.toLocaleString() : 0 %></p>
+                    
+                    <% if(booking.guestPhone) { %>
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-3">
+                            <div class="detail-card">
+                                <p class="info-label">Phone</p>
+                                <p class="info-value"><%= booking.guestPhone %></p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <hr>
-
-                <h4 class="mb-3">Guest Information</h4>
-                <div class="row">
-                    <div class="col-md-6">
-                        <p class="info-label">Name</p>
-                        <p class="info-value"><%= booking.guestName %></p>
-                    </div>
-                    <div class="col-md-6">
-                        <p class="info-label">Email</p>
-                        <p class="info-value"><%= booking.guestEmail %></p>
-                    </div>
-                </div>
-                <% if(booking.guestPhone) { %>
-                <div class="row">
-                    <div class="col-md-6">
-                        <p class="info-label">Phone</p>
-                        <p class="info-value"><%= booking.guestPhone %></p>
-                    </div>
-                </div>
-                <% } %>
-                <% if(booking.specialRequests) { %>
-                <div class="row mt-3">
-                    <div class="col-12">
-                        <p class="info-label">Special Requests</p>
-                        <p class="info-value"><%= booking.specialRequests %></p>
-                    </div>
-                </div>
-                <% } %>
-
-                <hr>
-
-                <div class="d-flex justify-content-between align-items-center">
-                    <a href="/listings/<%= booking.listing._id %>" class="btn btn-outline-primary">
-                        <i class="fas fa-arrow-left"></i> Back to Listing
-                    </a>
-                    <% if(isGuest && booking.status !== 'cancelled' && booking.status !== 'completed') { %>
-                        <form action="/bookings/<%= booking._id %>/cancel" method="POST">
-                            <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to cancel this booking?')">
-                                Cancel Booking
-                            </button>
-                        </form>
                     <% } %>
+                    
+                    <% if(booking.specialRequests) { %>
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="detail-card">
+                                <p class="info-label">Special Requests</p>
+                                <p class="info-value"><%= booking.specialRequests %></p>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                    
+                    <hr style="margin: 2rem 0;">
+                    
+                    <!-- Action Buttons -->
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                        <a href="/listings/<%= booking.listing._id %>" class="btn btn-view-listing">
+                            <i class="fas fa-eye"></i> View Listing
+                        </a>
+                        <% if(isGuest && booking.status !== 'cancelled' && booking.status !== 'completed') { %>
+                            <form action="/bookings/<%= booking._id %>/cancel" method="POST">
+                                <button type="submit" class="btn btn-cancel" onclick="return confirm('Are you sure you want to cancel this booking?')">
+                                    <i class="fas fa-times"></i> Cancel Booking
+                                </button>
+                            </form>
+                        <% } %>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-4">
-            <div class="booking-details p-4">
-                <img src="<%= booking.listing.image.url %>" alt="listing" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px;">
-                
-                <% if(isOwner) { %>
-                    <hr>
-                    <h5>Guest Details</h5>
-                    <p class="info-label">Name</p>
-                    <p class="info-value"><%= booking.user.username %></p>
-                    <p class="info-label">Email</p>
-                    <p class="info-value"><%= booking.user.email %></p>
-                <% } %>
-
-                <hr>
-                <p class="info-label">Booking ID</p>
-                <p class="info-value text-muted"><small><%= booking._id %></small></p>
-                <p class="info-label">Booked On</p>
-                <p class="info-value"><%= new Date(booking.createdAt).toLocaleDateString() %></p>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <div class="listing-image-card mb-4">
+                <img src="<%= booking.listing.image ? booking.listing.image.url : 'https://via.placeholder.com/400x300' %>" alt="<%= booking.listing.title %>">
+                <div class="card-body">
+                    <% if(isOwner) { %>
+                        <h5 class="mb-3" style="color: #003049; font-weight: 700;">
+                            <i class="fas fa-user"></i> Guest Details
+                        </h5>
+                        <div class="mb-3">
+                            <p class="info-label">Name</p>
+                            <p class="info-value"><%= booking.user.username %></p>
+                        </div>
+                        <div class="mb-3">
+                            <p class="info-label">Email</p>
+                            <p class="info-value"><%= booking.user.email %></p>
+                        </div>
+                        <hr>
+                    <% } %>
+                    
+                    <div class="mb-3">
+                        <p class="info-label">Booking ID</p>
+                        <p class="info-value text-muted" style="font-size: 0.8rem; word-break: break-all;"><%= booking._id %></p>
+                    </div>
+                    <div class="mb-0">
+                        <p class="info-label">Booked On</p>
+                        <p class="info-value"><%= new Date(booking.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) %></p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

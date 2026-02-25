@@ -1,83 +1,348 @@
 <% layout("/layouts/boilerplate") %>
 
 <style>
-    .message-card {
-        transition: transform 0.2s;
-        cursor: pointer;
+    /* Full Page Layout Styles */
+    .page-wrapper {
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
     }
-    .message-card:hover {
-        transform: translateX(5px);
+    
+    .full-width-container {
+        max-width: 100%;
+        padding: 2rem 3rem;
+        background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+        min-height: calc(100vh - 80px);
     }
-    .unread-badge {
-        background: #667eea;
+    
+    /* Hero Header Section */
+    .page-header {
+        background: linear-gradient(135deg, #003049 0%, #1a5276 50%, #003049 100%);
+        padding: 3rem 3rem;
+        margin: -2rem -3rem 2rem -3rem;
+        border-radius: 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .page-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/></svg>');
+        background-size: 200px 200px;
+        opacity: 0.5;
+    }
+    
+    .page-header h1 {
         color: white;
-        padding: 2px 8px;
-        border-radius: 50%;
-        font-size: 0.75rem;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        position: relative;
+        z-index: 1;
     }
-    .message-preview {
-        color: #6c757d;
+    
+    .page-header p {
+        color: rgba(255,255,255,0.85);
+        font-size: 1.1rem;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .header-icon {
+        position: absolute;
+        right: 3rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 8rem;
+        color: rgba(255,255,255,0.1);
+    }
+    
+    /* Unread Badge */
+    .unread-badge {
+        background: linear-gradient(135deg, #D62828 0%, #F77F00 100%);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-left: 0.5rem;
+    }
+    
+    /* Message Card */
+    .message-card {
+        background: white;
+        border: none;
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        text-decoration: none;
+        display: block;
+    }
+    
+    .message-card:hover {
+        transform: translateX(8px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    
+    .message-card.unread {
+        background: linear-gradient(135deg, #fff9f9, #fff5f5);
+        border-left: 4px solid #D62828;
+    }
+    
+    .message-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #003049, #006d92);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.3rem;
+        font-weight: 600;
+    }
+    
+    .sender-name {
+        font-weight: 700;
+        color: #003049;
+        font-size: 1.05rem;
+    }
+    
+    .sender-name.unread {
+        color: #D62828;
+    }
+    
+    .message-subject {
+        font-weight: 600;
+        color: #222;
+        margin-bottom: 0.3rem;
+        font-size: 1rem;
+    }
+    
+    .message-subject.unread {
+        font-weight: 700;
+    }
+    
+    .message-preview-text {
+        color: #666;
+        font-size: 0.9rem;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    .nav-pills .nav-link.active {
-        background-color: #667eea;
+    
+    .message-date {
+        color: #888;
+        font-size: 0.85rem;
     }
-    .nav-pills .nav-link {
-        color: #495057;
+    
+    .listing-ref {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        background: #EAE2B7;
+        color: #003049;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        margin-top: 0.5rem;
+    }
+    
+    .listing-ref i {
+        color: #D62828;
+    }
+    
+    .new-badge {
+        background: linear-gradient(135deg, #D62828 0%, #F77F00 100%);
+        color: white;
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 5rem 3rem;
+        background: white;
+        border-radius: 24px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+    
+    .empty-state i {
+        font-size: 5rem;
+        background: linear-gradient(135deg, #EAE2B7, #FCBF49);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1.5rem;
+    }
+    
+    .empty-state h4 {
+        color: #003049;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+    
+    .empty-state p {
+        color: #666;
+        margin-bottom: 2rem;
+    }
+    
+    .btn-browse {
+        background: linear-gradient(135deg, #D62828 0%, #F77F00 100%);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 0.8rem 2.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+    
+    .btn-browse:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(214, 40, 40, 0.4);
+        color: white;
+    }
+    
+    /* Animation */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .message-card {
+        animation: fadeInUp 0.5s ease forwards;
+    }
+    
+    .message-card:nth-child(1) { animation-delay: 0.1s; }
+    .message-card:nth-child(2) { animation-delay: 0.15s; }
+    .message-card:nth-child(3) { animation-delay: 0.2s; }
+    .message-card:nth-child(4) { animation-delay: 0.25s; }
+    .message-card:nth-child(5) { animation-delay: 0.3s; }
+    
+    /* Responsive */
+    @media (max-width: 992px) {
+        .full-width-container {
+            padding: 1.5rem;
+        }
+        
+        .page-header {
+            padding: 2rem 1.5rem;
+            margin: -1.5rem -1.5rem 1.5rem -1.5rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2rem;
+        }
+        
+        .header-icon {
+            display: none;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .page-header h1 {
+            font-size: 1.5rem;
+        }
+        
+        .message-card {
+            padding: 1rem;
+        }
+        
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            font-size: 1rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .full-width-container {
+            padding: 1rem;
+        }
+        
+        .empty-state {
+            padding: 3rem 1.5rem;
+        }
     }
 </style>
 
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2>
-                    <i class="fas fa-envelope"></i> Messages
-                    <% if(unreadCount > 0) { %>
-                        <span class="unread-badge"><%= unreadCount %></span>
-                    <% } %>
-                </h2>
-            </div>
-        </div>
+<div class="bg-pattern" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; background-image: radial-gradient(circle at 20% 80%, rgba(214, 40, 40, 0.03) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(0, 48, 73, 0.03) 0%, transparent 50%);"></div>
+
+<div class="full-width-container">
+    <!-- Hero Header -->
+    <div class="page-header">
+        <i class="fas fa-envelope-open-text header-icon"></i>
+        <h1>
+            <i class="fas fa-envelope"></i> Messages
+            <% if(unreadCount > 0) { %>
+                <span class="unread-badge"><%= unreadCount %> unread</span>
+            <% } %>
+        </h1>
+        <p>View and respond to messages from guests and hosts</p>
     </div>
 
     <% if(messages.length > 0) { %>
-        <div class="list-group">
+        <div class="messages-list">
             <% for(let message of messages) { %>
-                <a href="/messages/<%= message._id %>" class="list-group-item list-group-item-action message-card <%= !message.isRead ? 'bg-light' : '' %>">
-                    <div class="d-flex w-100 justify-content-between align-items-start">
-                        <div class="mb-1">
+                <a href="/messages/<%= message._id %>" class="message-card <%= !message.isRead ? 'unread' : '' %>">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
                             <% if(message.sender.profileImage && message.sender.profileImage.url) { %>
-                                <img src="<%= message.sender.profileImage.url %>" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;" class="mr-2">
+                                <img src="<%= message.sender.profileImage.url %>" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
                             <% } else { %>
-                                <i class="fas fa-user-circle fa-2x mr-2 text-muted"></i>
-                            <% } %>
-                            <strong class="<%= !message.isRead ? 'text-primary' : '' %>">
-                                <%= message.sender.username %>
-                            </strong>
-                            <% if(!message.isRead) { %>
-                                <span class="badge badge-primary">New</span>
+                                <div class="message-avatar">
+                                    <%= message.sender.username.charAt(0).toUpperCase() %>
+                                </div>
                             <% } %>
                         </div>
-                        <small class="text-muted"><%= new Date(message.createdAt).toLocaleDateString() %></small>
+                        <div class="col">
+                            <div class="d-flex justify-content-between align-items-start mb-1">
+                                <span class="sender-name <%= !message.isRead ? 'unread' : '' %>">
+                                    <%= message.sender.username %>
+                                    <% if(!message.isRead) { %>
+                                        <span class="new-badge">New</span>
+                                    <% } %>
+                                </span>
+                                <span class="message-date"><%= new Date(message.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) %></span>
+                            </div>
+                            <h6 class="message-subject <%= !message.isRead ? 'unread' : '' %>"><%= message.subject %></h6>
+                            <p class="message-preview-text mb-0"><%= message.body.substring(0, 100) %><%= message.body.length > 100 ? '...' : '' %></p>
+                            <% if(message.listing) { %>
+                                <span class="listing-ref">
+                                    <i class="fas fa-home"></i> <%= message.listing.title %>
+                                </span>
+                            <% } %>
+                        </div>
                     </div>
-                    <h6 class="mb-1 <%= !message.isRead ? 'font-weight-bold' : '' %>"><%= message.subject %></h6>
-                    <p class="message-preview mb-0"><%= message.body %></p>
-                    <% if(message.listing) { %>
-                        <small class="text-muted">
-                            <i class="fas fa-home"></i> Re: <%= message.listing.title %>
-                        </small>
-                    <% } %>
                 </a>
             <% } %>
         </div>
     <% } else { %>
-        <div class="text-center py-5">
-            <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
+        <div class="empty-state">
+            <i class="fas fa-inbox"></i>
             <h4>No messages yet</h4>
-            <p class="text-muted">When someone contacts you, you'll see their messages here.</p>
+            <p>When someone contacts you, you'll see their messages here.</p>
+            <a href="/listings" class="btn btn-browse">
+                <i class="fas fa-compass"></i> Browse Listings
+            </a>
         </div>
     <% } %>
 </div>

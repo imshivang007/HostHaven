@@ -1,308 +1,884 @@
 <% layout("/layouts/boilerplate") %>
 
 <style>
-    .form-container {
-        max-width: 800px;
-        margin: 0 auto;
-        background: white;
-        padding: 2rem;
-        border-radius: 16px;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    /* Full Page Layout Styles */
+    .page-wrapper {
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
     }
-    .form-title {
-        font-size: 1.8rem;
+    
+    .full-width-container {
+        max-width: 100%;
+        padding: 2rem 3rem;
+        background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+        min-height: calc(100vh - 80px);
+    }
+    
+    /* Hero Header Section */
+    .page-header {
+        background: linear-gradient(135deg, #003049 0%, #1a5276 50%, #003049 100%);
+        padding: 3rem 3rem;
+        margin: -2rem -3rem 2rem -3rem;
+        border-radius: 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .page-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/></svg>');
+        background-size: 200px 200px;
+        opacity: 0.5;
+    }
+    
+    .page-header h1 {
+        color: white;
+        font-size: 2.5rem;
         font-weight: 700;
-        color: #222222;
+        margin-bottom: 0.5rem;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .page-header p {
+        color: rgba(255,255,255,0.85);
+        font-size: 1.1rem;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .header-icon {
+        position: absolute;
+        right: 3rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 8rem;
+        color: rgba(255,255,255,0.1);
+    }
+    
+    /* Section Card Styles */
+    .form-section {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        border: 1px solid #eee;
+        transition: all 0.3s ease;
+    }
+    
+    .form-section:hover {
+        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        transform: translateY(-2px);
+    }
+    
+    .section-header {
+        display: flex;
+        align-items: center;
         margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #f0f0f0;
     }
+    
+    .section-icon {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #D62828 0%, #F77F00 100%);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        color: white;
+        font-size: 1.3rem;
+    }
+    
+    .section-title-group h3 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #003049;
+        margin: 0;
+    }
+    
+    .section-title-group p {
+        font-size: 0.9rem;
+        color: #666;
+        margin: 0;
+    }
+    
+    /* Two Column Grid */
+    .two-column-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+    
+    .three-column-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .four-column-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+    }
+    
+    /* Form Controls */
+    .form-label {
+        font-weight: 600;
+        color: #003049;
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+    }
+    
+    .form-control, .form-select {
+        border-radius: 12px;
+        border: 2px solid #e8e8e8;
+        padding: 0.85rem 1.1rem;
+        transition: all 0.3s ease;
+        background: #fafafa;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        border-color: #003049;
+        box-shadow: 0 0 0 4px rgba(0, 48, 73, 0.1);
+        background: white;
+        outline: none;
+    }
+    
+    /* Image Upload Styling */
+    .image-upload-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+    
+    .image-upload-box {
+        border: 2px dashed #ccc;
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        background: linear-gradient(145deg, #fafafa, #f0f0f0);
+        min-height: 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .image-upload-box:hover {
+        border-color: #D62828;
+        background: linear-gradient(145deg, #fff5f5, #ffeaea);
+        transform: scale(1.01);
+    }
+    
+    .image-upload-box i {
+        font-size: 3rem;
+        color: #D62828;
+        margin-bottom: 1rem;
+    }
+    
+    .image-upload-box p {
+        color: #666;
+        margin: 0;
+        font-weight: 500;
+    }
+    
+    .image-upload-box .browse-text {
+        color: #D62828;
+        font-weight: 600;
+        margin-top: 0.5rem;
+    }
+    
+    .selected-filename {
+        color: #D62828;
+        font-weight: 600;
+        margin-top: 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .image-preview {
+        max-width: 100%;
+        max-height: 180px;
+        margin-top: 1rem;
+        border-radius: 12px;
+        display: none;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    /* Amenity Checkboxes - Grid Layout */
+    .amenities-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 1rem;
+    }
+    
     .amenity-checkbox {
-        display: inline-block;
-        margin: 5px;
+        position: relative;
     }
+    
+    .amenity-checkbox input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+    
     .amenity-checkbox label {
-        display: inline-block;
-        padding: 0.6rem 1.2rem;
-        background: #EAE2B7;
-        border: 1px solid transparent;
-        border-radius: 25px;
+        display: flex;
+        align-items: center;
+        padding: 1rem 1.2rem;
+        background: linear-gradient(145deg, #fafafa, #f0f0f0);
+        border: 2px solid transparent;
+        border-radius: 12px;
         cursor: pointer;
         transition: all 0.3s ease;
         color: #003049;
         font-weight: 500;
     }
+    
+    .amenity-checkbox label:hover {
+        background: #EAE2B7;
+        transform: translateY(-2px);
+    }
+    
     .amenity-checkbox input:checked + label {
-        background: #D62828;
+        background: linear-gradient(135deg, #D62828 0%, #F77F00 100%);
         color: white;
         border-color: #D62828;
-    }
-    .amenity-checkbox input {
-        display: none;
-    }
-    .amenity-checkbox label i {
-        margin-right: 5px;
-    }
-    .form-label {
-        font-weight: 600;
-        color: #222222;
-        margin-bottom: 0.5rem;
-    }
-    .form-control, .form-select {
-        border-radius: 12px;
-        border: 1px solid #e0e0e0;
-        padding: 0.75rem 1rem;
-        transition: all 0.3s ease;
-    }
-    .form-control:focus, .form-select:focus {
-        border-color: #003049;
-        box-shadow: 0 0 0 3px rgba(0, 48, 73, 0.2);
-    }
-    .submit-btn {
-        background-color: #D62828 !important;
-        border: none !important;
-        border-radius: 12px;
-        padding: 0.8rem 2rem;
-        font-weight: 600;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-    }
-    .submit-btn:hover {
-        background-color: #F77F00 !important;
+        box-shadow: 0 4px 15px rgba(214, 40, 40, 0.3);
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(247, 127, 0, 0.4);
     }
-    .section-title {
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: #003049;
-        margin: 1.5rem 0 1rem 0;
-        padding-bottom: 0.5rem;
-        border-bottom: 1px solid #e0e0e0;
-    }
-    .form-check-input:checked {
-        background-color: #D62828;
-        border-color: #D62828;
-    }
-    .image-upload-area {
-        border: 2px dashed #e0e0e0;
-        border-radius: 12px;
-        padding: 2rem;
+    
+    .amenity-checkbox label i {
+        margin-right: 8px;
+        font-size: 1.1rem;
+        width: 24px;
         text-align: center;
-        transition: all 0.3s ease;
+    }
+    
+    /* Pricing Section */
+    .price-input-group {
+        position: relative;
+    }
+    
+    .price-input-group .currency-symbol {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+        font-weight: 600;
+    }
+    
+    .price-input-group input {
+        padding-left: 2rem;
+    }
+    
+    /* Availability Toggle */
+    .availability-toggle {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        background: linear-gradient(145deg, #fafafa, #f0f0f0);
+        border-radius: 12px;
+        gap: 1rem;
+    }
+    
+    .toggle-switch {
+        position: relative;
+        width: 50px;
+        height: 26px;
+    }
+    
+    .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    
+    .toggle-slider {
+        position: absolute;
         cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 34px;
     }
-    .image-upload-area:hover {
-        border-color: #D62828;
-        background-color: #EAE2B7;
+    
+    .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 20px;
+        width: 20px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
     }
-    .image-upload-area i {
-        font-size: 2rem;
-        color: #D62828;
+    
+    .toggle-switch input:checked + .toggle-slider {
+        background: linear-gradient(135deg, #D62828 0%, #F77F00 100%);
     }
-    .image-upload-area p {
-        color: #003049;
-        margin: 0.5rem 0 0 0;
+    
+    .toggle-switch input:checked + .toggle-slider:before {
+        transform: translateX(24px);
+    }
+    
+    /* Submit Button */
+    .submit-btn-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 2rem;
+        padding: 2rem;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    
+    .submit-btn {
+        background: linear-gradient(135deg, #D62828 0%, #F77F00 100%);
+        border: none;
+        border-radius: 50px;
+        padding: 1rem 4rem;
+        font-weight: 700;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 20px rgba(214, 40, 40, 0.4);
+        color: white;
+    }
+    
+    .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 30px rgba(214, 40, 40, 0.5);
+        background: linear-gradient(135deg, #F77F00 0%, #D62828 100%);
+    }
+    
+    .submit-btn i {
+        margin-right: 0.5rem;
+    }
+    
+    /* Night Input Styling */
+    .night-input-group {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .night-input-group input {
+        width: 80px;
+        text-align: center;
+    }
+    
+    .night-input-group span {
+        color: #666;
+        font-size: 0.9rem;
+    }
+    
+    /* Validation Styling */
+    .valid-feedback {
+        color: #28a745;
+        font-size: 0.85rem;
+        margin-top: 0.3rem;
+    }
+    
+    .invalid-feedback {
+        color: #dc3545;
+        font-size: 0.85rem;
+        margin-top: 0.3rem;
+    }
+    
+    .form-control.is-valid {
+        border-color: #28a745;
+        background-image: none;
+    }
+    
+    .form-control.is-invalid {
+        border-color: #dc3545;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+        .four-column-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+    
+    @media (max-width: 992px) {
+        .full-width-container {
+            padding: 1.5rem;
+        }
+        
+        .page-header {
+            padding: 2rem 1.5rem;
+            margin: -1.5rem -1.5rem 1.5rem -1.5rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2rem;
+        }
+        
+        .header-icon {
+            display: none;
+        }
+        
+        .two-column-grid,
+        .image-upload-wrapper {
+            grid-template-columns: 1fr;
+        }
+        
+        .three-column-grid,
+        .four-column-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .amenities-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .page-header h1 {
+            font-size: 1.75rem;
+        }
+        
+        .form-section {
+            padding: 1.5rem;
+        }
+        
+        .section-header {
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+        
+        .section-icon {
+            margin-bottom: 0.5rem;
+        }
+        
+        .three-column-grid,
+        .four-column-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .full-width-container {
+            padding: 1rem;
+        }
+        
+        .page-header h1 {
+            font-size: 1.5rem;
+        }
+        
+        .amenities-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+        }
+    }
+    
+    /* Animation Effects */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .form-section {
+        animation: fadeInUp 0.5s ease forwards;
+    }
+    
+    .form-section:nth-child(1) { animation-delay: 0.1s; }
+    .form-section:nth-child(2) { animation-delay: 0.2s; }
+    .form-section:nth-child(3) { animation-delay: 0.3s; }
+    .form-section:nth-child(4) { animation-delay: 0.4s; }
+    .form-section:nth-child(5) { animation-delay: 0.5s; }
+    
+    /* Background Pattern */
+    .bg-pattern {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+        background-image: 
+            radial-gradient(circle at 20% 80%, rgba(214, 40, 40, 0.03) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(0, 48, 73, 0.03) 0%, transparent 50%),
+            radial-gradient(circle at 40% 40%, rgba(247, 127, 0, 0.02) 0%, transparent 40%);
     }
 </style>
 
-<div class="row">
-    <div class="col-10 offset-1">
-        <div class="form-container">
-            <h2 class="form-title">Create a New Listing</h2>
-            <form method="post" action="/listings" class="needs-validation" novalidate enctype="multipart/form-data">
-                
-                <!-- Basic Info -->
-                <div class="section-title">Basic Information</div>
-                
+<div class="bg-pattern"></div>
+
+<div class="full-width-container">
+    <!-- Hero Header -->
+    <div class="page-header">
+        <i class="fas fa-home header-icon"></i>
+        <h1><i class="fas fa-plus-circle"></i> Create New Listing</h1>
+        <p>List your property and start hosting guests from around the world</p>
+    </div>
+
+    <form method="post" action="/listings" class="needs-validation" novalidate enctype="multipart/form-data">
+        
+        <!-- Section 1: Basic Information -->
+        <div class="form-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                <div class="section-title-group">
+                    <h3>Basic Information</h3>
+                    <p>Provide essential details about your property</p>
+                </div>
+            </div>
+            
+            <div class="two-column-grid">
                 <div class="mb-3">
-                    <label for="title" class="form-label">Title</label>
+                    <label for="title" class="form-label">Property Title</label>
                     <input type="text" name="listing[title]" placeholder="Add a catchy title" class="form-control" required>
                     <div class="valid-feedback">Looks good!</div>
                     <div class="invalid-feedback">Please enter a title</div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea name="listing[description]" placeholder="Enter Description" class="form-control" rows="4" required></textarea>
-                    <div class="invalid-feedback">Please enter a short description</div>
+                    <label for="category" class="form-label">Category</label>
+                    <select class="form-select" id="category" name="listing[category]">
+                        <option value="Rooms">Rooms</option>
+                        <option value="Trending">Trending</option>
+                        <option value="Iconic_Cities">Iconic Cities</option>
+                        <option value="Mountains">Mountains</option>
+                        <option value="Castles">Castles</option>
+                        <option value="Amazing_Pool">Amazing Pool</option>
+                        <option value="Camping">Camping</option>
+                        <option value="Farms">Farms</option>
+                        <option value="Arctic">Arctic</option>
+                        <option value="Domes">Domes</option>
+                        <option value="House_Boats">House Boats</option>
+                    </select>
                 </div>
+            </div>
 
-                <div class="row">
-                    <!-- Main Image -->
-                    <div class="mb-3 col-md-6">
-                        <label for="image" class="form-label">Main Image</label>
-                        <div class="image-upload-area">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Click to upload main image</p>
-                            <input type="file" name="listing[image]" class="form-control" required style="display: none;">
-                        </div>
-                    </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea name="listing[description]" placeholder="Describe your property in detail..." class="form-control" rows="4" required></textarea>
+                <div class="invalid-feedback">Please enter a description</div>
+            </div>
+        </div>
 
-                    <!-- Category -->
-                    <div class="mb-3 col-md-6">
-                        <label for="category" class="form-label">Category</label>
-                        <select class="form-select" id="category" name="listing[category]">
-                            <option value="Rooms">Rooms</option>
-                            <option value="Trending">Trending</option>
-                            <option value="Iconic_Cities">Iconic Cities</option>
-                            <option value="Mountains">Mountains</option>
-                            <option value="Castles">Castles</option>
-                            <option value="Amazing_Pool">Amazing Pool</option>
-                            <option value="Camping">Camping</option>
-                            <option value="Farms">Farms</option>
-                            <option value="Arctic">Arctic</option>
-                            <option value="Domes">Domes</option>
-                            <option value="House_Boats">House Boats</option>
-                        </select>
+        <!-- Section 2: Images -->
+        <div class="form-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-images"></i>
+                </div>
+                <div class="section-title-group">
+                    <h3>Property Images</h3>
+                    <p>Upload high-quality images to attract guests</p>
+                </div>
+            </div>
+            
+            <div class="image-upload-wrapper">
+                <!-- Main Image -->
+                <div class="mb-3">
+                    <label for="image" class="form-label">Main Image</label>
+                    <div class="image-upload-box" id="mainImageUploadArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Click to upload main image</p>
+                        <span class="browse-text">Browse Files</span>
+                        <input type="file" name="listing[image]" id="mainImageInput" class="form-control" required accept="image/*" style="display: none;">
+                        <div class="selected-filename" id="mainImageFilename"></div>
+                        <img id="mainImagePreview" class="image-preview" alt="Preview">
                     </div>
                 </div>
 
                 <!-- Additional Images -->
                 <div class="mb-3">
                     <label for="images" class="form-label">Additional Images (Optional)</label>
-                    <input type="file" name="listing[images]" class="form-control" multiple accept="image/*">
+                    <div class="image-upload-box" id="additionalImageUploadArea">
+                        <i class="fas fa-images"></i>
+                        <p>Upload additional photos</p>
+                        <span class="browse-text">Browse Files</span>
+                        <input type="file" name="listing[images]" id="additionalImagesInput" class="form-control" multiple accept="image/*" style="display: none;">
+                        <div class="selected-filename" id="additionalImageFilename"></div>
+                    </div>
                     <small class="text-muted">You can select multiple images</small>
                 </div>
-
-                <!-- Amenities -->
-                <div class="section-title">Amenities</div>
-                <div class="mb-3">
-                    <div class="amenities-container">
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-wifi" name="listing[amenities]" value="WiFi">
-                            <label for="amenity-wifi"><i class="fas fa-wifi"></i> WiFi</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-kitchen" name="listing[amenities]" value="Kitchen">
-                            <label for="amenity-kitchen"><i class="fas fa-utensils"></i> Kitchen</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-parking" name="listing[amenities]" value="Parking">
-                            <label for="amenity-parking"><i class="fas fa-parking"></i> Parking</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-pool" name="listing[amenities]" value="Pool">
-                            <label for="amenity-pool"><i class="fas fa-swimming-pool"></i> Pool</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-ac" name="listing[amenities]" value="Air Conditioning">
-                            <label for="amenity-ac"><i class="fas fa-snowflake"></i> AC</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-heating" name="listing[amenities]" value="Heating">
-                            <label for="amenity-heating"><i class="fas fa-fire"></i> Heating</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-washer" name="listing[amenities]" value="Washer">
-                            <label for="amenity-washer"><i class="fas fa-washer"></i> Washer</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-dryer" name="listing[amenities]" value="Dryer">
-                            <label for="amenity-dryer"><i class="fas fa-dryer"></i> Dryer</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-tv" name="listing[amenities]" value="TV">
-                            <label for="amenity-tv"><i class="fas fa-tv"></i> TV</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-gym" name="listing[amenities]" value="Gym">
-                            <label for="amenity-gym"><i class="fas fa-dumbbell"></i> Gym</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-hottub" name="listing[amenities]" value="Hot Tub">
-                            <label for="amenity-hottub"><i class="fas fa-hot-tub"></i> Hot Tub</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-pets" name="listing[amenities]" value="Pets Allowed">
-                            <label for="amenity-pets"><i class="fas fa-paw"></i> Pets</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-smoking" name="listing[amenities]" value="Smoking Allowed">
-                            <label for="amenity-smoking"><i class="fas fa-smoking"></i> Smoking</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-wheelchair" name="listing[amenities]" value="Wheelchair Accessible">
-                            <label for="amenity-wheelchair"><i class="fas fa-wheelchair"></i> Wheelchair</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-elevator" name="listing[amenities]" value="Elevator">
-                            <label for="amenity-elevator"><i class="fas fa-elevator"></i> Elevator</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-fireplace" name="listing[amenities]" value="Fireplace">
-                            <label for="amenity-fireplace"><i class="fas fa-fire-alt"></i> Fireplace</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-beachfront" name="listing[amenities]" value="Beachfront">
-                            <label for="amenity-beachfront"><i class="fas fa-umbrella-beach"></i> Beachfront</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-mountain" name="listing[amenities]" value="Mountain View">
-                            <label for="amenity-mountain"><i class="fas fa-mountain"></i> Mountain View</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-garden" name="listing[amenities]" value="Garden">
-                            <label for="amenity-garden"><i class="fas fa-leaf"></i> Garden</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-bbq" name="listing[amenities]" value="BBQ">
-                            <label for="amenity-bbq"><i class="fas fa-bacon"></i> BBQ</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-coffee" name="listing[amenities]" value="Coffee Maker">
-                            <label for="amenity-coffee"><i class="fas fa-coffee"></i> Coffee</label>
-                        </div>
-                        <div class="amenity-checkbox">
-                            <input type="checkbox" id="amenity-workspace" name="listing[amenities]" value="Workspace">
-                            <label for="amenity-workspace"><i class="fas fa-laptop"></i> Workspace</label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Location & Pricing -->
-                <div class="section-title">Location & Pricing</div>
-                <div class="row">
-                    <div class="mb-3 col-md-4">
-                        <label for="price" class="form-label">Price per night (₹)</label>
-                        <input type="number" name="listing[price]" placeholder="Enter Price" class="form-control" min="0" required>
-                        <div class="invalid-feedback">Price should be valid</div>
-                    </div>
-
-                    <div class="mb-3 col-md-4">
-                        <label for="country" class="form-label">Country</label>
-                        <input type="text" name="listing[country]" placeholder="Enter Country" class="form-control" required>
-                        <div class="invalid-feedback">Country name should be valid</div>
-                    </div>
-
-                    <div class="mb-3 col-md-4">
-                        <label for="location" class="form-label">Location</label>
-                        <input type="text" name="listing[location]" placeholder="Enter location" class="form-control" required>
-                        <div class="invalid-feedback">Location should be valid</div>
-                    </div>
-                </div>
-
-                <!-- Availability Settings -->
-                <div class="section-title">Availability Settings</div>
-                <div class="row">
-                    <div class="mb-3 col-md-4">
-                        <label class="form-label">Availability</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="available" name="listing[availability][available]" checked>
-                            <label class="form-check-label" for="available">Available for booking</label>
-                        </div>
-                    </div>
-                    <div class="mb-3 col-md-4">
-                        <label for="minNights" class="form-label">Min Nights</label>
-                        <input type="number" name="listing[availability][minNights]" class="form-control" value="1" min="1" max="365">
-                    </div>
-                    <div class="mb-3 col-md-4">
-                        <label for="maxNights" class="form-label">Max Nights</label>
-                        <input type="number" name="listing[availability][maxNights]" class="form-control" value="365" min="1" max="365">
-                    </div>
-                </div>
-
-                <button class="btn btn-primary submit-btn">Create Listing</button>
-                <br><br>
-            </form>
+            </div>
         </div>
-    </div>
+
+        <!-- Section 3: Location & Pricing -->
+        <div class="form-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="section-title-group">
+                    <h3>Location & Pricing</h3>
+                    <p>Set your location and nightly rate</p>
+                </div>
+            </div>
+            
+            <div class="three-column-grid">
+                <div class="mb-3">
+                    <label for="location" class="form-label">Location</label>
+                    <input type="text" name="listing[location]" placeholder="City, State" class="form-control" required>
+                    <div class="invalid-feedback">Location is required</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="country" class="form-label">Country</label>
+                    <input type="text" name="listing[country]" placeholder="Country" class="form-control" required>
+                    <div class="invalid-feedback">Country is required</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price per night</label>
+                    <div class="price-input-group">
+                        <span class="currency-symbol">₹</span>
+                        <input type="number" name="listing[price]" placeholder="0" class="form-control" min="0" required>
+                    </div>
+                    <div class="invalid-feedback">Price is required</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Amenities -->
+        <div class="form-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-concierge-bell"></i>
+                </div>
+                <div class="section-title-group">
+                    <h3>Amenities</h3>
+                    <p>Select the amenities available at your property</p>
+                </div>
+            </div>
+            
+            <div class="amenities-grid">
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-wifi" name="listing[amenities]" value="WiFi">
+                    <label for="amenity-wifi"><i class="fas fa-wifi"></i> WiFi</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-kitchen" name="listing[amenities]" value="Kitchen">
+                    <label for="amenity-kitchen"><i class="fas fa-utensils"></i> Kitchen</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-parking" name="listing[amenities]" value="Parking">
+                    <label for="amenity-parking"><i class="fas fa-parking"></i> Parking</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-pool" name="listing[amenities]" value="Pool">
+                    <label for="amenity-pool"><i class="fas fa-swimming-pool"></i> Pool</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-ac" name="listing[amenities]" value="Air Conditioning">
+                    <label for="amenity-ac"><i class="fas fa-snowflake"></i> Air Conditioning</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-heating" name="listing[amenities]" value="Heating">
+                    <label for="amenity-heating"><i class="fas fa-fire"></i> Heating</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-washer" name="listing[amenities]" value="Washer">
+                    <label for="amenity-washer"><i class="fas fa-washer"></i> Washer</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-dryer" name="listing[amenities]" value="Dryer">
+                    <label for="amenity-dryer"><i class="fas fa-dryer"></i> Dryer</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-tv" name="listing[amenities]" value="TV">
+                    <label for="amenity-tv"><i class="fas fa-tv"></i> TV</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-gym" name="listing[amenities]" value="Gym">
+                    <label for="amenity-gym"><i class="fas fa-dumbbell"></i> Gym</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-hottub" name="listing[amenities]" value="Hot Tub">
+                    <label for="amenity-hottub"><i class="fas fa-hot-tub"></i> Hot Tub</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-pets" name="listing[amenities]" value="Pets Allowed">
+                    <label for="amenity-pets"><i class="fas fa-paw"></i> Pets Allowed</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-smoking" name="listing[amenities]" value="Smoking Allowed">
+                    <label for="amenity-smoking"><i class="fas fa-smoking"></i> Smoking</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-wheelchair" name="listing[amenities]" value="Wheelchair Accessible">
+                    <label for="amenity-wheelchair"><i class="fas fa-wheelchair"></i> Wheelchair</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-elevator" name="listing[amenities]" value="Elevator">
+                    <label for="amenity-elevator"><i class="fas fa-elevator"></i> Elevator</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-fireplace" name="listing[amenities]" value="Fireplace">
+                    <label for="amenity-fireplace"><i class="fas fa-fire-alt"></i> Fireplace</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-beachfront" name="listing[amenities]" value="Beachfront">
+                    <label for="amenity-beachfront"><i class="fas fa-umbrella-beach"></i> Beachfront</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-mountain" name="listing[amenities]" value="Mountain View">
+                    <label for="amenity-mountain"><i class="fas fa-mountain"></i> Mountain View</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-garden" name="listing[amenities]" value="Garden">
+                    <label for="amenity-garden"><i class="fas fa-leaf"></i> Garden</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-bbq" name="listing[amenities]" value="BBQ">
+                    <label for="amenity-bbq"><i class="fas fa-bacon"></i> BBQ</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-coffee" name="listing[amenities]" value="Coffee Maker">
+                    <label for="amenity-coffee"><i class="fas fa-coffee"></i> Coffee Maker</label>
+                </div>
+                <div class="amenity-checkbox">
+                    <input type="checkbox" id="amenity-workspace" name="listing[amenities]" value="Workspace">
+                    <label for="amenity-workspace"><i class="fas fa-laptop"></i> Workspace</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Availability Settings -->
+        <div class="form-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="section-title-group">
+                    <h3>Availability Settings</h3>
+                    <p>Configure booking availability and restrictions</p>
+                </div>
+            </div>
+            
+            <div class="three-column-grid">
+                <div class="mb-3">
+                    <label class="form-label">Booking Status</label>
+                    <div class="availability-toggle">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="available" name="listing[availability][available]" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span>Available for booking</span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="minNights" class="form-label">Minimum Nights</label>
+                    <div class="night-input-group">
+                        <input type="number" name="listing[availability][minNights]" class="form-control" value="1" min="1" max="365">
+                        <span>nights</span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="maxNights" class="form-label">Maximum Nights</label>
+                    <div class="night-input-group">
+                        <input type="number" name="listing[availability][maxNights]" class="form-control" value="365" min="1" max="365">
+                        <span>nights</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="submit-btn-container">
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-plus-circle"></i> Create Listing
+            </button>
+        </div>
+    </form>
 </div>
+
+<script>
+    // Main Image Upload Functionality
+    const mainImageUploadArea = document.getElementById('mainImageUploadArea');
+    const mainImageInput = document.getElementById('mainImageInput');
+    const mainImageFilename = document.getElementById('mainImageFilename');
+    const mainImagePreview = document.getElementById('mainImagePreview');
+
+    if (mainImageUploadArea && mainImageInput) {
+        mainImageUploadArea.addEventListener('click', function() {
+            mainImageInput.click();
+        });
+
+        mainImageInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                mainImageFilename.textContent = `Selected: ${file.name}`;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    mainImagePreview.src = e.target.result;
+                    mainImagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+                
+                mainImageUploadArea.style.borderColor = '#D62828';
+                mainImageUploadArea.style.background = 'linear-gradient(145deg, #fff5f5, #ffeaea)';
+            }
+        });
+    }
+
+    // Additional Images Upload Functionality
+    const additionalImageUploadArea = document.getElementById('additionalImageUploadArea');
+    const additionalImagesInput = document.getElementById('additionalImagesInput');
+    const additionalImageFilename = document.getElementById('additionalImageFilename');
+
+    if (additionalImageUploadArea && additionalImagesInput) {
+        additionalImageUploadArea.addEventListener('click', function() {
+            additionalImagesInput.click();
+        });
+
+        additionalImagesInput.addEventListener('change', function() {
+            const files = this.files;
+            if (files.length > 0) {
+                const fileNames = Array.from(files).map(f => f.name).join(', ');
+                additionalImageFilename.textContent = `Selected: ${fileNames}`;
+                
+                additionalImageUploadArea.style.borderColor = '#D62828';
+                additionalImageUploadArea.style.background = 'linear-gradient(145deg, #fff5f5, #ffeaea)';
+            }
+        });
+    }
+
+    // Prevent form submission when clicking on upload areas
+    mainImageUploadArea.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+    
+    additionalImageUploadArea.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+</script>
