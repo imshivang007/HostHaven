@@ -1,3 +1,10 @@
+// Helper function to sanitize search input and prevent regex injection
+function sanitizeSearchInput(search) {
+    if (!search || typeof search !== 'string') return '';
+    // Escape special regex characters to treat search as literal string
+    return search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').trim();
+}
+
 const Listing = require("../models/listing");
 const ExpressError = require("../utils/ExpressError");
 const User = require("../models/user");
@@ -27,7 +34,11 @@ module.exports.index = async (req, res) => {
         if (priceRange !== "") {
             const [minPrice, maxPrice] = priceRange.split('-');
             if (maxPrice) {
-                query.price = { $gte: parseInt(minPrice), $lte: parseInt(maxPrice) };
+                const min = parseInt(minPrice);
+                const max = parseInt(maxPrice);
+                if (!isNaN(min) && !isNaN(max)) {
+                    query.price = { $gte: min, $lte: max };
+                }
             } else if (priceRange === '25000+') {
                 query.price = { $gte: 25000 };
             }
@@ -36,6 +47,20 @@ module.exports.index = async (req, res) => {
         // Amenities filter
         if (amenities !== "") {
             query.amenities = { $in: [amenities] };
+        }
+
+        // Use MongoDB text search for better performance and security
+        // Sanitize search input to prevent regex injection
+        const sanitizedSearch = sanitizeSearchInput(search);
+        
+        if (sanitizedSearch !== "") {
+            // Use $or with $regex for MongoDB query (sanitized)
+            query.$or = [
+                { title: { $regex: sanitizedSearch, $options: 'i' } },
+                { location: { $regex: sanitizedSearch, $options: 'i' } },
+                { country: { $regex: sanitizedSearch, $options: 'i' } },
+                { category: { $regex: sanitizedSearch, $options: 'i' } }
+            ];
         }
 
         // Build base query
@@ -51,23 +76,19 @@ module.exports.index = async (req, res) => {
         }
         
         // Execute query with pagination
-        totalItems = await Listing.countDocuments(query);
-        allListings = await baseQuery
-            .populate("owner")
-            .skip((page - 1) * ITEMS_PER_PAGE)
-            .limit(ITEMS_PER_PAGE);
-        
-        // Search (if provided)
-        if (search !== "") {
-            const searchRegex = new RegExp(search, 'i');
-            allListings = allListings.filter(listing => 
-                searchRegex.test(listing.title) ||
-                searchRegex.test(listing.location) ||
-                searchRegex.test(listing.country) ||
-                (listing.owner && searchRegex.test(listing.owner.username)) ||
-                searchRegex.test(listing.category)
-            );
-            totalItems = allListings.length;
+        // If there's a search query, we need to count properly
+        if (sanitizedSearch !== "") {
+            totalItems = await Listing.countDocuments(query);
+            allListings = await baseQuery
+                .populate("owner")
+                .skip((page - 1) * ITEMS_PER_PAGE)
+                .limit(ITEMS_PER_PAGE);
+        } else {
+            totalItems = await Listing.countDocuments(query);
+            allListings = await baseQuery
+                .populate("owner")
+                .skip((page - 1) * ITEMS_PER_PAGE)
+                .limit(ITEMS_PER_PAGE);
         }
 
         // Check wishlist status for each listing if user is logged in
@@ -91,7 +112,7 @@ module.exports.index = async (req, res) => {
             allListings, 
             totalPages, 
             currentPage: page, 
-            search, 
+            search: sanitizedSearch, 
             category
         });
     } catch (error) {
@@ -99,7 +120,8 @@ module.exports.index = async (req, res) => {
             req.flash("error", error.message);
             return res.redirect("/listings");
         }
-        req.flash("error", error.message);
+        console.error("Error fetching listings:", error);
+        req.flash("error", "Failed to load listings");
         return res.redirect("/listings");
     }
 };

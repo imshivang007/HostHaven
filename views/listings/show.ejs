@@ -1,865 +1,371 @@
 <% layout("/layouts/boilerplate") %>
 
 <style>
-    /* Hero Section Styles */
-    .hero-section {
-        position: relative;
-        margin-bottom: 2rem;
-    }
-    
-    .hero-image {
-        width: 100%;
-        height: 60vh;
-        object-fit: cover;
-        border-radius: 0;
-    }
-    
-    .hero-gallery {
-        display: grid;
-        grid-template-columns: 2fr 1fr 1fr;
-        gap: 8px;
-        height: 60vh;
-        border-radius: 0;
-        overflow: hidden;
-    }
-    
-    .hero-gallery .main-img {
-        grid-row: 1 / 3;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        cursor: pointer;
-        transition: transform 0.3s ease;
-    }
-    
-    .hero-gallery .main-img:hover {
-        transform: scale(1.02);
-    }
-    
-    .hero-gallery .side-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        cursor: pointer;
-        transition: transform 0.3s ease;
-    }
-    
-    .hero-gallery .side-img:hover {
-        transform: scale(1.05);
-    }
-    
-    .gallery-btn {
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
-        background: white;
-        border: none;
-        border-radius: 8px;
-        padding: 8px 16px;
-        font-weight: 600;
-        cursor: pointer;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        transition: all 0.3s ease;
-    }
-    
-    .gallery-btn:hover {
-        background: #f0f0f0;
-        transform: translateY(-2px);
-    }
-    
-    /* Wishlist Button */
-    .wishlist-btn {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        z-index: 100;
-        background: white;
-        border: none;
-        border-radius: 50%;
-        width: 48px;
-        height: 48px;
-        cursor: pointer;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .wishlist-btn:hover {
-        transform: scale(1.1);
-        box-shadow: 0 6px 20px rgba(214, 40, 40, 0.4);
-    }
-    
-    .wishlist-btn i {
-        color: #D62828;
-        font-size: 1.4rem;
-    }
-    
-    .wishlist-btn.in-wishlist i {
-        color: #D62828;
-    }
-    
-    /* Header Section */
-    .listing-header {
-        padding: 1.5rem 0;
-        border-bottom: 1px solid #eee;
-    }
-    
-    .listing-title {
-        font-size: 2rem;
-        font-weight: 700;
-        color: #222;
-        margin-bottom: 0.5rem;
-    }
-    
-    .listing-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-        align-items: center;
-        color: #444;
-    }
-    
-    .listing-meta-item {
-        display: flex;
-        align-items: center;
-        gap: 0.3rem;
-    }
-    
-    .listing-meta-item i {
-        color: #D62828;
-    }
-    
-    .rating-badge {
-        background: linear-gradient(135deg, #D62828, #F77F00);
-        color: white;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-    }
-    
-    /* Stats Row */
-    .stats-row {
-        display: flex;
-        gap: 2rem;
-        padding: 1rem 0;
-        margin: 1rem 0;
-        border-top: 1px solid #eee;
-        border-bottom: 1px solid #eee;
-    }
-    
-    .stat-item {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: #444;
-    }
-    
-    .stat-item i {
-        color: #003049;
-        font-size: 1.2rem;
-    }
-    
-    /* Booking Card */
-    .booking-card {
-        position: sticky;
-        top: 20px;
-        background: white;
-        border-radius: 20px;
-        padding: 1.5rem;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-        border: 1px solid #eee;
-    }
-    
-    .booking-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        margin-bottom: 1.5rem;
-    }
-    
-    .booking-price {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: #222;
-    }
-    
-    .booking-price span {
-        font-size: 1rem;
-        font-weight: 400;
-        color: #666;
-    }
-    
-    .price-details {
-        color: #666;
-        font-size: 0.9rem;
-    }
-    
-    .reserve-btn {
-        background: linear-gradient(135deg, #D62828, #F77F00) !important;
-        border: none !important;
-        border-radius: 12px;
-        padding: 1rem;
-        font-weight: 700;
-        font-size: 1.1rem;
-        transition: all 0.3s ease;
-        width: 100%;
-        color: white !important;
-    }
-    
-    .reserve-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(247, 127, 0, 0.4);
-    }
-    
-    .contact-btn {
-        border: 2px solid #003049 !important;
-        border-radius: 12px;
-        color: #003049 !important;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        width: 100%;
-    }
-    
-    .contact-btn:hover {
-        background: #003049 !important;
-        color: white !important;
-    }
-    
-    /* Host Card */
-    .host-card {
-        background: linear-gradient(135deg, #f8f9fa, #fff);
-        border-radius: 16px;
-        padding: 1.5rem;
-        border: 1px solid #eee;
-        margin-bottom: 2rem;
-    }
-    
-    .host-info {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-    
-    .host-avatar {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #D62828, #F77F00);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 1.5rem;
-        font-weight: 600;
-    }
-    
-    .host-details h4 {
-        margin: 0;
-        font-weight: 600;
-        color: #222;
-    }
-    
-    .host-details p {
-        margin: 0;
-        color: #666;
-        font-size: 0.9rem;
-    }
-    
-    /* Amenities Grid */
-    .amenities-section {
-        margin-bottom: 2rem;
-    }
-    
-    .amenities-title {
-        font-size: 1.4rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-        color: #222;
-    }
-    
-    .amenities-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 1rem;
-    }
-    
-    .amenity-item {
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-        padding: 0.8rem 1rem;
-        background: #f8f9fa;
-        border-radius: 12px;
-        transition: all 0.3s ease;
-    }
-    
-    .amenity-item:hover {
-        background: #EAE2B7;
-        transform: translateX(5px);
-    }
-    
-    .amenity-item i {
-        color: #D62828;
-        font-size: 1.1rem;
-        width: 24px;
-        text-align: center;
-    }
-    
-    /* Description */
-    .description-section {
-        margin-bottom: 2rem;
-        padding-bottom: 2rem;
-        border-bottom: 1px solid #eee;
-    }
-    
-    .description-text {
-        font-size: 1.05rem;
-        line-height: 1.8;
-        color: #444;
-    }
-    
-    /* Reviews Section */
-    .reviews-section {
-        margin-top: 2rem;
-    }
-    
-    .reviews-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1.5rem;
-    }
-    
-    .reviews-title {
-        font-size: 1.5rem;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-    
-    .reviews-title i {
-        color: #F77F00;
-    }
-    
-    .review-card {
-        background: white;
-        border: 1px solid #eee;
-        border-radius: 16px;
-        padding: 1.5rem;
-        margin-bottom: 1rem;
-        transition: all 0.3s ease;
-    }
-    
-    .review-card:hover {
-        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        transform: translateY(-2px);
-    }
-    
-    .review-header {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin-bottom: 1rem;
-    }
-    
-    .review-avatar {
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #003049, #006d92);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-weight: 600;
-    }
-    
-    .review-author {
-        font-weight: 600;
-        color: #222;
-    }
-    
-    .review-date {
-        font-size: 0.85rem;
-        color: #888;
-    }
-    
-    .review-comment {
-        color: #555;
-        line-height: 1.6;
-    }
-    
-    /* Forms */
-    .form-control {
-        border-radius: 12px;
-        border: 1px solid #ddd;
-        padding: 0.8rem 1rem;
-        transition: all 0.3s ease;
-    }
-    
-    .form-control:focus {
-        border-color: #003049;
-        box-shadow: 0 0 0 3px rgba(0, 48, 73, 0.15);
-    }
-    
-    .form-label {
-        font-weight: 600;
-        color: #222;
-        margin-bottom: 0.5rem;
-    }
-    
-    /* Availability Badge */
-    .availability-badge {
-        padding: 0.4rem 1rem;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        font-weight: 500;
-    }
-    
-    .availability-badge.available {
-        background: #d4edda;
-        color: #155724;
-    }
-    
-    .availability-badge.unavailable {
-        background: #f8d7da;
-        color: #721c24;
-    }
-    
-    /* Edit/Delete Buttons */
-    .edit-delete-btns {
-        display: flex;
-        gap: 1rem;
-        margin-top: 2rem;
-        padding-top: 2rem;
-        border-top: 1px solid #eee;
-    }
-    
-    .edit-delete-btns .btn {
-        border-radius: 12px;
-        padding: 0.6rem 1.5rem;
-        font-weight: 600;
-    }
-    
-    /* Star Rating */
-    .starability-slot {
-        margin: 0.5rem 0;
-    }
-    
-    /* Modal */
-    .modal-content {
-        border-radius: 16px;
-        border: none;
-    }
-    
-    .modal-header {
-        border-bottom: 1px solid #eee;
-        border-radius: 16px 16px 0 0;
-    }
-    
-    .modal-footer {
-        border-top: 1px solid #eee;
-    }
+    .page-wrapper { max-width: 100%; padding: 0; margin: 0; }
+    .full-width-container { max-width: 100%; padding: 0; margin: 0; background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%); }
+    
+    .page-header {
+        background: linear-gradient(135deg, #003049 0%, #1a5276 50%, #003049 100%);
+        padding: 2rem 3rem; margin: 0; border-radius: 0; position: relative; overflow: hidden;
+    }
+    .page-header::before {
+        content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/></svg>');
+        background-size: 200px 200px; opacity: 0.5;
+    }
+    .page-header h1 { color: white; font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; position: relative; z-index: 1; }
+    .page-header p { color: rgba(255,255,255,0.85); font-size: 1rem; position: relative; z-index: 1; }
+    
+    .form-section { background: white; border-radius: 20px; padding: 2rem; margin-bottom: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid #eee; transition: all 0.3s ease; }
+    .form-section:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.1); }
+    .section-header { display: flex; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid #f0f0f0; }
+    .section-icon { width: 50px; height: 50px; background: linear-gradient(135deg, #D62828 0%, #F77F00 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 1rem; color: white; font-size: 1.3rem; }
+    .section-title-group h3 { font-size: 1.4rem; font-weight: 700; color: #003049; margin: 0; }
+    .section-title-group p { font-size: 0.9rem; color: #666; margin: 0; }
+    
+    .hero-section { position: relative; margin-bottom: 2rem; }
+    .hero-image { width: 100%; height: 60vh; object-fit: cover; border-radius: 0; }
+    .hero-gallery { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4px; height: 60vh; border-radius: 0; overflow: hidden; background: #f0f0f0; }
+    .hero-gallery .main-img { grid-row: 1 / 3; width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: transform 0.3s ease; }
+    .hero-gallery .main-img:hover { transform: scale(1.02); }
+    .hero-gallery .side-img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: transform 0.3s ease; }
+    .hero-gallery .side-img:hover { transform: scale(1.05); }
+    .gallery-btn { position: absolute; bottom: 20px; right: 20px; background: white; border: none; border-radius: 8px; padding: 10px 20px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; }
+    .gallery-btn:hover { background: #f0f0f0; transform: translateY(-2px); }
+    
+    .wishlist-btn { position: absolute; top: 20px; right: 20px; z-index: 100; background: white; border: none; border-radius: 50%; width: 45px; height: 45px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; }
+    .wishlist-btn:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(214, 40, 40, 0.4); }
+    .wishlist-btn i { color: #D62828; font-size: 1.3rem; }
+    .wishlist-btn.in-wishlist i { color: #D62828; }
+    
+    .listing-title { font-size: 1.75rem; font-weight: 700; color: #003049; margin-bottom: 0.5rem; }
+    .listing-meta { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; color: #444; }
+    .listing-meta-item { display: flex; align-items: center; gap: 0.3rem; }
+    .listing-meta-item i { color: #D62828; }
+    .rating-badge { background: linear-gradient(135deg, #D62828, #F77F00); color: white; padding: 4px 12px; border-radius: 20px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+    
+    .stats-row { display: flex; gap: 2rem; padding: 1rem 0; margin: 1rem 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; }
+    .stat-item { display: flex; align-items: center; gap: 0.5rem; color: #444; }
+    .stat-item i { color: #003049; font-size: 1.1rem; }
+    
+    .booking-card { position: sticky; top: 20px; background: white; border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 32px rgba(0,0,0,0.12); border: 1px solid #eee; }
+    .booking-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem; }
+    .booking-price { font-size: 1.6rem; font-weight: 700; color: #003049; }
+    .booking-price span { font-size: 1rem; font-weight: 400; color: #666; }
+    .price-details { color: #666; font-size: 0.9rem; margin-bottom: 1rem; }
+    .reserve-btn { background: linear-gradient(135deg, #D62828, #F77F00) !important; border: none !important; border-radius: 50px; padding: 1rem; font-weight: 700; font-size: 1rem; transition: all 0.3s ease; width: 100%; color: white !important; }
+    .reserve-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(247, 127, 0, 0.4); }
+    .contact-btn { border: 2px solid #003049 !important; border-radius: 50px; color: #003049 !important; font-weight: 600; transition: all 0.3s ease; width: 100%; padding: 0.75rem 1rem; }
+    .contact-btn:hover { background: #003049 !important; color: white !important; }
+    
+    .host-card { background: linear-gradient(135deg, #f8f9fa, #fff); border-radius: 16px; padding: 1.25rem; border: 1px solid #eee; margin-bottom: 1.5rem; }
+    .host-info { display: flex; align-items: center; gap: 1rem; }
+    .host-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #D62828, #F77F00); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem; font-weight: 600; }
+    .host-details h4 { margin: 0; font-weight: 600; color: #003049; }
+    .host-details p { margin: 0; color: #666; font-size: 0.9rem; }
+    
+    .amenities-section { margin-bottom: 1.5rem; }
+    .amenities-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; color: #003049; }
+    .amenities-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.75rem; }
+    .amenity-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; background: linear-gradient(145deg, #fafafa, #f0f0f0); border-radius: 12px; transition: all 0.3s ease; }
+    .amenity-item:hover { background: #EAE2B7; transform: translateX(5px); }
+    .amenity-item i { color: #D62828; font-size: 1rem; width: 20px; text-align: center; }
+    .amenity-item span { font-size: 0.9rem; color: #003049; }
+    
+    .description-section { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #eee; }
+    .description-text { font-size: 1rem; line-height: 1.7; color: #444; }
+    
+    .reviews-section { margin-top: 1.5rem; }
+    .reviews-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .reviews-title { font-size: 1.4rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; color: #003049; }
+    .reviews-title i { color: #F77F00; }
+    .review-card { background: white; border: 1px solid #eee; border-radius: 16px; padding: 1.5rem; margin-bottom: 1rem; transition: all 0.3s ease; }
+    .review-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); transform: translateY(-2px); }
+    .review-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+    .review-avatar { width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(135deg, #003049, #006d92); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; }
+    .review-author { font-weight: 600; color: #003049; font-size: 0.95rem; }
+    .review-date { font-size: 0.8rem; color: #888; }
+    .review-rating { color: #F77F00; font-size: 0.85rem; }
+    .review-comment { color: #555; line-height: 1.6; font-size: 0.95rem; }
+    
+    .form-control { border-radius: 12px; border: 2px solid #e8e8e8; padding: 0.85rem 1.1rem; transition: all 0.3s ease; background: #fafafa; }
+    .form-control:focus { border-color: #003049; box-shadow: 0 0 0 4px rgba(0, 48, 73, 0.1); background: white; outline: none; }
+    .form-label { font-weight: 600; color: #003049; margin-bottom: 0.5rem; font-size: 0.95rem; }
+    
+    .review-form { background: linear-gradient(145deg, #f8f9fa, #fff); padding: 1.5rem; border-radius: 16px; margin-bottom: 1.5rem; border: 1px solid #eee; }
+    .review-form h4 { margin-bottom: 1rem; color: #003049; font-weight: 600; }
+    .review-form .form-control { border-radius: 12px; border: 2px solid #e8e8e8; padding: 0.85rem 1.1rem; }
+    .review-form .form-control:focus { border-color: #D62828; box-shadow: 0 0 0 4px rgba(214, 40, 40, 0.1); }
+    .review-form .btn { border-radius: 50px; padding: 0.75rem 2rem; font-weight: 600; }
+    .submit-review-btn { background: linear-gradient(135deg, #D62828, #F77F00); border: none; color: white; transition: all 0.3s ease; }
+    .submit-review-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(214, 40, 40, 0.4); }
+    .starability-slot { margin: 0.5rem 0; }
+    
+    .modal-content { border-radius: 16px; border: none; }
+    .modal-header { border-bottom: 1px solid #eee; border-radius: 16px 16px 0 0; }
+    .modal-footer { border-top: 1px solid #eee; }
+    
+    .availability-badge { padding: 0.35rem 0.85rem; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
+    .availability-badge.available { background: #d4edda; color: #155724; }
+    .availability-badge.unavailable { background: #f8d7da; color: #721c24; }
+    
+    .edit-delete-btns { display: flex; gap: 1rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #eee; }
+    .edit-delete-btns .btn { border-radius: 50px; padding: 0.6rem 1.5rem; font-weight: 600; }
+    
+    .thumbnail-container { display: flex; gap: 8px; padding: 0.75rem 0; overflow-x: auto; }
+    .thumbnail-container::-webkit-scrollbar { height: 6px; }
+    .thumbnail-container::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 3px; }
+    .thumbnail-container::-webkit-scrollbar-thumb { background: #D62828; border-radius: 3px; }
+    .thumbnail { width: 70px; height: 55px; object-fit: cover; border-radius: 8px; cursor: pointer; opacity: 0.6; transition: all 0.3s ease; flex-shrink: 0; border: 2px solid transparent; }
+    .thumbnail:hover, .thumbnail.active { opacity: 1; border-color: #D62828; box-shadow: 0 2px 8px rgba(214, 40, 40, 0.4); }
     
-    /* Responsive */
     @media (max-width: 992px) {
-        .hero-image, .hero-gallery {
-            height: 45vh;
-        }
-        
-        .booking-card {
-            position: relative;
-            margin-top: 2rem;
-        }
+        .hero-image, .hero-gallery { height: 45vh; }
+        .booking-card { position: relative; margin-top: 2rem; }
+        .page-header { padding: 1.5rem; }
     }
-    
     @media (max-width: 768px) {
-        .hero-gallery {
-            grid-template-columns: 1fr 1fr;
-            height: 40vh;
-        }
-        
-        .hero-gallery .main-img {
-            grid-row: 1;
-            grid-column: 1 / 3;
-        }
-        
-        .listing-title {
-            font-size: 1.5rem;
-        }
-        
-        .stats-row {
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        
-        .amenities-grid {
-            grid-template-columns: 1fr;
-        }
+        .hero-gallery { grid-template-columns: 1fr 1fr; height: 35vh; }
+        .hero-gallery .main-img { grid-row: 1; grid-column: 1 / 3; }
+        .hero-image { height: 30vh; }
+        .listing-title { font-size: 1.4rem; }
+        .stats-row { flex-wrap: wrap; gap: 0.75rem; }
+        .stat-item { font-size: 0.9rem; }
+        .amenities-grid { grid-template-columns: 1fr; }
+        .form-section { padding: 1.5rem; }
+        .reviews-title { font-size: 1.2rem; }
+        .host-info { flex-direction: column; text-align: center; }
+        .edit-delete-btns { flex-direction: column; }
+        .edit-delete-btns .btn { width: 100%; text-align: center; }
+        .page-header { padding: 1.5rem; }
+        .page-header h1 { font-size: 1.5rem; }
     }
     
-    /* Thumbnail Gallery */
-    .thumbnail-container {
-        display: flex;
-        gap: 8px;
-        padding: 1rem 0;
-        overflow-x: auto;
-    }
+    .bg-pattern { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; background-image: radial-gradient(circle at 20% 80%, rgba(214, 40, 40, 0.03) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(0, 48, 73, 0.03) 0%, transparent 50%), radial-gradient(circle at 40% 40%, rgba(247, 127, 0, 0.02) 0%, transparent 40%); }
     
-    .thumbnail {
-        width: 80px;
-        height: 60px;
-        object-fit: cover;
-        border-radius: 8px;
-        cursor: pointer;
-        opacity: 0.6;
-        transition: all 0.3s ease;
-        flex-shrink: 0;
-    }
-    
-    .thumbnail:hover, .thumbnail.active {
-        opacity: 1;
-        box-shadow: 0 2px 8px rgba(214, 40, 40, 0.4);
-    }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .form-section { animation: fadeInUp 0.5s ease forwards; }
 </style>
 
-<!-- Hero Section with Images -->
+<% 
+// Calculate host since year dynamically
+let hostSinceYear = new Date().getFullYear();
+if (listing.owner && listing.owner.createdAt) {
+    hostSinceYear = new Date(listing.owner.createdAt).getFullYear();
+}
+%>
+
+<div class="bg-pattern"></div>
+
+<% if(listing.title || listing.location) { %>
+<div class="page-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+    <div>
+        <% if(listing.title) { %><h1><%= listing.title %></h1><% } %>
+        <% if(listing.location) { %><p><i class="fas fa-map-marker-alt"></i> <%= listing.location %><% if(listing.country) { %>, <%= listing.country %><% } %></p><% } %>
+    </div>
+    <div class="d-flex align-items-center gap-3" style="z-index: 1;">
+        <a href="/listings" class="btn btn-sm" style="background: rgba(255,255,255,0.2); color: white; border-radius: 25px;">
+            <i class="fas fa-arrow-left"></i> Back to Listings
+        </a>
+    </div>
+</div>
+<% } %>
+
 <div class="hero-section">
     <% if(listing.images && listing.images.length > 0) { %>
         <div class="hero-gallery">
             <img src="<%= listing.images[0].url %>" class="main-img" alt="Main Image" onclick="openGallery(0)">
-            <% if(listing.images.length > 1) { %>
-                <img src="<%= listing.images[1].url %>" class="side-img" alt="Image 2" onclick="openGallery(1)">
-            <% } %>
-            <% if(listing.images.length > 2) { %>
-                <img src="<%= listing.images[2].url %>" class="side-img" alt="Image 3" onclick="openGallery(2)">
-            <% } %>
-            <% if(listing.images.length > 3) { %>
-                <img src="<%= listing.images[3].url %>" class="side-img" alt="Image 4" onclick="openGallery(3)">
-            <% } %>
+            <% if(listing.images.length > 1) { %><img src="<%= listing.images[1].url %>" class="side-img" alt="Image 2" onclick="openGallery(1)"><% } %>
+            <% if(listing.images.length > 2) { %><img src="<%= listing.images[2].url %>" class="side-img" alt="Image 3" onclick="openGallery(2)"><% } %>
+            <% if(listing.images.length > 3) { %><img src="<%= listing.images[3].url %>" class="side-img" alt="Image 4" onclick="openGallery(3)"><% } %>
         </div>
-        
-        <!-- Thumbnail Row -->
         <div class="thumbnail-container">
-            <% for(let i = 0; i < listing.images.length; i++) { %>
-                <img src="<%= listing.images[i].url %>" class="thumbnail <%= i === 0 ? 'active' : '' %>" 
-                     onclick="changeImage('<%= listing.images[i].url %>', this)" alt="Thumbnail <%= i + 1 %>">
-            <% } %>
+            <% for(let i = 0; i < listing.images.length; i++) { %><img src="<%= listing.images[i].url %>" class="thumbnail <%= i === 0 ? 'active' : '' %>" onclick="changeImage('<%= listing.images[i].url %>', this)" alt="Thumbnail <%= i + 1 %>"><% } %>
         </div>
-        
-        <% if(listing.images.length > 4) { %>
-            <button class="gallery-btn" onclick="openGallery(0)">
-                <i class="fas fa-images"></i> Show all <%= listing.images.length %> photos
-            </button>
-        <% } %>
-        
-    <% } else if(listing.image && listing.image.url) { %>
-        <img src="<%= listing.image.url %>" class="hero-image" alt="listing_image">
-    <% } else { %>
-        <img src="https://via.placeholder.com/1200x600" class="hero-image" alt="listing_image">
-    <% } %>
+        <% if(listing.images.length > 4) { %><button class="gallery-btn" onclick="openGallery(0)"><i class="fas fa-images"></i> Show all <%= listing.images.length %> photos</button><% } %>
+    <% } else if(listing.image && listing.image.url) { %><img src="<%= listing.image.url %>" class="hero-image" alt="listing_image"><% } else { %><img src="https://via.placeholder.com/1200x600" class="hero-image" alt="listing_image"><% } %>
     
-    <!-- Wishlist Button -->
     <% if(currUser) { %>
         <form action="/listings/<%= listing._id %>/wishlist" method="POST" style="position: relative;">
-            <button type="submit" class="wishlist-btn <%= typeof isInWishlist !== 'undefined' && isInWishlist ? 'in-wishlist' : '' %>" 
-                    title="<%= typeof isInWishlist !== 'undefined' && isInWishlist ? 'Remove from wishlist' : 'Add to wishlist' %>">
+            <button type="submit" class="wishlist-btn <%= typeof isInWishlist !== 'undefined' && isInWishlist ? 'in-wishlist' : '' %>" title="<%= typeof isInWishlist !== 'undefined' && isInWishlist ? 'Remove from wishlist' : 'Add to wishlist' %>">
                 <i class="<%= typeof isInWishlist !== 'undefined' && isInWishlist ? 'fas' : 'far' %> fa-heart"></i>
             </button>
         </form>
     <% } %>
 </div>
 
-<!-- Main Content -->
-<div class="container-fluid px-4">
-    <div class="row">
-        <!-- Left Column - Listing Details -->
-        <div class="col-lg-8">
-            <!-- Header -->
-            <div class="listing-header">
-                <h1 class="listing-title"><%= listing.title %></h1>
+<div class="full-width-container">
+    
+    <div class="container-fluid px-4" style="max-width: 1400px; margin: 0 auto;">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="form-section">
+                    <div class="stats-row" style="border: none; margin: 0; padding: 0;">
+                        <% if(listing.guests) { %><div class="stat-item"><i class="fas fa-users"></i><span><%= listing.guests %> guests</span></div><% } %>
+                        <% if(listing.bedrooms) { %><div class="stat-item"><i class="fas fa-bed"></i><span><%= listing.bedrooms %> bedrooms</span></div><% } %>
+                        <% if(listing.beds) { %><div class="stat-item"><i class="fas fa-bed"></i><span><%= listing.beds %> beds</span></div><% } %>
+                        <% if(listing.baths) { %><div class="stat-item"><i class="fas fa-bath"></i><span><%= listing.baths %> baths</span></div><% } %>
+                        <% if(listing.avgRating > 0) { %><div class="rating-badge"><i class="fas fa-star"></i><span><%= listing.avgRating.toFixed(1) %> · <%= listing.reviews.length %> reviews</span></div><% } %>
+                    </div>
+                </div>
                 
-                <div class="listing-meta">
-                    <div class="listing-meta-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span><%= listing.location %>, <%= listing.country %></span>
+                <div class="form-section">
+                    <div class="section-header" style="border: none; padding: 0; margin: 0;">
+                        <div class="section-icon"><i class="fas fa-user"></i></div>
+                        <div class="section-title-group">
+                            <h3>Hosted by <%= listing.owner ? listing.owner.username : 'Unknown' %></h3>
+                            <p>Host since <%= hostSinceYear %> · Superhost</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section description-section">
+                    <div class="section-header">
+                        <div class="section-icon"><i class="fas fa-info-circle"></i></div>
+                        <div class="section-title-group">
+                            <h3>About this place</h3>
+                            <p>What makes this place special</p>
+                        </div>
+                    </div>
+                    <p class="description-text"><%= listing.description %></p>
+                    <% if(listing.availability) { %>
+                        <div class="mt-3">
+                            <i class="fas fa-calendar-alt" style="color: #D62828;"></i>
+                            <strong>Min:</strong> <%= listing.availability.minNights %> nights · <strong>Max:</strong> <%= listing.availability.maxNights %> nights
+                            <% if(listing.availability.available) { %><span class="availability-badge available ms-2"><i class="fas fa-check"></i> Available</span><% } else { %><span class="availability-badge unavailable ms-2"><i class="fas fa-times"></i> Not Available</span><% } %>
+                        </div>
+                    <% } %>
+                </div>
+                
+                <% if(listing.amenities && listing.amenities.length > 0) { %>
+                    <div class="form-section amenities-section">
+                        <div class="section-header">
+                            <div class="section-icon"><i class="fas fa-concierge-bell"></i></div>
+                            <div class="section-title-group">
+                                <h3>What this place offers</h3>
+                                <p>Features and amenities</p>
+                            </div>
+                        </div>
+                        <div class="amenities-grid">
+                            <% for(let amenity of listing.amenities) { %><div class="amenity-item"><i class="fas fa-check-circle"></i><span><%= amenity %></span></div><% } %>
+                        </div>
+                    </div>
+                <% } %>
+                
+                <div class="form-section reviews-section">
+                    <div class="section-header">
+                        <div class="section-icon"><i class="fas fa-star"></i></div>
+                        <div class="section-title-group">
+                            <h3><%= listing.reviews.length %> Reviews</h3>
+                            <p>What guests say about their stay</p>
+                        </div>
                     </div>
                     
-                    <% if(listing.avgRating > 0) { %>
-                        <div class="rating-badge">
-                            <i class="fas fa-star"></i>
-                            <span><%= listing.avgRating.toFixed(1) %> · <%= listing.reviews.length %> reviews</span>
-                        </div>
-                    <% } %>
-                </div>
-                
-                <!-- Stats Row -->
-                <div class="stats-row">
-                    <% if(listing.guests) { %>
-                        <div class="stat-item">
-                            <i class="fas fa-users"></i>
-                            <span><%= listing.guests %> guests</span>
-                        </div>
-                    <% } %>
-                    <% if(listing.bedrooms) { %>
-                        <div class="stat-item">
-                            <i class="fas fa-bed"></i>
-                            <span><%= listing.bedrooms %> bedrooms</span>
-                        </div>
-                    <% } %>
-                    <% if(listing.beds) { %>
-                        <div class="stat-item">
-                            <i class="fas fa-bed"></i>
-                            <span><%= listing.beds %> beds</span>
-                        </div>
-                    <% } %>
-                    <% if(listing.baths) { %>
-                        <div class="stat-item">
-                            <i class="fas fa-bath"></i>
-                            <span><%= listing.baths %> baths</span>
-                        </div>
-                    <% } %>
-                </div>
-            </div>
-            
-            <!-- Host Card -->
-            <div class="host-card">
-                <div class="host-info">
-                    <div class="host-avatar">
-                        <%= listing.owner ? listing.owner.username.charAt(0).toUpperCase() : 'U' %>
-                    </div>
-                    <div class="host-details">
-                        <h4>Hosted by <%= listing.owner ? listing.owner.username : 'Unknown' %></h4>
-                        <p>Host since 2024 · Superhost</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Description -->
-            <div class="description-section">
-                <h3 class="mb-3">About this place</h3>
-                <p class="description-text"><%= listing.description %></p>
-                
-                <% if(listing.availability) { %>
-                    <div class="mt-3">
-                        <i class="fas fa-calendar-alt" style="color: #D62828;"></i>
-                        <strong>Min:</strong> <%= listing.availability.minNights %> nights · 
-                        <strong>Max:</strong> <%= listing.availability.maxNights %> nights
-                        <% if(listing.availability.available) { %>
-                            <span class="availability-badge available ms-2">
-                                <i class="fas fa-check"></i> Available
-                            </span>
-                        <% } else { %>
-                            <span class="availability-badge unavailable ms-2">
-                                <i class="fas fa-times"></i> Not Available
-                            </span>
-                        <% } %>
-                    </div>
-                <% } %>
-            </div>
-            
-            <!-- Amenities -->
-            <% if(listing.amenities && listing.amenities.length > 0) { %>
-                <div class="amenities-section">
-                    <h3 class="amenities-title">What this place offers</h3>
-                    <div class="amenities-grid">
-                        <% for(let amenity of listing.amenities) { %>
-                            <div class="amenity-item">
-                                <i class="fas fa-check-circle"></i>
-                                <span><%= amenity %></span>
-                            </div>
-                        <% } %>
-                    </div>
-                </div>
-            <% } %>
-            
-            <!-- Reviews Section -->
-            <div class="reviews-section">
-                <div class="reviews-header">
-                    <h3 class="reviews-title">
-                        <i class="fas fa-star"></i>
-                        <%= listing.reviews.length %> Reviews
-                    </h3>
-                </div>
-                
-                <% if(currUser) { %>
-                    <div class="review-form mb-4">
-                        <h4>Leave a Review</h4>
-                        <form action="/listings/<%= listing._id %>/reviews" method="POST" class="needs-validation" novalidate>
-                            <div class="mb-3">
-                                <label class="form-label">Rating</label>
-                                <fieldset class="starability-slot">
-                                    <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
-                                    <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-                                    <label for="first-rate1" title="Terrible">1 star</label>
-                                    <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-                                    <label for="first-rate2" title="Not good">2 stars</label>
-                                    <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-                                    <label for="first-rate3" title="Average">3 stars</label>
-                                    <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-                                    <label for="first-rate4" title="Very good">4 stars</label>
-                                    <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-                                    <label for="first-rate5" title="Amazing">5 stars</label>
-                                </fieldset>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Comments</label>
-                                <textarea name="review[comment]" id="comment" cols="30" rows="4" class="form-control" required placeholder="Share your experience..."></textarea>
-                                <div class="invalid-feedback">Please share your thoughts</div>
-                            </div>
-                            <button class="btn btn-primary">Submit Review</button>
-                        </form>
-                    </div>
-                <% } %>
-                
-                <% if(listing.reviews.length > 0) { %>
-                    <div class="reviews-list">
-                        <% for(review of listing.reviews) { %>
-                            <div class="review-card">
-                                <div class="review-header">
-                                    <div class="review-avatar">
-                                        <%= review.author.username.charAt(0).toUpperCase() %>
-                                    </div>
-                                    <div>
-                                        <div class="review-author">@<%= review.author.username %></div>
-                                        <div class="review-date"><%= new Date(review.createdAt).toLocaleDateString() %></div>
-                                    </div>
+                    <% if(currUser) { %>
+                        <div class="review-form">
+                            <h4><i class="fas fa-pen"></i> Leave a Review</h4>
+                            <form action="/listings/<%= listing._id %>/reviews" method="POST" class="needs-validation" novalidate>
+                                <div class="mb-3">
+                                    <label class="form-label">Rating</label>
+                                    <fieldset class="starability-slot">
+                                        <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+                                        <input type="radio" id="first-rate1" name="review[rating]" value="1" /><label for="first-rate1" title="Terrible">1 star</label>
+                                        <input type="radio" id="first-rate2" name="review[rating]" value="2" /><label for="first-rate2" title="Not good">2 stars</label>
+                                        <input type="radio" id="first-rate3" name="review[rating]" value="3" /><label for="first-rate3" title="Average">3 stars</label>
+                                        <input type="radio" id="first-rate4" name="review[rating]" value="4" /><label for="first-rate4" title="Very good">4 stars</label>
+                                        <input type="radio" id="first-rate5" name="review[rating]" value="5" /><label for="first-rate5" title="Amazing">5 stars</label>
+                                    </fieldset>
                                 </div>
-                                <div class="starability-result" data-rating="<%= review.rating %>"></div>
-                                <p class="review-comment mt-2"><%= review.comment %></p>
-                                <% if(currUser && review.author._id.equals(currUser._id)) { %>
-                                    <form method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="mt-2">
-                                        <button class="btn btn-sm btn-outline-danger">Delete</button>
-                                    </form>
-                                <% } %>
-                            </div>
-                        <% } %>
+                                <div class="mb-3">
+                                    <label class="form-label">Your Review</label>
+                                    <textarea name="review[comment]" id="comment" cols="30" rows="4" class="form-control" required placeholder="Share your experience at this place..."></textarea>
+                                    <div class="invalid-feedback">Please share your thoughts</div>
+                                </div>
+                                <button type="submit" class="btn submit-review-btn"><i class="fas fa-paper-plane"></i> Submit Review</button>
+                            </form>
+                        </div>
+                    <% } %>
+                    
+                    <% if(listing.reviews && listing.reviews.length > 0) { %>
+                        <div class="reviews-list">
+                            <% for(review of listing.reviews) { %>
+                                <div class="review-card">
+                                    <div class="review-header">
+                                        <div class="review-avatar"><%= review.author && review.author.username ? review.author.username.charAt(0).toUpperCase() : 'U' %></div>
+                                        <div>
+                                            <div class="review-author">@<%= review.author && review.author.username ? review.author.username : 'Unknown' %></div>
+                                            <div class="review-date">
+                                                <%= review.created ? new Date(review.created).toLocaleDateString() : 'Recently' %>
+                                                <% if(review.rating) { %><span class="review-rating"> · <i class="fas fa-star"></i> <%= review.rating %>/5</span><% } %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="review-comment"><%= review.comment %></p>
+                                    <% if(currUser && review.author && review.author._id && currUser._id && review.author._id.equals(currUser._id)) { %>
+                                        <form method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="mt-2"><button class="btn btn-sm btn-outline-danger">Delete Review</button></form>
+                                    <% } %>
+                                </div>
+                            <% } %>
+                        </div>
+                    <% } else { %>
+                        <div class="text-center py-4"><i class="fas fa-comments" style="font-size: 3rem; color: #ccc;"></i><p class="text-muted mt-2">No reviews yet. Be the first to review!</p></div>
+                    <% } %>
+                </div>
+                
+                <% if(currUser && listing.owner && listing.owner._id.equals(currUser._id)){ %>
+                    <div class="edit-delete-btns">
+                        <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark"><i class="fas fa-edit"></i> Edit Listing</a>
+                        <form method="post" action="/listings/<%= listing._id %>?_method=DELETE" class="d-inline"><button class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button></form>
                     </div>
-                <% } else { %>
-                    <p class="text-muted">No reviews yet. Be the first to review!</p>
                 <% } %>
             </div>
             
-            <!-- Edit/Delete for Owner -->
-            <% if(currUser && listing.owner && listing.owner._id.equals(currUser._id)){ %>
-                <div class="edit-delete-btns">
-                    <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark">
-                        <i class="fas fa-edit"></i> Edit Listing
-                    </a>
-                    <form method="post" action="/listings/<%= listing._id %>?_method=DELETE" class="d-inline">
-                        <button class="btn btn-danger">
-                            <i class="fas fa-trash"></i> Delete
-                        </button>
-                    </form>
-                </div>
-            <% } %>
-        </div>
-        
-        <!-- Right Column - Booking Card -->
-        <div class="col-lg-4">
-            <div class="booking-card">
-                <div class="booking-header">
-                    <div>
-                        <span class="booking-price">₹<%= listing.price ? listing.price.toLocaleString("en-IN") : 0 %></span>
-                        <span>/ night</span>
+            <div class="col-lg-4">
+                <div class="booking-card">
+                    <div class="booking-header">
+                        <div><span class="booking-price">₹<%= listing.price ? listing.price.toLocaleString("en-IN") : 0 %></span><span>/ night</span></div>
                     </div>
-                </div>
-                
-                <p class="price-details mb-3">
-                    <i class="fas fa-info-circle"></i> You won't be charged yet
-                </p>
-                
-                <% if(currUser && listing.owner && !listing.owner._id.equals(currUser._id) && listing.availability && listing.availability.available !== false) { %>
-                    <form action="/listings/<%= listing._id %>/book" method="POST" id="bookingForm">
-                        <div class="mb-3">
-                            <label class="form-label">Check-in</label>
-                            <input type="date" class="form-control" name="checkIn" required min="<%= new Date().toISOString().split('T')[0] %>">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Check-out</label>
-                            <input type="date" class="form-control" name="checkOut" required min="<%= new Date().toISOString().split('T')[0] %>">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Guests</label>
-                            <select class="form-control" name="guests">
-                                <% for(let i = 1; i <= (listing.guests || 10); i++) { %>
-                                    <option value="<%= i %>"><%= i %> <%= i === 1 ? 'guest' : 'guests' %></option>
-                                <% } %>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Your Name</label>
-                            <input type="text" class="form-control" name="guestName" required placeholder="Full name">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-control" name="guestEmail" required placeholder="your@email.com">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Phone</label>
-                            <input type="tel" class="form-control" name="guestPhone" required placeholder="Phone number">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Special Requests (optional)</label>
-                            <textarea class="form-control" name="specialRequests" rows="2" placeholder="Any special requests?"></textarea>
-                        </div>
-                        <button type="submit" class="btn reserve-btn">
-                            <i class="fas fa-calendar-check"></i> Reserve
-                        </button>
-                    </form>
+                    <p class="price-details mb-3"><i class="fas fa-info-circle"></i> You won't be charged yet</p>
                     
-                    <button class="btn contact-btn mt-3" data-bs-toggle="modal" data-bs-target="#contactModal">
-                        <i class="fas fa-envelope"></i> Contact Host
-                    </button>
-                <% } else if(!currUser) { %>
-                    <a href="/login" class="btn reserve-btn text-center">
-                        <i class="fas fa-sign-in-alt"></i> Login to Book
-                    </a>
-                <% } else if(listing.availability && listing.availability.available === false) { %>
-                    <div class="alert alert-danger text-center">
-                        <i class="fas fa-ban"></i> This listing is not available for booking
-                    </div>
-                <% } %>
-                
-                <div class="text-center mt-3">
-                    <small class="text-muted">
-                        <i class="fas fa-shield-alt"></i> Free cancellation up to 24h before check-in
-                    </small>
+                    <% if(currUser && listing.owner && !listing.owner._id.equals(currUser._id) && listing.availability && listing.availability.available !== false) { %>
+                        <form action="/listings/<%= listing._id %>/book" method="POST" id="bookingForm">
+                            <div class="mb-3"><label class="form-label">Check-in</label><input type="date" class="form-control" name="checkIn" required min="<%= new Date().toISOString().split('T')[0] %>"></div>
+                            <div class="mb-3"><label class="form-label">Check-out</label><input type="date" class="form-control" name="checkOut" required min="<%= new Date().toISOString().split('T')[0] %>"></div>
+                            <div class="mb-3"><label class="form-label">Guests</label><select class="form-control" name="guests"><% for(let i = 1; i <= (listing.guests || 10); i++) { %><option value="<%= i %>"><%= i %> <%= i === 1 ? 'guest' : 'guests' %></option><% } %></select></div>
+                            <div class="mb-3"><label class="form-label">Your Name</label><input type="text" class="form-control" name="guestName" required placeholder="Full name"></div>
+                            <div class="mb-3"><label class="form-label">Email</label><input type="email" class="form-control" name="guestEmail" required placeholder="your@email.com"></div>
+                            <div class="mb-3"><label class="form-label">Phone</label><input type="tel" class="form-control" name="guestPhone" required placeholder="Phone number"></div>
+                            <div class="mb-3"><label class="form-label">Special Requests (optional)</label><textarea class="form-control" name="specialRequests" rows="2" placeholder="Any special requests?"></textarea></div>
+                            <button type="submit" class="btn reserve-btn"><i class="fas fa-calendar-check"></i> Reserve</button>
+                        </form>
+                        <button class="btn contact-btn mt-3" data-bs-toggle="modal" data-bs-target="#contactModal"><i class="fas fa-envelope"></i> Contact Host</button>
+                    <% } else if(!currUser) { %>
+                        <a href="/login" class="btn reserve-btn text-center"><i class="fas fa-sign-in-alt"></i> Login to Book</a>
+                    <% } else if(listing.availability && listing.availability.available === false) { %>
+                        <div class="alert alert-danger text-center"><i class="fas fa-ban"></i> This listing is not available for booking</div>
+                    <% } %>
+                    
+                    <div class="text-center mt-3"><small class="text-muted"><i class="fas fa-shield-alt"></i> Free cancellation up to 24h before check-in</small></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Contact Host Modal -->
 <% if(currUser && listing.owner) { %>
 <div class="modal fade" id="contactModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">
-                    <i class="fas fa-envelope" style="color: #D62828;"></i> Contact Host
-                </h5>
+                <h5 class="modal-title"><i class="fas fa-envelope" style="color: #D62828;"></i> Contact Host</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="/messages/send" method="POST">
                 <input type="hidden" name="recipientId" value="<%= listing.owner._id %>">
                 <input type="hidden" name="listingId" value="<%= listing._id %>">
                 <div class="modal-body">
-                    <div class="form-group mb-3">
-                        <label>Subject</label>
-                        <input type="text" class="form-control" name="subject" placeholder="Inquiry about <%= listing.title %>" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Message</label>
-                        <textarea class="form-control" name="body" rows="4" placeholder="Write your message to the host..." required></textarea>
-                    </div>
+                    <div class="form-group mb-3"><label>Subject</label><input type="text" class="form-control" name="subject" placeholder="Inquiry about <%= listing.title %>" required></div>
+                    <div class="form-group"><label>Message</label><textarea class="form-control" name="body" rows="4" placeholder="Write your message to the host..." required></textarea></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -872,22 +378,14 @@
 <% } %>
 
 <script>
-    // Image Gallery
     function changeImage(url, thumbnail) {
         const mainImg = document.querySelector('.main-img');
-        if (mainImg) {
-            mainImg.src = url;
-        }
+        if (mainImg) mainImg.src = url;
         document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
         thumbnail.classList.add('active');
     }
+    function openGallery(index) { console.log('Open gallery at index:', index); }
     
-    function openGallery(index) {
-        // Could implement a lightbox here
-        console.log('Open gallery at index:', index);
-    }
-    
-    // Booking Form Validation
     const bookingForm = document.getElementById('bookingForm');
     if (bookingForm) {
         bookingForm.addEventListener('submit', function(e) {
@@ -895,18 +393,10 @@
             const checkOut = new Date(this.checkOut.value);
             const today = new Date();
             today.setHours(0, 0, 0, 0);
-            
-            if (checkIn < today) {
-                e.preventDefault();
-                alert('Check-in date cannot be in the past');
-                return;
-            }
-            
-            if (checkOut <= checkIn) {
-                e.preventDefault();
-                alert('Check-out must be after check-in');
-                return;
-            }
+            if (checkIn < today) { e.preventDefault(); alert('Check-in date cannot be in the past'); return; }
+            if (checkOut <= checkIn) { e.preventDefault(); alert('Check-out must be after check-in'); return; }
         });
     }
 </script>
+</parameter>
+</invoke>
