@@ -13,6 +13,9 @@ const ExpressError = require("./utils/ExpressError");
 const listingRouter = require("./routes/listing");
 const reviewRouter = require("./routes/review");
 const userRouter = require("./routes/user");
+const wishlistRouter = require("./routes/wishlist");
+const bookingRouter = require("./routes/booking");
+const messageRouter = require("./routes/message");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
@@ -175,6 +178,12 @@ app.use((req, res, next) => {
 
 app.get("/", (req, res) => { res.redirect("/listings"); });
 
+// New feature routes
+app.use("/", wishlistRouter);
+app.use("/", bookingRouter);
+app.use("/", messageRouter);
+
+// Existing routes
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);

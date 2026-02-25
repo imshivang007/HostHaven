@@ -1,0 +1,278 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+    .profile-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+    }
+    .profile-img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid white;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .nav-tabs .nav-link {
+        color: #495057;
+        font-weight: 500;
+    }
+    .nav-tabs .nav-link.active {
+        background-color: #fff;
+        border-color: #dee2e6 #dee2e6 #fff;
+        color: #667eea;
+    }
+    .stat-card {
+        background: white;
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+    .stat-number {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #667eea;
+    }
+    .listing-card {
+        transition: transform 0.2s;
+    }
+    .listing-card:hover {
+        transform: translateY(-5px);
+    }
+    .booking-card {
+        border-left: 4px solid #667eea;
+    }
+    .status-badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+    }
+    .status-confirmed { background: #d4edda; color: #155724; }
+    .status-pending { background: #fff3cd; color: #856404; }
+    .status-cancelled { background: #f8d7da; color: #721c24; }
+    .status-completed { background: #cce5ff; color: #004085; }
+</style>
+
+<div class="profile-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-3 text-center">
+                <% if(user.profileImage && user.profileImage.url) { %>
+                    <img src="<%= user.profileImage.url %>" alt="Profile" class="profile-img">
+                <% } else { %>
+                    <img src="https://via.placeholder.com/150" alt="Profile" class="profile-img">
+                <% } %>
+            </div>
+            <div class="col-md-9">
+                <h1><%= user.username %></h1>
+                <p class="mb-1"><i class="fas fa-envelope"></i> <%= user.email %></p>
+                <% if(user.bio) { %>
+                    <p class="mb-0"><%= user.bio %></p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Stats -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="stat-number"><%= listings.length %></div>
+                <div>Listings</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="stat-number"><%= bookings.length %></div>
+                <div>Bookings</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="stat-number"><%= wishlistCount %></div>
+                <div>Wishlist</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="stat-number"><%= reviews.length %></div>
+                <div>Reviews</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="listings-tab" data-bs-toggle="tab" href="#listings" role="tab">My Listings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="bookings-tab" data-bs-toggle="tab" href="#bookings" role="tab">My Bookings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="wishlist-tab" data-bs-toggle="tab" href="#wishlist" role="tab">Wishlist</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="reviews-tab" data-bs-toggle="tab" href="#reviews" role="tab">Reviews</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="edit-tab" data-bs-toggle="tab" href="#edit" role="tab">Edit Profile</a>
+        </li>
+    </ul>
+
+    <div class="tab-content p-4 bg-white border border-top-0 rounded-bottom">
+        <!-- My Listings -->
+        <div class="tab-pane fade show active" id="listings" role="tabpanel">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4>My Listings</h4>
+                <a href="/listings/new" class="btn btn-primary">Add New Listing</a>
+            </div>
+            <% if(listings.length > 0) { %>
+                <div class="row">
+                    <% for(let listing of listings) { %>
+                        <% if(listing && listing.image) { %>
+                        <div class="col-md-4 mb-3">
+                            <div class="card listing-card h-100">
+                                <img src="<%= listing.image.url %>" class="card-img-top" alt="listing" style="height: 200px;">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= listing.title %></h5>
+                                    <p class="card-text text-muted"><%= listing.location %></p>
+                                    <p class="card-text"><strong>₹<%= listing.price ? listing.price.toLocaleString() : 0 %></strong> / night</p>
+                                    <a href="/listings/<%= listing._id %>" class="btn btn-sm btn-outline-primary">View</a>
+                                    <a href="/listings/<%= listing._id %>/edit" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                    <% } %>
+                </div>
+            <% } else { %>
+                <p class="text-muted">You haven't created any listings yet.</p>
+            <% } %>
+        </div>
+
+        <!-- My Bookings -->
+        <div class="tab-pane fade" id="bookings" role="tabpanel">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4>My Bookings</h4>
+                <a href="/my-bookings" class="btn btn-link">View All</a>
+            </div>
+            <% if(bookings.length > 0) { %>
+                <% for(let booking of bookings) { %>
+                    <% if(booking && booking.listing && booking.listing.image) { %>
+                    <div class="card mb-3 booking-card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <img src="<%= booking.listing.image.url %>" alt="listing" style="width: 100%; height: 100px; object-fit: cover;">
+                                </div>
+                                <div class="col-md-6">
+                                    <h5><%= booking.listing.title %></h5>
+                                    <p class="mb-1">
+                                        <i class="fas fa-calendar"></i> 
+                                        <%= new Date(booking.checkIn).toLocaleDateString() %> - 
+                                        <%= new Date(booking.checkOut).toLocaleDateString() %>
+                                    </p>
+                                    <p class="mb-0"><i class="fas fa-users"></i> <%= booking.guests %> guests</p>
+                                </div>
+                                <div class="col-md-3 text-right">
+                                    <span class="status-badge status-<%= booking.status %>"><%= booking.status %></span>
+                                    <p class="mt-2"><strong>₹<%= booking.totalPrice ? booking.totalPrice.toLocaleString() : 0 %></strong></p>
+                                    <a href="/bookings/<%= booking._id %>" class="btn btn-sm btn-outline-primary">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                <% } %>
+            <% } else { %>
+                <p class="text-muted">You haven't made any bookings yet.</p>
+            <% } %>
+        </div>
+
+        <!-- Wishlist -->
+        <div class="tab-pane fade" id="wishlist" role="tabpanel">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4>My Wishlist</h4>
+                <a href="/my-wishlist" class="btn btn-link">View All</a>
+            </div>
+            <% if(wishlistCount > 0) { %>
+                <p>You have <%= wishlistCount %> listings in your wishlist.</p>
+            <% } else { %>
+                <p class="text-muted">Your wishlist is empty. Start adding listings you like!</p>
+            <% } %>
+        </div>
+
+        <!-- Reviews -->
+        <div class="tab-pane fade" id="reviews" role="tabpanel">
+            <h4 class="mb-3">My Reviews</h4>
+            <% if(reviews.length > 0) { %>
+                <% for(let review of reviews) { %>
+                    <% if(review.listing && review.listing.image) { %>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="<%= review.listing.image.url %>" alt="listing" style="width: 100%; height: 80px; object-fit: cover;">
+                                </div>
+                                <div class="col-md-10">
+                                    <h6><%= review.listing.title %></h6>
+                                    <p class="starability-result" data-rating="<%= review.rating %>"></p>
+                                    <p class="mb-0"><%= review.comment %></p>
+                                    <small class="text-muted"><%= new Date(review.createdAt).toLocaleDateString() %></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                <% } %>
+            <% } else { %>
+                <p class="text-muted">You haven't written any reviews yet.</p>
+            <% } %>
+        </div>
+
+        <!-- Edit Profile -->
+        <div class="tab-pane fade" id="edit" role="tabpanel">
+            <h4 class="mb-3">Edit Profile</h4>
+            <form action="/profile?_method=PUT" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" value="<%= user.username %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" value="<%= user.email %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="bio">Bio</label>
+                    <textarea class="form-control" id="bio" name="bio" rows="4" maxlength="500"><%= user.bio || '' %></textarea>
+                    <small class="text-muted">Max 500 characters</small>
+                </div>
+                <div class="form-group">
+                    <label for="profileImage">Profile Image</label>
+                    <input type="file" class="form-control-file" id="profileImage" name="profileImage" accept="image/*">
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Enable Bootstrap 5 tabs
+    document.addEventListener('DOMContentLoaded', function() {
+        const triggerTabList = document.querySelectorAll('#profileTabs a');
+        triggerTabList.forEach(function(triggerEl) {
+            const tabTrigger = new bootstrap.Tab(triggerEl);
+            triggerEl.addEventListener('click', function(event) {
+                event.preventDefault();
+                tabTrigger.show();
+            });
+        });
+    });
+</script>

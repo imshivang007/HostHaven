@@ -1,0 +1,73 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+    .wishlist-card {
+        transition: transform 0.2s;
+    }
+    .wishlist-card:hover {
+        transform: translateY(-5px);
+    }
+    .remove-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 100;
+        background: white;
+        border: none;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    .remove-btn:hover {
+        background: #dc3545;
+        color: white;
+    }
+</style>
+
+<div class="container mt-4">
+    <h2 class="mb-4"><i class="fas fa-heart text-danger"></i> My Wishlist</h2>
+    
+    <% if(listings.length > 0) { %>
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+            <% for(let listing of listings) { %>
+                <div class="col mb-4">
+                    <div class="card wishlist-card h-100">
+                        <!-- Remove Button -->
+                        <form action="/listings/<%= listing._id %>/wishlist/remove" method="POST">
+                            <button type="submit" class="remove-btn" title="Remove from wishlist">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </form>
+                        
+                        <a href="/listings/<%= listing._id %>">
+                            <img src="<%= listing.image.url %>" class="card-img-top" alt="listing" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= listing.title %></h5>
+                                <p class="card-text text-muted">
+                                    <i class="fas fa-map-marker-alt"></i> <%= listing.location %>, <%= listing.country %>
+                                </p>
+                                <p class="card-text">
+                                    <strong>₹<%= listing.price ? listing.price.toLocaleString() : 0 %></strong> / night
+                                </p>
+                                <% if(listing.avgRating > 0) { %>
+                                    <small class="text-muted">
+                                        <i class="fas fa-star text-warning"></i> <%= listing.avgRating.toFixed(1) %> (<%= listing.reviews.length %> reviews)
+                                    </small>
+                                <% } %>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    <% } else { %>
+        <div class="text-center py-5">
+            <i class="fas fa-heart-broken fa-4x text-muted mb-3"></i>
+            <h4>Your wishlist is empty</h4>
+            <p class="text-muted">Start adding listings you like to your wishlist!</p>
+            <a href="/listings" class="btn btn-primary">Browse Listings</a>
+        </div>
+    <% } %>
+</div>

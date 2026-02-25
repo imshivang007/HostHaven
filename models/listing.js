@@ -3,50 +3,77 @@ const Schema = mongoose.Schema;
 const Review = require("./review");
 
 const listingSchema = new Schema({
-    title:{
-        type:String,
-        required:true,
+    title: {
+        type: String,
+        required: true,
     },
-    description:{
-        type:String
+    description: {
+        type: String
     },
-    image:{
-        url:String,
-        filename:String
+    image: {
+        url: String,
+        filename: String
     },
-    price:{
-        type:Number
-    },
-    location:{
-        type:String
-    },
-    country:{
-        type:String 
-    },
-    reviews:[{
-        type:Schema.Types.ObjectId,
-        ref:"Review"
+    // Multiple images for gallery
+    images: [{
+        url: String,
+        filename: String
     }],
-    owner:{
-        type:Schema.Types.ObjectId,
-        ref:"User"
+    price: {
+        type: Number
     },
-    // geometry:{
-    //     type: {
-    //         type: String, // Don't do `{ location: { type: String } }`
-    //         enum: ['Point'], // 'location.type' must be 'Point'
-    //         required: true
-    //     },
-    //         coordinates: {
-    //         type: [Number],
-    //         required: true
-    //     }
-    // },
-
-category:{
-    type:String,
-    enum:['Trending', 'Rooms', 'Iconic_Cities', 'Mountains', 'Castles', 'Amazing_Pool', 'Camping', 'Farms', 'Arctic', 'Domes', 'House_Boats']
-}
+    location: {
+        type: String
+    },
+    country: {
+        type: String
+    },
+    reviews: [{
+        type: Schema.Types.ObjectId,
+        ref: "Review"
+    }],
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    },
+    
+    category: {
+        type: String,
+        enum: ['Trending', 'Rooms', 'Iconic_Cities', 'Mountains', 'Castles', 'Amazing_Pool', 'Camping', 'Farms', 'Arctic', 'Domes', 'House_Boats']
+    },
+    
+    // Amenities array
+    amenities: [{
+        type: String,
+        enum: ['WiFi', 'Kitchen', 'Parking', 'Pool', 'Air Conditioning', 'Heating', 'Washer', 'Dryer', 
+               'TV', 'Gym', 'Hot Tub', 'Pets Allowed', 'Smoking Allowed', 'Wheelchair Accessible',
+               'Elevator', 'Fireplace', 'Beachfront', 'Lakefront', 'Mountain View', 'City View',
+               'Garden', 'BBQ', 'Coffee Maker', 'Microwave', 'Refrigerator', 'Dishwasher', 'Iron',
+               'Hair Dryer', 'Workspace', 'EV Charger', 'Security Cameras', 'Doorman']
+    }],
+    
+    // Availability settings
+    availability: {
+        available: { type: Boolean, default: true },
+        minNights: { type: Number, default: 1 },
+        maxNights: { type: Number, default: 365 },
+        unavailableDates: [{
+            start: Date,
+            end: Date
+        }]
+    },
+    
+    // Cached average rating
+    avgRating: {
+        type: Number,
+        default: 0
+    },
+    
+    // Booking count
+    bookingCount: {
+        type: Number,
+        default: 0
+    }
     
 });
 

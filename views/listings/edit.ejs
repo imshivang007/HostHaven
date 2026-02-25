@@ -1,96 +1,226 @@
 <% layout("/layouts/boilerplate") %>
-<div class="row ">
-    <div class="col-8 offset-2" >
-    <br><br>
-    <h3>Edit your listing</h3>
-    <form method="post" action="/listings/<%= listing._id %>?_method=PUT" class="needs-validation" novalidate enctype="multipart/form-data">
-        <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text"  name="listing[title]" value="<%= listing.title %>" class="form-control" required>
-            <div class="valid-feedback">
-                Looks good!
-            </div>
-            <div class="invalid-feedback">
-                Please enter a title
-            </div>
-        </div>
-        
-        
-        <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea name="listing[description]" value="<%= listing.description %>" class="form-control" required><%=listing.description %></textarea>
-            <div class="valid-feedback">
-                Looks good!
-            </div>
-            <div class="invalid-feedback">
-                Please enter a short description
-            </div>
-        </div>
-        
-        <div class="mb-3">
-            <p class="mb-0">Original Listing image</p>
-            <img src="<%= originalImageUrl %>" alt="listing_image" width="250">
-        </div>
-        <div class="row">
-            <div class="mb-3 col-md-8">
-                <label for="image" class="form-label">Upload New Image </label>
-                <input type="file" name="listing[image]"  class="form-control">
-            </div>
-            <div class="mb-3 col-md-4">
-                <label for="category" class="form-label">Category</label>
-                <select class="form-select" id="category" name="listing[category]">
-                    <option selected>Rooms</option>
-                    <option value="Iconic_Cities">Iconic Cities</option>
-                    <option value="Mountains">Mountains</option>
-                    <option value="Castles">Castles</option>
-                    <option value="Amazing_Pool">Amazing Pool</option>
-                    <option value="Camping">Camping</option>
-                    <option value="Farms">Farms</option>
-                    <option value="Arctic">Arctic</option>
-                    <option value="Domes">Domes</option>
-                    <option value="House_Boats">House Boats</option>
-                </select>
-            </div>
-        </div>        
+
+<style>
+    .amenity-checkbox {
+        display: inline-block;
+        margin: 5px;
+    }
+    .amenity-checkbox label {
+        display: inline-block;
+        padding: 8px 15px;
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .amenity-checkbox input:checked + label {
+        background: #667eea;
+        color: white;
+        border-color: #667eea;
+    }
+    .amenity-checkbox input {
+        display: none;
+    }
+</style>
+
 <div class="row">
-
-    <div class="mb-3 col-md-4">
-        <label for="price" class="form-label">Price</label>
-        <input type="number" name="listing[price]" value="<%= listing.price %>" class="form-control" required>
-        <div class="valid-feedback">
-            Looks good!
-        </div>
-        <div class="invalid-feedback">
-            Price should be valid
-        </div>
-    </div>    
-    <div class="mb-3 col-md-8">
-        <label for="country" class="form-label">Country</label>
-        <input type="text" name="listing[country]" value="<%= listing.country %>" class="form-control" required>
-        <div class="valid-feedback">
-            Looks good!
-        </div>
-        <div class="invalid-feedback">
-            Country name should be valid
-        </div>
-    </div>
-</div>
-
-
-    <div class="mb-3">
-        <label for="location" class="form-label">Location</label>
-        <input type="text" name="listing[location]" value="<%= listing.location %>" class="form-control" required>
-        <div class="valid-feedback">
-            Looks good!
-        </div>
-        <div class="invalid-feedback">
-            Location should be valid
-        </div>
-    </div>
-        
-        
-        <button class="btn btn-dark edit-btn">EDIT</button>
+    <div class="col-8 offset-2">
         <br><br>
-    </form>
-</div>
+        <h3>Edit your listing</h3>
+        <form method="post" action="/listings/<%= listing._id %>?_method=PUT" class="needs-validation" novalidate enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" name="listing[title]" value="<%= listing.title %>" class="form-control" required>
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please enter a title</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea name="listing[description]" class="form-control" rows="4" required><%= listing.description %></textarea>
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please enter a short description</div>
+            </div>
+
+            <!-- Original Image -->
+            <div class="mb-3">
+                <p class="mb-0">Original Listing image</p>
+                <img src="<%= originalImageUrl %>" alt="listing_image" width="250">
+            </div>
+
+            <div class="row">
+                <!-- Main Image -->
+                <div class="mb-3 col-md-6">
+                    <label for="image" class="form-label">Upload New Image</label>
+                    <input type="file" name="listing[image]" class="form-control">
+                </div>
+
+                <!-- Category -->
+                <div class="mb-3 col-md-6">
+                    <label for="category" class="form-label">Category</label>
+                    <select class="form-select" id="category" name="listing[category]">
+                        <option value="Rooms" <%= listing.category === 'Rooms' ? 'selected' : '' %>>Rooms</option>
+                        <option value="Trending" <%= listing.category === 'Trending' ? 'selected' : '' %>>Trending</option>
+                        <option value="Iconic_Cities" <%= listing.category === 'Iconic_Cities' ? 'selected' : '' %>>Iconic Cities</option>
+                        <option value="Mountains" <%= listing.category === 'Mountains' ? 'selected' : '' %>>Mountains</option>
+                        <option value="Castles" <%= listing.category === 'Castles' ? 'selected' : '' %>>Castles</option>
+                        <option value="Amazing_Pool" <%= listing.category === 'Amazing_Pool' ? 'selected' : '' %>>Amazing Pool</option>
+                        <option value="Camping" <%= listing.category === 'Camping' ? 'selected' : '' %>>Camping</option>
+                        <option value="Farms" <%= listing.category === 'Farms' ? 'selected' : '' %>>Farms</option>
+                        <option value="Arctic" <%= listing.category === 'Arctic' ? 'selected' : '' %>>Arctic</option>
+                        <option value="Domes" <%= listing.category === 'Domes' ? 'selected' : '' %>>Domes</option>
+                        <option value="House_Boats" <%= listing.category === 'House_Boats' ? 'selected' : '' %>>House Boats</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Multiple Images -->
+            <div class="mb-3">
+                <label for="images" class="form-label">Additional Images (Optional)</label>
+                <input type="file" name="listing[images]" class="form-control" multiple accept="image/*">
+                <small class="text-muted">You can select multiple images</small>
+            </div>
+
+            <!-- Amenities -->
+            <div class="mb-3">
+                <label class="form-label">Amenities</label>
+                <div class="amenities-container">
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-wifi" name="listing[amenities]" value="WiFi" <%= listing.amenities && listing.amenities.includes('WiFi') ? 'checked' : '' %>>
+                        <label for="amenity-wifi"><i class="fas fa-wifi"></i> WiFi</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-kitchen" name="listing[amenities]" value="Kitchen" <%= listing.amenities && listing.amenities.includes('Kitchen') ? 'checked' : '' %>>
+                        <label for="amenity-kitchen"><i class="fas fa-utensils"></i> Kitchen</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-parking" name="listing[amenities]" value="Parking" <%= listing.amenities && listing.amenities.includes('Parking') ? 'checked' : '' %>>
+                        <label for="amenity-parking"><i class="fas fa-parking"></i> Parking</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-pool" name="listing[amenities]" value="Pool" <%= listing.amenities && listing.amenities.includes('Pool') ? 'checked' : '' %>>
+                        <label for="amenity-pool"><i class="fas fa-swimming-pool"></i> Pool</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-ac" name="listing[amenities]" value="Air Conditioning" <%= listing.amenities && listing.amenities.includes('Air Conditioning') ? 'checked' : '' %>>
+                        <label for="amenity-ac"><i class="fas fa-snowflake"></i> AC</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-heating" name="listing[amenities]" value="Heating" <%= listing.amenities && listing.amenities.includes('Heating') ? 'checked' : '' %>>
+                        <label for="amenity-heating"><i class="fas fa-fire"></i> Heating</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-washer" name="listing[amenities]" value="Washer" <%= listing.amenities && listing.amenities.includes('Washer') ? 'checked' : '' %>>
+                        <label for="amenity-washer"><i class="fas fa-washer"></i> Washer</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-dryer" name="listing[amenities]" value="Dryer" <%= listing.amenities && listing.amenities.includes('Dryer') ? 'checked' : '' %>>
+                        <label for="amenity-dryer"><i class="fas fa-dryer"></i> Dryer</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-tv" name="listing[amenities]" value="TV" <%= listing.amenities && listing.amenities.includes('TV') ? 'checked' : '' %>>
+                        <label for="amenity-tv"><i class="fas fa-tv"></i> TV</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-gym" name="listing[amenities]" value="Gym" <%= listing.amenities && listing.amenities.includes('Gym') ? 'checked' : '' %>>
+                        <label for="amenity-gym"><i class="fas fa-dumbbell"></i> Gym</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-hottub" name="listing[amenities]" value="Hot Tub" <%= listing.amenities && listing.amenities.includes('Hot Tub') ? 'checked' : '' %>>
+                        <label for="amenity-hottub"><i class="fas fa-hot-tub"></i> Hot Tub</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-pets" name="listing[amenities]" value="Pets Allowed" <%= listing.amenities && listing.amenities.includes('Pets Allowed') ? 'checked' : '' %>>
+                        <label for="amenity-pets"><i class="fas fa-paw"></i> Pets</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-smoking" name="listing[amenities]" value="Smoking Allowed" <%= listing.amenities && listing.amenities.includes('Smoking Allowed') ? 'checked' : '' %>>
+                        <label for="amenity-smoking"><i class="fas fa-smoking"></i> Smoking</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-wheelchair" name="listing[amenities]" value="Wheelchair Accessible" <%= listing.amenities && listing.amenities.includes('Wheelchair Accessible') ? 'checked' : '' %>>
+                        <label for="amenity-wheelchair"><i class="fas fa-wheelchair"></i> Wheelchair</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-elevator" name="listing[amenities]" value="Elevator" <%= listing.amenities && listing.amenities.includes('Elevator') ? 'checked' : '' %>>
+                        <label for="amenity-elevator"><i class="fas fa-elevator"></i> Elevator</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-fireplace" name="listing[amenities]" value="Fireplace" <%= listing.amenities && listing.amenities.includes('Fireplace') ? 'checked' : '' %>>
+                        <label for="amenity-fireplace"><i class="fas fa-fire-alt"></i> Fireplace</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-beachfront" name="listing[amenities]" value="Beachfront" <%= listing.amenities && listing.amenities.includes('Beachfront') ? 'checked' : '' %>>
+                        <label for="amenity-beachfront"><i class="fas fa-umbrella-beach"></i> Beachfront</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-mountain" name="listing[amenities]" value="Mountain View" <%= listing.amenities && listing.amenities.includes('Mountain View') ? 'checked' : '' %>>
+                        <label for="amenity-mountain"><i class="fas fa-mountain"></i> Mountain View</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-garden" name="listing[amenities]" value="Garden" <%= listing.amenities && listing.amenities.includes('Garden') ? 'checked' : '' %>>
+                        <label for="amenity-garden"><i class="fas fa-leaf"></i> Garden</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-bbq" name="listing[amenities]" value="BBQ" <%= listing.amenities && listing.amenities.includes('BBQ') ? 'checked' : '' %>>
+                        <label for="amenity-bbq"><i class="fas fa-bacon"></i> BBQ</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-coffee" name="listing[amenities]" value="Coffee Maker" <%= listing.amenities && listing.amenities.includes('Coffee Maker') ? 'checked' : '' %>>
+                        <label for="amenity-coffee"><i class="fas fa-coffee"></i> Coffee</label>
+                    </div>
+                    <div class="amenity-checkbox">
+                        <input type="checkbox" id="amenity-workspace" name="listing[amenities]" value="Workspace" <%= listing.amenities && listing.amenities.includes('Workspace') ? 'checked' : '' %>>
+                        <label for="amenity-workspace"><i class="fas fa-laptop"></i> Workspace</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="mb-3 col-md-4">
+                    <label for="price" class="form-label">Price per night (₹)</label>
+                    <input type="number" name="listing[price]" value="<%= listing.price %>" class="form-control" min="0" required>
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Price should be valid</div>
+                </div>
+
+                <div class="mb-3 col-md-4">
+                    <label for="country" class="form-label">Country</label>
+                    <input type="text" name="listing[country]" value="<%= listing.country %>" class="form-control" required>
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Country name should be valid</div>
+                </div>
+
+                <div class="mb-3 col-md-4">
+                    <label for="location" class="form-label">Location</label>
+                    <input type="text" name="listing[location]" value="<%= listing.location %>" class="form-control" required>
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Location should be valid</div>
+                </div>
+            </div>
+
+            <!-- Availability Settings -->
+            <div class="row">
+                <div class="mb-3 col-md-4">
+                    <label class="form-label">Availability</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="available" name="listing[availability][available]" value="true" <%= listing.availability && listing.availability.available === true ? 'checked' : '' %>>
+                        <label class="form-check-label" for="available">Available for booking</label>
+                    </div>
+                </div>
+                <div class="mb-3 col-md-4">
+                    <label for="minNights" class="form-label">Min Nights</label>
+                    <input type="number" name="listing[availability][minNights]" class="form-control" value="<%= listing.availability && listing.availability.minNights ? listing.availability.minNights : 1 %>" min="1" max="365">
+                </div>
+                <div class="mb-3 col-md-4">
+                    <label for="maxNights" class="form-label">Max Nights</label>
+                    <input type="number" name="listing[availability][maxNights]" class="form-control" value="<%= listing.availability && listing.availability.maxNights ? listing.availability.maxNights : 365 %>" min="1" max="365">
+                </div>
+            </div>
+
+            <button class="btn btn-dark edit-btn">Update Listing</button>
+            <br><br>
+        </form>
+    </div>
 </div>
