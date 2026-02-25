@@ -1,28 +1,72 @@
 <style>
-    .btn-search{
-        background-color: #fe424d;
-        color: bisque;
+    .btn-search {
+        background-color: #003049;
+        color: white;
         border-radius: 25px;
-        padding: 0 1rem 0 1rem;
+        padding: 0 1.5rem 0 1rem;
+        border: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
     }
-    .btn-search:hover{
-        background-color: #fe424d;
-        color: bisque;
+    .btn-search:hover {
+        background-color: #F77F00;
+        color: white;
+        transform: scale(1.02);
     }
-    .btn-search i{
+    .btn-search i {
         display: inline;
         margin-right: 0.5rem;
     }
-    .search-input{
+    .search-input {
         border-radius: 25px;
-        padding: 0.5rem 3rem 0.5rem 3rem;
+        padding: 0.6rem 3rem 0.6rem 1.5rem;
         font-size: 1rem;
+        border: 1px solid #e0e0e0;
+    }
+    .search-input:focus {
+        border-color: #003049;
+        box-shadow: 0 0 0 3px rgba(0, 48, 73, 0.2);
     }
     .dropdown-menu {
         min-width: 200px;
+        border: none;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        border-radius: 12px;
+        padding: 0.5rem;
+    }
+    .dropdown-item {
+        border-radius: 8px;
+        padding: 0.6rem 1rem;
+        transition: all 0.3s ease;
+    }
+    .dropdown-item:hover {
+        background-color: #EAE2B7;
+        color: #003049;
     }
     .nav-icon {
-        margin-right: 5px;
+        margin-right: 8px;
+        color: #F77F00;
+    }
+    .navbar {
+        box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    }
+    .nav-link {
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+    .nav-link:hover {
+        background-color: #EAE2B7;
+    }
+    .user-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: #D62828;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
     }
 </style>
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
@@ -40,7 +84,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link" href="/listings"><i class="fa-solid fa-compass" style="color: #fe424d;">HostHaven</i></a>
+                <a class="navbar-brand" href="/listings">
+                    <i class="fa-solid fa-compass"></i>
+                    <span class="brand-text">HostHaven</span>
+                </a>
             </div>
             <div class="navbar-nav ms-auto">
                 <form class="d-flex" role="search">
@@ -52,7 +99,7 @@
             </div>
 
             <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="/listings/new">HostHaven your home</a>
+                <a class="nav-link" href="/listings/new">Host your home</a>
                 
                 <% if(!currUser){%>
                     <a class="nav-link" href="/signup"><b>Sign up</b></a>
@@ -73,7 +120,10 @@
                     <!-- User Dropdown -->
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-user-circle"></i> <%= currUser.username %>
+                            <div class="user-avatar">
+                                <%= currUser.username.charAt(0).toUpperCase() %>
+                            </div>
+                            <span class="ms-2"><%= currUser.username %></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <li><a class="dropdown-item" href="/profile"><i class="fa-solid fa-user nav-icon"></i> My Profile</a></li>

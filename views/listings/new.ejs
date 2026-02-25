@@ -1,216 +1,308 @@
 <% layout("/layouts/boilerplate") %>
 
 <style>
+    .form-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 2rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    .form-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #222222;
+        margin-bottom: 1.5rem;
+    }
     .amenity-checkbox {
         display: inline-block;
         margin: 5px;
     }
     .amenity-checkbox label {
         display: inline-block;
-        padding: 8px 15px;
-        background: #f8f9fa;
-        border: 1px solid #dee2e6;
-        border-radius: 20px;
+        padding: 0.6rem 1.2rem;
+        background: #EAE2B7;
+        border: 1px solid transparent;
+        border-radius: 25px;
         cursor: pointer;
-        transition: all 0.2s;
+        transition: all 0.3s ease;
+        color: #003049;
+        font-weight: 500;
     }
     .amenity-checkbox input:checked + label {
-        background: #667eea;
+        background: #D62828;
         color: white;
-        border-color: #667eea;
+        border-color: #D62828;
     }
     .amenity-checkbox input {
         display: none;
     }
+    .amenity-checkbox label i {
+        margin-right: 5px;
+    }
+    .form-label {
+        font-weight: 600;
+        color: #222222;
+        margin-bottom: 0.5rem;
+    }
+    .form-control, .form-select {
+        border-radius: 12px;
+        border: 1px solid #e0e0e0;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+    }
+    .form-control:focus, .form-select:focus {
+        border-color: #003049;
+        box-shadow: 0 0 0 3px rgba(0, 48, 73, 0.2);
+    }
+    .submit-btn {
+        background-color: #D62828 !important;
+        border: none !important;
+        border-radius: 12px;
+        padding: 0.8rem 2rem;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    .submit-btn:hover {
+        background-color: #F77F00 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(247, 127, 0, 0.4);
+    }
+    .section-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #003049;
+        margin: 1.5rem 0 1rem 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    .form-check-input:checked {
+        background-color: #D62828;
+        border-color: #D62828;
+    }
+    .image-upload-area {
+        border: 2px dashed #e0e0e0;
+        border-radius: 12px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    .image-upload-area:hover {
+        border-color: #D62828;
+        background-color: #EAE2B7;
+    }
+    .image-upload-area i {
+        font-size: 2rem;
+        color: #D62828;
+    }
+    .image-upload-area p {
+        color: #003049;
+        margin: 0.5rem 0 0 0;
+    }
 </style>
 
 <div class="row">
-    <div class="col-8 offset-2">
-        <br><br>
-        <h3>Create a New Listing</h3>
-        <form method="post" action="/listings" class="needs-validation" novalidate enctype="multipart/form-data">
-            <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" name="listing[title]" placeholder="Add a catchy title" class="form-control" required>
-                <div class="valid-feedback">Looks good!</div>
-                <div class="invalid-feedback">Please enter a title</div>
-            </div>
-
-            <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <textarea name="listing[description]" placeholder="Enter Description" class="form-control" rows="4" required></textarea>
-                <div class="invalid-feedback">Please enter a short description</div>
-            </div>
-
-            <div class="row">
-                <!-- Main Image -->
-                <div class="mb-3 col-md-6">
-                    <label for="image" class="form-label">Main Image</label>
-                    <input type="file" name="listing[image]" class="form-control" required>
+    <div class="col-10 offset-1">
+        <div class="form-container">
+            <h2 class="form-title">Create a New Listing</h2>
+            <form method="post" action="/listings" class="needs-validation" novalidate enctype="multipart/form-data">
+                
+                <!-- Basic Info -->
+                <div class="section-title">Basic Information</div>
+                
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" name="listing[title]" placeholder="Add a catchy title" class="form-control" required>
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Please enter a title</div>
                 </div>
 
-                <!-- Category -->
-                <div class="mb-3 col-md-6">
-                    <label for="category" class="form-label">Category</label>
-                    <select class="form-select" id="category" name="listing[category]">
-                        <option value="Rooms">Rooms</option>
-                        <option value="Trending">Trending</option>
-                        <option value="Iconic_Cities">Iconic Cities</option>
-                        <option value="Mountains">Mountains</option>
-                        <option value="Castles">Castles</option>
-                        <option value="Amazing_Pool">Amazing Pool</option>
-                        <option value="Camping">Camping</option>
-                        <option value="Farms">Farms</option>
-                        <option value="Arctic">Arctic</option>
-                        <option value="Domes">Domes</option>
-                        <option value="House_Boats">House Boats</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Multiple Images -->
-            <div class="mb-3">
-                <label for="images" class="form-label">Additional Images (Optional)</label>
-                <input type="file" name="listing[images]" class="form-control" multiple accept="image/*">
-                <small class="text-muted">You can select multiple images</small>
-            </div>
-
-            <!-- Amenities -->
-            <div class="mb-3">
-                <label class="form-label">Amenities</label>
-                <div class="amenities-container">
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-wifi" name="listing[amenities]" value="WiFi">
-                        <label for="amenity-wifi"><i class="fas fa-wifi"></i> WiFi</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-kitchen" name="listing[amenities]" value="Kitchen">
-                        <label for="amenity-kitchen"><i class="fas fa-utensils"></i> Kitchen</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-parking" name="listing[amenities]" value="Parking">
-                        <label for="amenity-parking"><i class="fas fa-parking"></i> Parking</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-pool" name="listing[amenities]" value="Pool">
-                        <label for="amenity-pool"><i class="fas fa-swimming-pool"></i> Pool</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-ac" name="listing[amenities]" value="Air Conditioning">
-                        <label for="amenity-ac"><i class="fas fa-snowflake"></i> AC</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-heating" name="listing[amenities]" value="Heating">
-                        <label for="amenity-heating"><i class="fas fa-fire"></i> Heating</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-washer" name="listing[amenities]" value="Washer">
-                        <label for="amenity-washer"><i class="fas fa-washer"></i> Washer</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-dryer" name="listing[amenities]" value="Dryer">
-                        <label for="amenity-dryer"><i class="fas fa-dryer"></i> Dryer</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-tv" name="listing[amenities]" value="TV">
-                        <label for="amenity-tv"><i class="fas fa-tv"></i> TV</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-gym" name="listing[amenities]" value="Gym">
-                        <label for="amenity-gym"><i class="fas fa-dumbbell"></i> Gym</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-hottub" name="listing[amenities]" value="Hot Tub">
-                        <label for="amenity-hottub"><i class="fas fa-hot-tub"></i> Hot Tub</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-pets" name="listing[amenities]" value="Pets Allowed">
-                        <label for="amenity-pets"><i class="fas fa-paw"></i> Pets</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-smoking" name="listing[amenities]" value="Smoking Allowed">
-                        <label for="amenity-smoking"><i class="fas fa-smoking"></i> Smoking</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-wheelchair" name="listing[amenities]" value="Wheelchair Accessible">
-                        <label for="amenity-wheelchair"><i class="fas fa-wheelchair"></i> Wheelchair</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-elevator" name="listing[amenities]" value="Elevator">
-                        <label for="amenity-elevator"><i class="fas fa-elevator"></i> Elevator</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-fireplace" name="listing[amenities]" value="Fireplace">
-                        <label for="amenity-fireplace"><i class="fas fa-fire-alt"></i> Fireplace</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-beachfront" name="listing[amenities]" value="Beachfront">
-                        <label for="amenity-beachfront"><i class="fas fa-umbrella-beach"></i> Beachfront</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-mountain" name="listing[amenities]" value="Mountain View">
-                        <label for="amenity-mountain"><i class="fas fa-mountain"></i> Mountain View</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-garden" name="listing[amenities]" value="Garden">
-                        <label for="amenity-garden"><i class="fas fa-leaf"></i> Garden</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-bbq" name="listing[amenities]" value="BBQ">
-                        <label for="amenity-bbq"><i class="fas fa-bacon"></i> BBQ</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-coffee" name="listing[amenities]" value="Coffee Maker">
-                        <label for="amenity-coffee"><i class="fas fa-coffee"></i> Coffee</label>
-                    </div>
-                    <div class="amenity-checkbox">
-                        <input type="checkbox" id="amenity-workspace" name="listing[amenities]" value="Workspace">
-                        <label for="amenity-workspace"><i class="fas fa-laptop"></i> Workspace</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="mb-3 col-md-4">
-                    <label for="price" class="form-label">Price per night (₹)</label>
-                    <input type="number" name="listing[price]" placeholder="Enter Price" class="form-control" min="0" required>
-                    <div class="invalid-feedback">Price should be valid</div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea name="listing[description]" placeholder="Enter Description" class="form-control" rows="4" required></textarea>
+                    <div class="invalid-feedback">Please enter a short description</div>
                 </div>
 
-                <div class="mb-3 col-md-4">
-                    <label for="country" class="form-label">Country</label>
-                    <input type="text" name="listing[country]" placeholder="Enter Country" class="form-control" required>
-                    <div class="invalid-feedback">Country name should be valid</div>
-                </div>
+                <div class="row">
+                    <!-- Main Image -->
+                    <div class="mb-3 col-md-6">
+                        <label for="image" class="form-label">Main Image</label>
+                        <div class="image-upload-area">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Click to upload main image</p>
+                            <input type="file" name="listing[image]" class="form-control" required style="display: none;">
+                        </div>
+                    </div>
 
-                <div class="mb-3 col-md-4">
-                    <label for="location" class="form-label">Location</label>
-                    <input type="text" name="listing[location]" placeholder="Enter location" class="form-control" required>
-                    <div class="invalid-feedback">Location should be valid</div>
-                </div>
-            </div>
-
-            <!-- Availability Settings -->
-            <div class="row">
-                <div class="mb-3 col-md-4">
-                    <label class="form-label">Availability</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="available" name="listing[availability][available]" checked>
-                        <label class="form-check-label" for="available">Available for booking</label>
+                    <!-- Category -->
+                    <div class="mb-3 col-md-6">
+                        <label for="category" class="form-label">Category</label>
+                        <select class="form-select" id="category" name="listing[category]">
+                            <option value="Rooms">Rooms</option>
+                            <option value="Trending">Trending</option>
+                            <option value="Iconic_Cities">Iconic Cities</option>
+                            <option value="Mountains">Mountains</option>
+                            <option value="Castles">Castles</option>
+                            <option value="Amazing_Pool">Amazing Pool</option>
+                            <option value="Camping">Camping</option>
+                            <option value="Farms">Farms</option>
+                            <option value="Arctic">Arctic</option>
+                            <option value="Domes">Domes</option>
+                            <option value="House_Boats">House Boats</option>
+                        </select>
                     </div>
                 </div>
-                <div class="mb-3 col-md-4">
-                    <label for="minNights" class="form-label">Min Nights</label>
-                    <input type="number" name="listing[availability][minNights]" class="form-control" value="1" min="1" max="365">
-                </div>
-                <div class="mb-3 col-md-4">
-                    <label for="maxNights" class="form-label">Max Nights</label>
-                    <input type="number" name="listing[availability][maxNights]" class="form-control" value="365" min="1" max="365">
-                </div>
-            </div>
 
-            <button class="btn btn-dark add-btn">Create Listing</button>
-            <br><br>
-        </form>
+                <!-- Additional Images -->
+                <div class="mb-3">
+                    <label for="images" class="form-label">Additional Images (Optional)</label>
+                    <input type="file" name="listing[images]" class="form-control" multiple accept="image/*">
+                    <small class="text-muted">You can select multiple images</small>
+                </div>
+
+                <!-- Amenities -->
+                <div class="section-title">Amenities</div>
+                <div class="mb-3">
+                    <div class="amenities-container">
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-wifi" name="listing[amenities]" value="WiFi">
+                            <label for="amenity-wifi"><i class="fas fa-wifi"></i> WiFi</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-kitchen" name="listing[amenities]" value="Kitchen">
+                            <label for="amenity-kitchen"><i class="fas fa-utensils"></i> Kitchen</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-parking" name="listing[amenities]" value="Parking">
+                            <label for="amenity-parking"><i class="fas fa-parking"></i> Parking</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-pool" name="listing[amenities]" value="Pool">
+                            <label for="amenity-pool"><i class="fas fa-swimming-pool"></i> Pool</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-ac" name="listing[amenities]" value="Air Conditioning">
+                            <label for="amenity-ac"><i class="fas fa-snowflake"></i> AC</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-heating" name="listing[amenities]" value="Heating">
+                            <label for="amenity-heating"><i class="fas fa-fire"></i> Heating</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-washer" name="listing[amenities]" value="Washer">
+                            <label for="amenity-washer"><i class="fas fa-washer"></i> Washer</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-dryer" name="listing[amenities]" value="Dryer">
+                            <label for="amenity-dryer"><i class="fas fa-dryer"></i> Dryer</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-tv" name="listing[amenities]" value="TV">
+                            <label for="amenity-tv"><i class="fas fa-tv"></i> TV</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-gym" name="listing[amenities]" value="Gym">
+                            <label for="amenity-gym"><i class="fas fa-dumbbell"></i> Gym</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-hottub" name="listing[amenities]" value="Hot Tub">
+                            <label for="amenity-hottub"><i class="fas fa-hot-tub"></i> Hot Tub</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-pets" name="listing[amenities]" value="Pets Allowed">
+                            <label for="amenity-pets"><i class="fas fa-paw"></i> Pets</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-smoking" name="listing[amenities]" value="Smoking Allowed">
+                            <label for="amenity-smoking"><i class="fas fa-smoking"></i> Smoking</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-wheelchair" name="listing[amenities]" value="Wheelchair Accessible">
+                            <label for="amenity-wheelchair"><i class="fas fa-wheelchair"></i> Wheelchair</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-elevator" name="listing[amenities]" value="Elevator">
+                            <label for="amenity-elevator"><i class="fas fa-elevator"></i> Elevator</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-fireplace" name="listing[amenities]" value="Fireplace">
+                            <label for="amenity-fireplace"><i class="fas fa-fire-alt"></i> Fireplace</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-beachfront" name="listing[amenities]" value="Beachfront">
+                            <label for="amenity-beachfront"><i class="fas fa-umbrella-beach"></i> Beachfront</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-mountain" name="listing[amenities]" value="Mountain View">
+                            <label for="amenity-mountain"><i class="fas fa-mountain"></i> Mountain View</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-garden" name="listing[amenities]" value="Garden">
+                            <label for="amenity-garden"><i class="fas fa-leaf"></i> Garden</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-bbq" name="listing[amenities]" value="BBQ">
+                            <label for="amenity-bbq"><i class="fas fa-bacon"></i> BBQ</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-coffee" name="listing[amenities]" value="Coffee Maker">
+                            <label for="amenity-coffee"><i class="fas fa-coffee"></i> Coffee</label>
+                        </div>
+                        <div class="amenity-checkbox">
+                            <input type="checkbox" id="amenity-workspace" name="listing[amenities]" value="Workspace">
+                            <label for="amenity-workspace"><i class="fas fa-laptop"></i> Workspace</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Location & Pricing -->
+                <div class="section-title">Location & Pricing</div>
+                <div class="row">
+                    <div class="mb-3 col-md-4">
+                        <label for="price" class="form-label">Price per night (₹)</label>
+                        <input type="number" name="listing[price]" placeholder="Enter Price" class="form-control" min="0" required>
+                        <div class="invalid-feedback">Price should be valid</div>
+                    </div>
+
+                    <div class="mb-3 col-md-4">
+                        <label for="country" class="form-label">Country</label>
+                        <input type="text" name="listing[country]" placeholder="Enter Country" class="form-control" required>
+                        <div class="invalid-feedback">Country name should be valid</div>
+                    </div>
+
+                    <div class="mb-3 col-md-4">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" name="listing[location]" placeholder="Enter location" class="form-control" required>
+                        <div class="invalid-feedback">Location should be valid</div>
+                    </div>
+                </div>
+
+                <!-- Availability Settings -->
+                <div class="section-title">Availability Settings</div>
+                <div class="row">
+                    <div class="mb-3 col-md-4">
+                        <label class="form-label">Availability</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="available" name="listing[availability][available]" checked>
+                            <label class="form-check-label" for="available">Available for booking</label>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-4">
+                        <label for="minNights" class="form-label">Min Nights</label>
+                        <input type="number" name="listing[availability][minNights]" class="form-control" value="1" min="1" max="365">
+                    </div>
+                    <div class="mb-3 col-md-4">
+                        <label for="maxNights" class="form-label">Max Nights</label>
+                        <input type="number" name="listing[availability][maxNights]" class="form-control" value="365" min="1" max="365">
+                    </div>
+                </div>
+
+                <button class="btn btn-primary submit-btn">Create Listing</button>
+                <br><br>
+            </form>
+        </div>
     </div>
 </div>

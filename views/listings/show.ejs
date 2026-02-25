@@ -3,46 +3,100 @@
 <style>
     .wishlist-btn {
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: 15px;
+        right: 15px;
         z-index: 100;
         background: white;
         border: none;
         border-radius: 50%;
-        width: 40px;
-        height: 40px;
+        width: 45px;
+        height: 45px;
         cursor: pointer;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        transition: all 0.3s;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .wishlist-btn:hover {
         transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(214, 40, 40, 0.4);
     }
     .wishlist-btn i {
-        color: #dc3545;
+        color: #D62828;
+        font-size: 1.3rem;
     }
     .wishlist-btn.in-wishlist i {
-        fill: #dc3545;
+        color: #D62828;
     }
     .booking-card {
         position: sticky;
         top: 20px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        border-radius: 16px;
+        background: white;
+        padding: 1.5rem;
+    }
+    .booking-price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #222222;
+    }
+    .booking-price span {
+        font-size: 1rem;
+        font-weight: 400;
+        color: #003049;
+    }
+    .reserve-btn {
+        background-color: #D62828 !important;
+        border: none !important;
+        border-radius: 12px;
+        padding: 0.8rem 1.5rem;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+    .reserve-btn:hover {
+        background-color: #F77F00 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(247, 127, 0, 0.4);
+    }
+    .contact-btn {
+        border: 2px solid #003049 !important;
+        border-radius: 12px;
+        color: #003049 !important;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    .contact-btn:hover {
+        background-color: #003049 !important;
+        color: white !important;
     }
     .amenity-badge {
         display: inline-block;
-        padding: 5px 12px;
-        margin: 5px;
-        background: #f8f9fa;
+        padding: 0.5rem 1rem;
+        margin: 0.3rem;
+        background: #EAE2B7;
         border-radius: 20px;
         font-size: 0.85rem;
-        color: #495057;
+        color: #003049;
+        transition: all 0.3s ease;
+    }
+    .amenity-badge:hover {
+        background: #FCBF49;
+        color: #222222;
+    }
+    .amenity-badge i {
+        color: #D62828;
+        margin-right: 5px;
     }
     .gallery-img {
         height: 200px;
         object-fit: cover;
         cursor: pointer;
-        transition: transform 0.2s;
+        transition: all 0.3s ease;
+        border-radius: 12px;
     }
     .gallery-img:hover {
         transform: scale(1.02);
@@ -52,10 +106,99 @@
         object-fit: cover;
         cursor: pointer;
         opacity: 0.6;
-        transition: opacity 0.2s;
+        transition: all 0.3s ease;
+        border-radius: 8px;
     }
     .thumbnail:hover, .thumbnail.active {
         opacity: 1;
+        box-shadow: 0 2px 8px rgba(214, 40, 40, 0.4);
+    }
+    .listing-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #222222;
+    }
+    .listing-location {
+        color: #003049;
+    }
+    .listing-rating {
+        color: #F77F00;
+    }
+    .info-card {
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        border: none;
+    }
+    .info-card .card-body {
+        padding: 1.5rem;
+    }
+    .host-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    .host-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #D62828;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+    .review-section {
+        margin-top: 2rem;
+    }
+    .review-card {
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        border: none;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+    }
+    .review-card:hover {
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    .review-author {
+        font-weight: 600;
+        color: #222222;
+    }
+    .edit-delete-btns .btn {
+        border-radius: 12px;
+        padding: 0.5rem 1.5rem;
+        font-weight: 600;
+    }
+    .form-label {
+        font-weight: 600;
+        color: #222222;
+        margin-bottom: 0.5rem;
+    }
+    .form-control {
+        border-radius: 12px;
+        border: 1px solid #e0e0e0;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+    }
+    .form-control:focus {
+        border-color: #003049;
+        box-shadow: 0 0 0 3px rgba(0, 48, 73, 0.2);
+    }
+    .availability-badge {
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+    .availability-badge.available {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    .availability-badge.unavailable {
+        background-color: #f8d7da;
+        color: #721c24;
     }
 </style>
 
@@ -64,18 +207,18 @@
     <% if(currUser) { %>
         <form action="/listings/<%= listing._id %>/wishlist" method="POST" style="position: relative;">
             <button type="submit" class="wishlist-btn <%= typeof isInWishlist !== 'undefined' && isInWishlist ? 'in-wishlist' : '' %>" title="<%= typeof isInWishlist !== 'undefined' && isInWishlist ? 'Remove from wishlist' : 'Add to wishlist' %>">
-                <i class="<%= typeof isInWishlist !== 'undefined' && isInWishlist ? 'fas' : 'far' %> fa-heart fa-lg"></i>
+                <i class="<%= typeof isInWishlist !== 'undefined' && isInWishlist ? 'fas' : 'far' %> fa-heart"></i>
             </button>
         </form>
     <% } %>
 
-    <div class="col-8 offset-3">
-        <h3><%= listing.title %></h3>
-        <p class="text-muted">
+    <div class="col-8 offset-2">
+        <h2 class="listing-title"><%= listing.title %></h2>
+        <p class="listing-location">
             <i class="fas fa-map-marker-alt"></i> <%= listing.location %>, <%= listing.country %>
             <% if(listing.avgRating > 0) { %>
-                <span class="ms-3">
-                    <i class="fas fa-star text-warning"></i> <%= listing.avgRating.toFixed(1) %> (<%= listing.reviews.length %> reviews)
+                <span class="ms-3 listing-rating">
+                    <i class="fas fa-star"></i> <%= listing.avgRating.toFixed(1) %> (<%= listing.reviews.length %> reviews)
                 </span>
             <% } %>
         </p>
@@ -85,42 +228,53 @@
     <div class="col-6 offset-3">
         <div class="card listing-card show-card">
             <% if(listing.images && listing.images.length > 0) { %>
-                <img id="mainImage" src="<%= listing.images[0].url %>" class="card-img-top show-img" alt="listing_image" style="height: 400px;">
+                <img id="mainImage" src="<%= listing.images[0].url %>" class="card-img-top show-img" alt="listing_image" style="height: 450px; border-radius: 16px;">
                 <% if(listing.images.length > 1) { %>
-                    <div class="p-2">
-                        <% for(let img of listing.images) { %>
-                            <img src="<%= img.url %>" class="thumbnail me-1" onclick="changeImage('<%= img.url %>', this)" alt="thumbnail">
-                        <% } %>
+                    <div class="p-3">
+                        <div class="d-flex gap-2 overflow-auto">
+                            <% for(let img of listing.images) { %>
+                                <img src="<%= img.url %>" class="thumbnail me-2" onclick="changeImage('<%= img.url %>', this)" alt="thumbnail">
+                            <% } %>
+                        </div>
                     </div>
                 <% } %>
             <% } else if(listing.image && listing.image.url) { %>
-                <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing_image">
+                <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing_image" style="border-radius: 16px;">
             <% } else { %>
                 <img src="https://via.placeholder.com/400" class="card-img-top show-img" alt="listing_image">
             <% } %>
         </div>
     </div>
 
-    <div class="col-6 offset-3 mt-3">
+    <div class="col-6 offset-3 mt-4">
         <div class="row">
             <!-- Listing Info -->
             <div class="col-md-8">
-                <div class="card mb-3">
+                <div class="card info-card mb-3">
                     <div class="card-body">
                         <% if(listing.owner) { %>
-                        <p class="card-text">Hosted by <i><%= listing.owner.username %></i></p>
+                        <div class="host-info mb-3">
+                            <div class="host-avatar">
+                                <%= listing.owner.username.charAt(0).toUpperCase() %>
+                            </div>
+                            <div>
+                                <p class="mb-0 fw-bold">Hosted by <%= listing.owner.username %></p>
+                                <small class="text-muted">Host since 2024</small>
+                            </div>
+                        </div>
                         <% } else { %>
                         <p class="card-text">Owned by <i>Unknown</i></p>
                         <% } %>
-                        <p class="card-text"><%= listing.description %></p>
+                        <hr>
+                        <p class="card-text" style="line-height: 1.8;"><%= listing.description %></p>
                         
                         <!-- Amenities -->
                         <% if(listing.amenities && listing.amenities.length > 0) { %>
                             <hr>
-                            <h5>Amenities</h5>
+                            <h5 class="mb-3">What this place offers</h5>
                             <div class="amenities-list">
                                 <% for(let amenity of listing.amenities) { %>
-                                    <span class="amenity-badge"><i class="fas fa-check-circle text-success"></i> <%= amenity %></span>
+                                    <span class="amenity-badge"><i class="fas fa-check-circle"></i> <%= amenity %></span>
                                 <% } %>
                             </div>
                         <% } %>
@@ -129,12 +283,13 @@
                         <% if(listing.availability) { %>
                             <hr>
                             <p class="card-text">
-                                <i class="fas fa-calendar-alt"></i> 
-                                Min: <%= listing.availability.minNights %> nights | Max: <%= listing.availability.maxNights %> nights
+                                <i class="fas fa-calendar-alt" style="color: #D62828;"></i> 
+                                <strong>Min:</strong> <%= listing.availability.minNights %> nights &nbsp;|&nbsp; 
+                                <strong>Max:</strong> <%= listing.availability.maxNights %> nights
                                 <% if(listing.availability.available) { %>
-                                    <span class="badge bg-success ms-2">Available</span>
+                                    <span class="availability-badge available ms-2"><i class="fas fa-check"></i> Available</span>
                                 <% } else { %>
-                                    <span class="badge bg-danger ms-2">Not Available</span>
+                                    <span class="availability-badge unavailable ms-2"><i class="fas fa-times"></i> Not Available</span>
                                 <% } %>
                             </p>
                         <% } %>
@@ -144,55 +299,57 @@
 
             <!-- Booking Card -->
             <div class="col-md-4">
-                <div class="card booking-card p-3">
+                <div class="booking-card">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="mb-0">₹<%= listing.price ? listing.price.toLocaleString("en-IN") : 0 %></h4>
-                        <span class="text-muted">/ night</span>
+                        <div>
+                            <span class="booking-price">₹<%= listing.price ? listing.price.toLocaleString("en-IN") : 0 %></span>
+                            <span>/ night</span>
+                        </div>
                     </div>
                     
                     <% if(currUser && listing.owner && !listing.owner._id.equals(currUser._id) && listing.availability && listing.availability.available !== false) { %>
                         <form action="/listings/<%= listing._id %>/book" method="POST" id="bookingForm">
-                            <div class="form-group">
-                                <label>Check-in</label>
+                            <div class="mb-3">
+                                <label class="form-label">Check-in</label>
                                 <input type="date" class="form-control" name="checkIn" required min="<%= new Date().toISOString().split('T')[0] %>">
                             </div>
-                            <div class="form-group">
-                                <label>Check-out</label>
+                            <div class="mb-3">
+                                <label class="form-label">Check-out</label>
                                 <input type="date" class="form-control" name="checkOut" required min="<%= new Date().toISOString().split('T')[0] %>">
                             </div>
-                            <div class="form-group">
-                                <label>Guests</label>
+                            <div class="mb-3">
+                                <label class="form-label">Guests</label>
                                 <select class="form-control" name="guests">
                                     <% for(let i = 1; i <= 10; i++) { %>
                                         <option value="<%= i %>"><%= i %> <%= i === 1 ? 'guest' : 'guests' %></option>
                                     <% } %>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label>Your Name</label>
+                            <div class="mb-3">
+                                <label class="form-label">Your Name</label>
                                 <input type="text" class="form-control" name="guestName" required placeholder="Full name">
                             </div>
-                            <div class="form-group">
-                                <label>Email</label>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
                                 <input type="email" class="form-control" name="guestEmail" required placeholder="your@email.com">
                             </div>
-                            <div class="form-group">
-                                <label>Phone</label>
+                            <div class="mb-3">
+                                <label class="form-label">Phone</label>
                                 <input type="tel" class="form-control" name="guestPhone" required placeholder="Phone number">
                             </div>
-                            <div class="form-group">
-                                <label>Special Requests</label>
+                            <div class="mb-3">
+                                <label class="form-label">Special Requests</label>
                                 <textarea class="form-control" name="specialRequests" rows="2" placeholder="Any special requests?"></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">Reserve</button>
+                            <button type="submit" class="btn btn-primary reserve-btn">Reserve</button>
                         </form>
                         
                         <!-- Contact Host Button -->
-                        <button class="btn btn-outline-dark btn-block mt-2" data-bs-toggle="modal" data-bs-target="#contactModal">
+                        <button class="btn btn-outline-dark contact-btn btn-block mt-3" data-bs-toggle="modal" data-bs-target="#contactModal">
                             <i class="fas fa-envelope"></i> Contact Host
                         </button>
                     <% } else if(!currUser) { %>
-                        <a href="/login" class="btn btn-primary btn-block">Login to Book</a>
+                        <a href="/login" class="btn btn-primary reserve-btn">Login to Book</a>
                     <% } else if(listing.availability && listing.availability.available === false) { %>
                         <div class="alert alert-danger text-center">
                             <i class="fas fa-ban"></i> This listing is not available for booking
@@ -205,8 +362,8 @@
 
     <!-- Edit/Delete Buttons for Owner -->
     <% if(currUser && listing.owner && listing.owner._id.equals(currUser._id)){ %>
-    <div class="col-6 offset-3 mt-3">
-        <div class="btns">
+    <div class="col-6 offset-3 mt-4">
+        <div class="btns edit-delete-btns">
             <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark edit-btn">Edit</a>
             <form method="post" action="/listings/<%= listing._id %>?_method=DELETE" class="d-inline">
                 <button class="btn btn-dark">Delete</button>
@@ -216,9 +373,9 @@
     <% } %>
 
     <!-- Reviews Section -->
-    <div class="col-8 offset-3 mb-3">
+    <div class="col-8 offset-3 mb-5 review-section">
         <hr>
-        <h3><i class="fas fa-star text-warning"></i> <%= listing.reviews.length %> Reviews</h3>
+        <h3><i class="fas fa-star" style="color: #F77F00;"></i> <%= listing.reviews.length %> Reviews</h3>
         
         <% if(currUser){ %>
         <hr>
@@ -256,9 +413,9 @@
         <% if(listing.reviews.length > 0) { %>
         <div class="row">
             <% for(review of listing.reviews) {%>
-                <div class="card col-5 ms-3 mb-3">
+                <div class="card col-5 ms-3 mb-3 review-card">
                     <div class="card-body">
-                        <h5 class="card-title">@<%=review.author.username %></h5>
+                        <h5 class="review-author">@<%=review.author.username %></h5>
                         <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
                         <p class="card-text"> <%= review.comment %></p>
                         <small class="text-muted"><%= new Date(review.createdAt).toLocaleDateString() %></small>
@@ -279,8 +436,8 @@
 <% if(currUser && listing.owner) { %>
 <div class="modal fade" id="contactModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
+        <div class="modal-content" style="border-radius: 16px;">
+            <div class="modal-header" style="border-bottom: 1px solid #e0e0e0;">
                 <h5 class="modal-title">Contact Host</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -288,7 +445,7 @@
                 <input type="hidden" name="recipientId" value="<%= listing.owner._id %>">
                 <input type="hidden" name="listingId" value="<%= listing._id %>">
                 <div class="modal-body">
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label>Subject</label>
                         <input type="text" class="form-control" name="subject" placeholder="Inquiry about <%= listing.title %>" required>
                     </div>
@@ -297,9 +454,9 @@
                         <textarea class="form-control" name="body" rows="4" placeholder="Write your message to the host..." required></textarea>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Send Message</button>
+                <div class="modal-footer" style="border-top: 1px solid #e0e0e0;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 12px;">Cancel</button>
+                    <button type="submit" class="btn btn-primary" style="border-radius: 12px;">Send Message</button>
                 </div>
             </form>
         </div>

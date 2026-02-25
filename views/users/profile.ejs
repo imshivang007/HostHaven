@@ -2,10 +2,11 @@
 
 <style>
     .profile-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #003049 0%, #004a70 100%);
         color: white;
         padding: 3rem 0;
         margin-bottom: 2rem;
+        border-radius: 0 0 24px 24px;
     }
     .profile-img {
         width: 150px;
@@ -15,45 +16,204 @@
         border: 4px solid white;
         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
+    .profile-name {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    .profile-email {
+        opacity: 0.9;
+        margin-bottom: 0.5rem;
+    }
+    .profile-bio {
+        opacity: 0.85;
+        font-size: 0.95rem;
+        max-width: 600px;
+    }
+    .nav-tabs {
+        border-bottom: 2px solid #e0e0e0;
+    }
     .nav-tabs .nav-link {
-        color: #495057;
+        color: #003049;
         font-weight: 500;
+        border: none;
+        border-radius: 12px 12px 0 0;
+        padding: 0.75rem 1.5rem;
+        transition: all 0.3s ease;
+    }
+    .nav-tabs .nav-link:hover {
+        background-color: #EAE2B7;
+        color: #D62828;
     }
     .nav-tabs .nav-link.active {
-        background-color: #fff;
-        border-color: #dee2e6 #dee2e6 #fff;
-        color: #667eea;
+        background-color: white;
+        color: #D62828;
+        border-bottom: 3px solid #D62828;
     }
     .stat-card {
         background: white;
-        border-radius: 10px;
+        border-radius: 16px;
         padding: 1.5rem;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         text-align: center;
+        transition: all 0.3s ease;
+    }
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     }
     .stat-number {
         font-size: 2rem;
         font-weight: bold;
-        color: #667eea;
+        color: #D62828;
+    }
+    .stat-label {
+        color: #003049;
+        font-size: 0.9rem;
+        font-weight: 500;
     }
     .listing-card {
-        transition: transform 0.2s;
+        border: none;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
     }
     .listing-card:hover {
-        transform: translateY(-5px);
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    .listing-card .card-img-top {
+        height: 200px;
+        object-fit: cover;
+    }
+    .listing-card .card-body {
+        padding: 1.2rem;
+    }
+    .listing-card .card-title {
+        font-weight: 600;
+        color: #222222;
+        margin-bottom: 0.3rem;
+    }
+    .listing-card .card-text {
+        color: #003049;
+        font-size: 0.9rem;
+    }
+    .listing-card .price {
+        color: #D62828;
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+    .btn-view, .btn-edit {
+        border-radius: 10px;
+        padding: 0.4rem 1rem;
+        font-weight: 500;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+    }
+    .btn-view {
+        background-color: #D62828;
+        color: white;
+        border: none;
+    }
+    .btn-view:hover {
+        background-color: #F77F00;
+        color: white;
+    }
+    .btn-edit {
+        background-color: transparent;
+        color: #003049;
+        border: 1px solid #003049;
+    }
+    .btn-edit:hover {
+        background-color: #003049;
+        color: white;
     }
     .booking-card {
-        border-left: 4px solid #667eea;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+    }
+    .booking-card:hover {
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
     }
     .status-badge {
-        padding: 0.25rem 0.75rem;
+        padding: 0.3rem 0.8rem;
         border-radius: 20px;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
+        font-weight: 500;
     }
     .status-confirmed { background: #d4edda; color: #155724; }
     .status-pending { background: #fff3cd; color: #856404; }
     .status-cancelled { background: #f8d7da; color: #721c24; }
     .status-completed { background: #cce5ff; color: #004085; }
+    .review-card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        margin-bottom: 1rem;
+    }
+    .review-card .card-body {
+        padding: 1.2rem;
+    }
+    .tab-content {
+        background: white;
+        border: none;
+        border-radius: 0 16px 16px 16px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        padding: 2rem;
+    }
+    .section-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #222222;
+        margin-bottom: 1rem;
+    }
+    .btn-add-listing {
+        background-color: #D62828;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 0.6rem 1.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    .btn-add-listing:hover {
+        background-color: #F77F00;
+        color: white;
+    }
+    .edit-profile-form .form-label {
+        font-weight: 600;
+        color: #222222;
+    }
+    .edit-profile-form .form-control {
+        border-radius: 12px;
+        border: 1px solid #e0e0e0;
+        padding: 0.75rem 1rem;
+    }
+    .edit-profile-form .form-control:focus {
+        border-color: #003049;
+        box-shadow: 0 0 0 3px rgba(0, 48, 73, 0.2);
+    }
+    .btn-save {
+        background-color: #D62828;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 0.6rem 2rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    .btn-save:hover {
+        background-color: #F77F00;
+    }
+    .empty-text {
+        color: #003049;
+        text-align: center;
+        padding: 2rem;
+    }
 </style>
 
 <div class="profile-header">
@@ -67,10 +227,10 @@
                 <% } %>
             </div>
             <div class="col-md-9">
-                <h1><%= user.username %></h1>
-                <p class="mb-1"><i class="fas fa-envelope"></i> <%= user.email %></p>
+                <h1 class="profile-name"><%= user.username %></h1>
+                <p class="profile-email"><i class="fas fa-envelope"></i> <%= user.email %></p>
                 <% if(user.bio) { %>
-                    <p class="mb-0"><%= user.bio %></p>
+                    <p class="profile-bio"><%= user.bio %></p>
                 <% } %>
             </div>
         </div>
@@ -79,29 +239,29 @@
 
 <div class="container">
     <!-- Stats -->
-    <div class="row mb-4">
+    <div class="row mb-4 g-3">
         <div class="col-md-3">
             <div class="stat-card">
                 <div class="stat-number"><%= listings.length %></div>
-                <div>Listings</div>
+                <div class="stat-label">Listings</div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="stat-card">
                 <div class="stat-number"><%= bookings.length %></div>
-                <div>Bookings</div>
+                <div class="stat-label">Bookings</div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="stat-card">
                 <div class="stat-number"><%= wishlistCount %></div>
-                <div>Wishlist</div>
+                <div class="stat-label">Wishlist</div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="stat-card">
                 <div class="stat-number"><%= reviews.length %></div>
-                <div>Reviews</div>
+                <div class="stat-label">Reviews</div>
             </div>
         </div>
     </div>
@@ -109,42 +269,56 @@
     <!-- Tabs -->
     <ul class="nav nav-tabs" id="profileTabs" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="listings-tab" data-bs-toggle="tab" href="#listings" role="tab">My Listings</a>
+            <a class="nav-link active" id="listings-tab" data-bs-toggle="tab" href="#listings" role="tab">
+                <i class="fas fa-home me-2"></i>My Listings
+            </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="bookings-tab" data-bs-toggle="tab" href="#bookings" role="tab">My Bookings</a>
+            <a class="nav-link" id="bookings-tab" data-bs-toggle="tab" href="#bookings" role="tab">
+                <i class="fas fa-calendar-check me-2"></i>My Bookings
+            </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="wishlist-tab" data-bs-toggle="tab" href="#wishlist" role="tab">Wishlist</a>
+            <a class="nav-link" id="wishlist-tab" data-bs-toggle="tab" href="#wishlist" role="tab">
+                <i class="fas fa-heart me-2"></i>Wishlist
+            </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="reviews-tab" data-bs-toggle="tab" href="#reviews" role="tab">Reviews</a>
+            <a class="nav-link" id="reviews-tab" data-bs-toggle="tab" href="#reviews" role="tab">
+                <i class="fas fa-star me-2"></i>Reviews
+            </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="edit-tab" data-bs-toggle="tab" href="#edit" role="tab">Edit Profile</a>
+            <a class="nav-link" id="edit-tab" data-bs-toggle="tab" href="#edit" role="tab">
+                <i class="fas fa-user-edit me-2"></i>Edit Profile
+            </a>
         </li>
     </ul>
 
-    <div class="tab-content p-4 bg-white border border-top-0 rounded-bottom">
+    <div class="tab-content p-4">
         <!-- My Listings -->
         <div class="tab-pane fade show active" id="listings" role="tabpanel">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4>My Listings</h4>
-                <a href="/listings/new" class="btn btn-primary">Add New Listing</a>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="section-title mb-0">My Listings</h4>
+                <a href="/listings/new" class="btn btn-add-listing">
+                    <i class="fas fa-plus me-2"></i>Add New Listing
+                </a>
             </div>
             <% if(listings.length > 0) { %>
                 <div class="row">
                     <% for(let listing of listings) { %>
                         <% if(listing && listing.image) { %>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-4 mb-4">
                             <div class="card listing-card h-100">
-                                <img src="<%= listing.image.url %>" class="card-img-top" alt="listing" style="height: 200px;">
+                                <img src="<%= listing.image.url %>" class="card-img-top" alt="listing">
                                 <div class="card-body">
                                     <h5 class="card-title"><%= listing.title %></h5>
-                                    <p class="card-text text-muted"><%= listing.location %></p>
-                                    <p class="card-text"><strong>₹<%= listing.price ? listing.price.toLocaleString() : 0 %></strong> / night</p>
-                                    <a href="/listings/<%= listing._id %>" class="btn btn-sm btn-outline-primary">View</a>
-                                    <a href="/listings/<%= listing._id %>/edit" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    <p class="card-text"><i class="fas fa-map-marker-alt me-1"></i><%= listing.location %></p>
+                                    <p class="price">₹<%= listing.price ? listing.price.toLocaleString() : 0 %> / night</p>
+                                    <div class="d-flex gap-2">
+                                        <a href="/listings/<%= listing._id %>" class="btn btn-view">View</a>
+                                        <a href="/listings/<%= listing._id %>/edit" class="btn btn-edit">Edit</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -152,38 +326,39 @@
                     <% } %>
                 </div>
             <% } else { %>
-                <p class="text-muted">You haven't created any listings yet.</p>
+                <p class="empty-text">You haven't created any listings yet.</p>
             <% } %>
         </div>
 
         <!-- My Bookings -->
         <div class="tab-pane fade" id="bookings" role="tabpanel">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4>My Bookings</h4>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="section-title mb-0">My Bookings</h4>
                 <a href="/my-bookings" class="btn btn-link">View All</a>
             </div>
             <% if(bookings.length > 0) { %>
                 <% for(let booking of bookings) { %>
                     <% if(booking && booking.listing && booking.listing.image) { %>
-                    <div class="card mb-3 booking-card">
+                    <div class="card booking-card">
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <img src="<%= booking.listing.image.url %>" alt="listing" style="width: 100%; height: 100px; object-fit: cover;">
+                            <div class="row align-items-center">
+                                <div class="col-md-2">
+                                    <img src="<%= booking.listing.image.url %>" alt="listing" style="width: 100%; height: 80px; object-fit: cover; border-radius: 8px;">
                                 </div>
                                 <div class="col-md-6">
-                                    <h5><%= booking.listing.title %></h5>
-                                    <p class="mb-1">
+                                    <h6><%= booking.listing.title %></h6>
+                                    <small class="text-muted">
                                         <i class="fas fa-calendar"></i> 
                                         <%= new Date(booking.checkIn).toLocaleDateString() %> - 
                                         <%= new Date(booking.checkOut).toLocaleDateString() %>
-                                    </p>
-                                    <p class="mb-0"><i class="fas fa-users"></i> <%= booking.guests %> guests</p>
+                                    </small>
                                 </div>
-                                <div class="col-md-3 text-right">
+                                <div class="col-md-2 text-center">
                                     <span class="status-badge status-<%= booking.status %>"><%= booking.status %></span>
-                                    <p class="mt-2"><strong>₹<%= booking.totalPrice ? booking.totalPrice.toLocaleString() : 0 %></strong></p>
-                                    <a href="/bookings/<%= booking._id %>" class="btn btn-sm btn-outline-primary">View Details</a>
+                                </div>
+                                <div class="col-md-2 text-right">
+                                    <strong>₹<%= booking.totalPrice ? booking.totalPrice.toLocaleString() : 0 %></strong>
+                                    <a href="/bookings/<%= booking._id %>" class="d-block btn btn-view btn-sm mt-2">View Details</a>
                                 </div>
                             </div>
                         </div>
@@ -191,39 +366,39 @@
                     <% } %>
                 <% } %>
             <% } else { %>
-                <p class="text-muted">You haven't made any bookings yet.</p>
+                <p class="empty-text">You haven't made any bookings yet.</p>
             <% } %>
         </div>
 
         <!-- Wishlist -->
         <div class="tab-pane fade" id="wishlist" role="tabpanel">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4>My Wishlist</h4>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="section-title mb-0">My Wishlist</h4>
                 <a href="/my-wishlist" class="btn btn-link">View All</a>
             </div>
             <% if(wishlistCount > 0) { %>
                 <p>You have <%= wishlistCount %> listings in your wishlist.</p>
             <% } else { %>
-                <p class="text-muted">Your wishlist is empty. Start adding listings you like!</p>
+                <p class="empty-text">Your wishlist is empty. Start adding listings you like!</p>
             <% } %>
         </div>
 
         <!-- Reviews -->
         <div class="tab-pane fade" id="reviews" role="tabpanel">
-            <h4 class="mb-3">My Reviews</h4>
+            <h4 class="section-title mb-3">My Reviews</h4>
             <% if(reviews.length > 0) { %>
                 <% for(let review of reviews) { %>
                     <% if(review.listing && review.listing.image) { %>
-                    <div class="card mb-3">
+                    <div class="card review-card">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-2">
-                                    <img src="<%= review.listing.image.url %>" alt="listing" style="width: 100%; height: 80px; object-fit: cover;">
+                                    <img src="<%= review.listing.image.url %>" alt="listing" style="width: 100%; height: 80px; object-fit: cover; border-radius: 8px;">
                                 </div>
                                 <div class="col-md-10">
                                     <h6><%= review.listing.title %></h6>
                                     <p class="starability-result" data-rating="<%= review.rating %>"></p>
-                                    <p class="mb-0"><%= review.comment %></p>
+                                    <p class="mb-1"><%= review.comment %></p>
                                     <small class="text-muted"><%= new Date(review.createdAt).toLocaleDateString() %></small>
                                 </div>
                             </div>
@@ -232,32 +407,34 @@
                     <% } %>
                 <% } %>
             <% } else { %>
-                <p class="text-muted">You haven't written any reviews yet.</p>
+                <p class="empty-text">You haven't written any reviews yet.</p>
             <% } %>
         </div>
 
         <!-- Edit Profile -->
         <div class="tab-pane fade" id="edit" role="tabpanel">
-            <h4 class="mb-3">Edit Profile</h4>
-            <form action="/profile?_method=PUT" method="POST" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" value="<%= user.username %>" required>
+            <h4 class="section-title mb-4">Edit Profile</h4>
+            <form action="/profile?_method=PUT" method="POST" enctype="multipart/form-data" class="edit-profile-form">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" value="<%= user.username %>" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="<%= user.email %>" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value="<%= user.email %>" required>
-                </div>
-                <div class="form-group">
-                    <label for="bio">Bio</label>
-                    <textarea class="form-control" id="bio" name="bio" rows="4" maxlength="500"><%= user.bio || '' %></textarea>
+                <div class="mb-3">
+                    <label for="bio" class="form-label">Bio</label>
+                    <textarea class="form-control" id="bio" name="bio" rows="4" maxlength="500" placeholder="Tell us about yourself..."><%= user.bio || '' %></textarea>
                     <small class="text-muted">Max 500 characters</small>
                 </div>
-                <div class="form-group">
-                    <label for="profileImage">Profile Image</label>
-                    <input type="file" class="form-control-file" id="profileImage" name="profileImage" accept="image/*">
+                <div class="mb-4">
+                    <label for="profileImage" class="form-label">Profile Image</label>
+                    <input type="file" class="form-control" id="profileImage" name="profileImage" accept="image/*">
                 </div>
-                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <button type="submit" class="btn btn-save">Save Changes</button>
             </form>
         </div>
     </div>

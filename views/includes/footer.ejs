@@ -1,14 +1,114 @@
-<footer>
+<style>
+    .footer {
+        background-color: #003049;
+        padding: 2rem 0;
+        margin-top: auto;
+    }
+    .f-info {
+        text-align: center;
+        height: auto;
+        min-height: auto;
+        background-color: transparent;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 0;
+    }
+    .f-info-links a {
+        text-decoration: none;
+        color: #EAE2B7;
+        margin: 0 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    .f-info-links a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background-color: #FCBF49;
+        transition: width 0.3s ease;
+    }
+    .f-info-links a:hover {
+        color: #FCBF49;
+    }
+    .f-info-links a:hover::after {
+        width: 100%;
+    }
+    .f-info-socials {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.2rem;
+        width: 100%;
+    }
+    .f-info-socials a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: rgba(255,255,255,0.1);
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+    .f-info-socials a:hover {
+        background-color: #FCBF49;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(252, 191, 73, 0.4);
+    }
+    .f-info-socials i {
+        font-size: 1.2rem;
+        color: #EAE2B7;
+        margin: 0;
+        transition: all 0.3s ease;
+    }
+    .f-info-socials a:hover i {
+        color: #003049;
+    }
+    .f-info-brand {
+        width: 100%;
+        color: #EAE2B7;
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+    .footer-divider {
+        width: 50px;
+        height: 1px;
+        background-color: #EAE2B7;
+        opacity: 0.3;
+    }
+</style>
+
+<footer class="footer">
     <div class="f-info">
         <div class="f-info-socials">
-            <a href="https://github.com/imshivang007"><i class="fa-brands fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/shivang-gupta-65744a225"><i class="fa-brands fa-linkedin"></i></a>
-            <a href="https://www.instagram.com/shivang_._21/"><i class="fa-brands fa-square-instagram"></i></a>
+            <a href="https://github.com/imshivang007" title="GitHub" target="_blank">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/shivang-gupta-65744a225" title="LinkedIn" target="_blank">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+            <a href="https://www.instagram.com/shivang_._21/" title="Instagram" target="_blank">
+                <i class="fa-brands fa-square-instagram"></i>
+            </a>
         </div>
-        <div class="f-info-brand"> &copy;HostHaven Private Limited</div>
+        
+        
         <div class="f-info-links">
             <a href="/privacy">Privacy</a>
             <a href="/terms">Terms</a>
+            <a href="/sitemap">Sitemap</a>
+        </div>
+        
+        <div class="f-info-brand">
+            &copy; <%= new Date().getFullYear() %> HostHaven Private Limited
         </div>
     </div>
 </footer>

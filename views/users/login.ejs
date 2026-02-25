@@ -1,20 +1,165 @@
 <% layout("/layouts/boilerplate") %>
 
+<style>
+    .auth-container {
+        max-width: 450px;
+        margin: 2rem auto;
+        background: white;
+        padding: 2.5rem;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+    .auth-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #222222;
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+    .auth-subtitle {
+        text-align: center;
+        color: #003049;
+        margin-bottom: 2rem;
+    }
+    .form-label {
+        font-weight: 600;
+        color: #222222;
+        margin-bottom: 0.5rem;
+    }
+    .form-control {
+        border-radius: 12px;
+        border: 1px solid #e0e0e0;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+    }
+    .form-control:focus {
+        border-color: #003049;
+        box-shadow: 0 0 0 3px rgba(0, 48, 73, 0.2);
+    }
+    .submit-btn {
+        background-color: #D62828 !important;
+        border: none !important;
+        border-radius: 12px;
+        padding: 0.8rem 2rem;
+        font-weight: 600;
+        font-size: 1rem;
+        width: 100%;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+    }
+    .submit-btn:hover {
+        background-color: #F77F00 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(247, 127, 0, 0.4);
+    }
+    .auth-footer {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: #003049;
+    }
+    .auth-footer a {
+        color: #D62828;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    .auth-footer a:hover {
+        color: #F77F00;
+        text-decoration: underline;
+    }
+    .brand-icon {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    .brand-icon i {
+        font-size: 3rem;
+        color: #003049;
+    }
+    .divider {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 1.5rem 0;
+    }
+    .divider::before,
+    .divider::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    .divider span {
+        padding: 0 1rem;
+        color: #003049;
+        font-size: 0.9rem;
+    }
+    .social-login {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+    .social-btn {
+        width: 100%;
+        padding: 0.6rem;
+        border-radius: 12px;
+        border: 1px solid #e0e0e0;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    .social-btn:hover {
+        border-color: #D62828;
+        background: #EAE2B7;
+    }
+</style>
+
 <div class="row mt-3">
-    <h1 class="col-6 offset-3">Login on HostHaven</h1>
-    <div class="col-6 offset-3" >
+    <div class="auth-container">
+        <div class="brand-icon">
+            <i class="fa-solid fa-compass"></i>
+        </div>
+        <h1 class="auth-title">Welcome back</h1>
+        <p class="auth-subtitle">Log in to continue to HostHaven</p>
+        
         <form action="/login" method="post" class="needs-validation" novalidate>
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="text"  name="username" id="username" class="form-control" required>
+                <input type="text" name="username" id="username" class="form-control" placeholder="Enter your username" required>
+                <div class="invalid-feedback">Please enter your username</div>
             </div>
-
 
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password"  name="password" id="password" class="form-control" required>
+                <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" required>
+                <div class="invalid-feedback">Please enter your password</div>
             </div>
-            <button class="btn btn-success">Login</button>
+            
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="rememberMe">
+                <label class="form-check-label" for="rememberMe">Remember me</label>
+            </div>
+            
+            <button class="btn btn-primary submit-btn">Log in</button>
         </form>
+        
+        <div class="divider">
+            <span>or</span>
+        </div>
+        
+        <div class="social-login">
+            <button class="social-btn">
+                <i class="fa-brands fa-google"></i> Google
+            </button>
+            <button class="social-btn">
+                <i class="fa-brands fa-facebook"></i> Facebook
+            </button>
+        </div>
+        
+        <div class="auth-footer">
+            <p>Don't have an account? <a href="/signup">Sign up</a></p>
+        </div>
     </div>
 </div>
