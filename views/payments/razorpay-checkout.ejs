@@ -1,35 +1,86 @@
 <% layout("/layouts/boilerplate") %>
 
 <style>
+    /* Full Page Layout Styles */
+    .page-wrapper {
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .full-width-container {
+        max-width: 100%;
+        padding: 2rem 3rem;
+        background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+        min-height: calc(100vh - 80px);
+    }
+    
+    /* Payment Card Styles */
     .payment-container {
         max-width: 600px;
-        margin: 2rem auto;
-        padding: 2rem;
+        margin: 0 auto;
+        padding: 0;
     }
     
     .payment-card {
         background: white;
         border: none;
         border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
         overflow: hidden;
+        transition: all 0.3s ease;
+        border: 1px solid #eee;
+    }
+    
+    .payment-card:hover {
+        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        transform: translateY(-2px);
     }
     
     .payment-header {
-        background: linear-gradient(135deg, #3399cc 0%, #247ba0 100%);
-        padding: 2rem;
+        background: linear-gradient(135deg, #003049 0%, #1a5276 50%, #003049 100%);
+        padding: 2.5rem 2rem;
         text-align: center;
         color: white;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .payment-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/></svg>');
+        background-size: 200px 200px;
+        opacity: 0.5;
     }
     
     .payment-header h2 {
         margin: 0;
         font-size: 1.8rem;
+        position: relative;
+        z-index: 1;
+        font-weight: 700;
     }
     
     .payment-header p {
         margin: 0.5rem 0 0 0;
         opacity: 0.9;
+        position: relative;
+        z-index: 1;
+        font-size: 1.1rem;
+    }
+    
+    .header-icon {
+        position: absolute;
+        right: 2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 6rem;
+        color: rgba(255,255,255,0.1);
     }
     
     .payment-body {
@@ -37,7 +88,7 @@
     }
     
     .booking-summary {
-        background: linear-gradient(135deg, #f8f9fa, #fff);
+        background: linear-gradient(145deg, #fafafa, #f0f0f0);
         border-radius: 12px;
         padding: 1.5rem;
         margin-bottom: 1.5rem;
@@ -47,12 +98,20 @@
         color: #003049;
         margin-bottom: 1rem;
         font-size: 1.1rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+    }
+    
+    .booking-summary h4 i {
+        margin-right: 0.5rem;
+        color: #D62828;
     }
     
     .summary-row {
         display: flex;
         justify-content: space-between;
-        padding: 0.5rem 0;
+        padding: 0.75rem 0;
         border-bottom: 1px solid #eee;
     }
     
@@ -62,6 +121,7 @@
     
     .summary-label {
         color: #666;
+        font-weight: 500;
     }
     
     .summary-value {
@@ -69,36 +129,49 @@
         color: #003049;
     }
     
+    .total-row .summary-label {
+        color: #003049;
+        font-weight: 700;
+    }
+    
     .total-row .summary-value {
         color: #D62828;
-        font-size: 1.3rem;
+        font-size: 1.4rem;
+        font-weight: 700;
     }
     
     .razorpay-logo {
         text-align: center;
         margin: 1.5rem 0;
+        padding: 1rem;
+        background: linear-gradient(145deg, #fafafa, #f0f0f0);
+        border-radius: 12px;
     }
     
-    .razorpay-logo img {
-        height: 40px;
+    .razorpay-logo span {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #003049;
     }
     
     .pay-button {
-        background: linear-gradient(135deg, #3399cc 0%, #247ba0 100%);
+        background: linear-gradient(135deg, #D62828 0%, #F77F00 100%);
         border: none;
-        border-radius: 12px;
+        border-radius: 50px;
         padding: 1rem 2rem;
         font-size: 1.1rem;
-        font-weight: 600;
+        font-weight: 700;
         color: white;
         width: 100%;
         cursor: pointer;
         transition: all 0.3s ease;
+        box-shadow: 0 4px 20px rgba(214, 40, 40, 0.4);
     }
     
     .pay-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(51, 153, 204, 0.4);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 30px rgba(214, 40, 40, 0.5);
+        background: linear-gradient(135deg, #F77F00 0%, #D62828 100%);
     }
     
     .pay-button:disabled {
@@ -118,29 +191,51 @@
     .payment-methods p {
         color: #666;
         font-size: 0.9rem;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.75rem;
     }
     
     .method-icons {
         display: flex;
         justify-content: center;
-        gap: 1rem;
+        gap: 1.5rem;
         font-size: 1.5rem;
         color: #666;
     }
     
+    .method-icons i {
+        transition: all 0.3s ease;
+        padding: 0.5rem;
+        border-radius: 8px;
+    }
+    
+    .method-icons i:hover {
+        color: #D62828;
+        background: #EAE2B7;
+        transform: translateY(-2px);
+    }
+    
     .cancel-link {
         text-align: center;
-        margin-top: 1rem;
+        margin-top: 1.5rem;
     }
     
     .cancel-link a {
         color: #666;
         text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
     }
     
     .cancel-link a:hover {
-        text-decoration: underline;
+        color: #D62828;
+        background: #fff5f5;
+        text-decoration: none;
+    }
+    
+    .cancel-link a i {
+        margin-right: 0.5rem;
     }
     
     .loading-overlay {
@@ -159,16 +254,17 @@
     .loading-spinner {
         background: white;
         padding: 2rem;
-        border-radius: 12px;
+        border-radius: 20px;
         text-align: center;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
     }
     
     .spinner {
         border: 4px solid #f3f3f3;
-        border-top: 4px solid #3399cc;
+        border-top: 4px solid #D62828;
         border-radius: 50%;
-        width: 40px;
-        height: 40px;
+        width: 50px;
+        height: 50px;
         animation: spin 1s linear infinite;
         margin: 0 auto 1rem;
     }
@@ -177,77 +273,141 @@
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
+    
+    .loading-spinner p {
+        color: #003049;
+        font-weight: 600;
+        margin: 0;
+    }
+    
+    /* Animation */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .payment-card {
+        animation: fadeInUp 0.5s ease forwards;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .full-width-container {
+            padding: 1.5rem;
+        }
+        
+        .payment-body {
+            padding: 1.5rem;
+        }
+        
+        .payment-header {
+            padding: 2rem 1.5rem;
+        }
+        
+        .payment-header h2 {
+            font-size: 1.5rem;
+        }
+        
+        .header-icon {
+            display: none;
+        }
+    }
+    
+    /* Background Pattern */
+    .bg-pattern {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+        background-image: 
+            radial-gradient(circle at 20% 80%, rgba(214, 40, 40, 0.03) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(0, 48, 73, 0.03) 0%, transparent 50%),
+            radial-gradient(circle at 40% 40%, rgba(247, 127, 0, 0.02) 0%, transparent 40%);
+    }
 </style>
 
-<div class="payment-container">
-    <div class="payment-card">
-        <div class="payment-header">
-            <h2><i class="fas fa-credit-card"></i> Complete Payment</h2>
-            <p>Secure payment via Razorpay</p>
-        </div>
-        
-        <div class="payment-body">
-            <!-- Booking Summary -->
-            <div class="booking-summary">
-                <h4><i class="fas fa-calendar-check"></i> Booking Summary</h4>
-                <div class="summary-row">
-                    <span class="summary-label">Property</span>
-                    <span class="summary-value"><%= listing.title %></span>
-                </div>
-                <div class="summary-row">
-                    <span class="summary-label">Location</span>
-                    <span class="summary-value"><%= listing.location %>, <%= listing.country %></span>
-                </div>
-                <div class="summary-row">
-                    <span class="summary-label">Duration</span>
-                    <span class="summary-value"><%= paymentData.nights %> night<%= paymentData.nights > 1 ? 's' : '' %></span>
-                </div>
-                <div class="summary-row">
-                    <span class="summary-label">Guest</span>
-                    <span class="summary-value"><%= paymentData.guestName %></span>
-                </div>
-                <div class="summary-row total-row">
-                    <span class="summary-label">Total Amount</span>
-                    <span class="summary-value">₹<%= (paymentData.amount / 100).toLocaleString('en-IN') %></span>
-                </div>
+<div class="bg-pattern"></div>
+
+<div class="full-width-container">
+    <div class="payment-container">
+        <div class="payment-card">
+            <div class="payment-header">
+                <h2><i class="fas fa-credit-card"></i> Complete Payment</h2>
+                <p>Secure payment via Razorpay</p>
             </div>
             
-            <!-- Hidden data elements for JavaScript -->
-            <span id="data-key-id" style="display:none"><%= keyId %></span>
-            <span id="data-order-id" style="display:none"><%= paymentData.orderId %></span>
-            <span id="data-amount" style="display:none"><%= paymentData.amount %></span>
-            <span id="data-listing-title" style="display:none"><%= listing.title %></span>
-            <span id="data-guest-name" style="display:none"><%= paymentData.guestName %></span>
-            <span id="data-guest-email" style="display:none"><%= paymentData.guestEmail %></span>
-            
-            <!-- Hidden form for payment verification -->
-            <form id="payment-form" action="/bookings/<%= booking._id %>/verify-payment" method="POST">
-                <input type="hidden" name="razorpay_order_id" id="razorpay_order_id" value="<%= paymentData.orderId %>">
-                <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id" value="">
-                <input type="hidden" name="razorpay_signature" id="razorpay_signature" value="">
-            </form>
-            
-            <!-- Pay Button -->
-            <button id="pay-button" class="pay-button">
-                <i class="fas fa-lock"></i> Pay ₹<%= (paymentData.amount / 100).toLocaleString('en-IN') %>
-            </button>
-            
-            <!-- Payment Methods Info -->
-            <div class="payment-methods">
-                <p>Accepted Payment Methods</p>
-                <div class="method-icons">
-                    <i class="fas fa-mobile-alt" title="UPI"></i>
-                    <i class="fas fa-credit-card" title="Cards"></i>
-                    <i class="fas fa-university" title="Net Banking"></i>
-                    <i class="fas fa-wallet" title="Wallets"></i>
+            <div class="payment-body">
+                <!-- Booking Summary -->
+                <div class="booking-summary">
+                    <h4><i class="fas fa-calendar-check"></i> Booking Summary</h4>
+                    <div class="summary-row">
+                        <span class="summary-label">Property</span>
+                        <span class="summary-value"><%= listing.title %></span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Location</span>
+                        <span class="summary-value"><%= listing.location %>, <%= listing.country %></span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Duration</span>
+                        <span class="summary-value"><%= paymentData.nights %> night<%= paymentData.nights > 1 ? 's' : '' %></span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Guest</span>
+                        <span class="summary-value"><%= paymentData.guestName %></span>
+                    </div>
+                    <div class="summary-row total-row">
+                        <span class="summary-label">Total Amount</span>
+                        <span class="summary-value">₹<%= (paymentData.amount / 100).toLocaleString('en-IN') %></span>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Cancel Link -->
-            <div class="cancel-link">
-                <a href="/bookings/<%= booking._id %>">
-                    <i class="fas fa-times"></i> Cancel Payment
-                </a>
+                
+                <!-- Hidden data elements for JavaScript -->
+                <span id="data-key-id" style="display:none"><%= keyId %></span>
+                <span id="data-order-id" style="display:none"><%= paymentData.orderId %></span>
+                <span id="data-amount" style="display:none"><%= paymentData.amount %></span>
+                <span id="data-listing-title" style="display:none"><%= listing.title %></span>
+                <span id="data-guest-name" style="display:none"><%= paymentData.guestName %></span>
+                <span id="data-guest-email" style="display:none"><%= paymentData.guestEmail %></span>
+                
+                <!-- Hidden form for payment verification -->
+                <form id="payment-form" action="/bookings/<%= booking._id %>/verify-payment" method="POST">
+                    <input type="hidden" name="razorpay_order_id" id="razorpay_order_id" value="<%= paymentData.orderId %>">
+                    <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id" value="">
+                    <input type="hidden" name="razorpay_signature" id="razorpay_signature" value="">
+                </form>
+                
+                <!-- Pay Button -->
+                <button id="pay-button" class="pay-button">
+                    <i class="fas fa-lock"></i> Pay ₹<%= (paymentData.amount / 100).toLocaleString('en-IN') %>
+                </button>
+                
+                <!-- Payment Methods Info -->
+                <div class="payment-methods">
+                    <p>Accepted Payment Methods</p>
+                    <div class="method-icons">
+                        <i class="fas fa-mobile-alt" title="UPI"></i>
+                        <i class="fas fa-credit-card" title="Cards"></i>
+                        <i class="fas fa-university" title="Net Banking"></i>
+                        <i class="fas fa-wallet" title="Wallets"></i>
+                    </div>
+                </div>
+                
+                <!-- Cancel Link -->
+                <div class="cancel-link">
+                    <a href="/bookings/<%= booking._id %>">
+                        <i class="fas fa-times"></i> Cancel Payment
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -306,7 +466,7 @@
                 email: razorpayData.guestEmail
             },
             theme: {
-                color: "#3399cc"
+                color: "#D62828"
             },
             modal: {
                 ondismiss: function() {
