@@ -17,13 +17,16 @@ const wishlistRouter = require("./routes/wishlist");
 const bookingRouter = require("./routes/booking");
 const messageRouter = require("./routes/message");
 const paymentRouter = require("./routes/payment");
-const payment = require("./controllers/payment");
+const razorpayController = require("./controllers/razorpay");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
+
+// RAZORPAY WEBHOOK - Must be BEFORE express.urlencoded() to receive raw body
+app.post("/webhook/razorpay", express.raw({ type: "application/json" }), razorpayController.handleWebhook);
 
 // Security imports
 const helmet = require("helmet");
@@ -43,7 +46,9 @@ const scriptSrcUrls = [
     "https://api.tiles.mapbox.com",
     "https://api.mapbox.com",
     "https://cdnjs.cloudflare.com",
-    "https://cdn.jsdelivr.net"
+    "https://cdn.jsdelivr.net",
+    "https://checkout.razorpay.com",
+    "https://*.razorpay.com"
 ];
 const styleSrcUrls = [
     "https://api.tiles.mapbox.com",
@@ -54,11 +59,16 @@ const styleSrcUrls = [
 const connectSrcUrls = [
     "https://api.mapbox.com",
     "*.tiles.mapbox.com",
-    "events.mapbox.com"
+    "events.mapbox.com",
+    "https://api.razorpay.com",
+    "https://*.razorpay.com",
+    "https://api.razorpay.com"
 ];
 const fontSrcUrls = ["cdnjs.cloudflare.com", "fonts.gstatic.com", "fonts.googleapis.com", "'self'", "'unsafe-eval'"];
+const frameSrcUrls = ["https://checkout.razorpay.com", "https://*.razorpay.com"];
 
 app.set("views", path.join(__dirname, "views"));
+app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
@@ -73,7 +83,8 @@ app.use(helmet({
             styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
             connectSrc: ["'self'", ...connectSrcUrls],
             fontSrc: ["'self'", ...fontSrcUrls],
-            imgSrc: ["'self'", "data:", "https:", "https://res.cloudinary.com"]
+            imgSrc: ["'self'", "data:", "https:", "https://res.cloudinary.com"],
+            frameSrc: ["'self'", ...frameSrcUrls]
         }
     }
 }));
@@ -251,10 +262,6 @@ app.use("/", wishlistRouter);
 app.use("/", bookingRouter);
 app.use("/", messageRouter);
 app.use("/", paymentRouter);
-
-// Stripe webhook - must be before express.json() middleware
-// This needs raw body for signature verification
-app.post("/webhook", express.raw({ type: "application/json" }), payment.handleWebhook);
 
 // Existing routes
 app.use("/listings", listingRouter);

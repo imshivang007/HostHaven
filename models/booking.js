@@ -39,6 +39,21 @@ const bookingSchema = new Schema({
         enum: ['pending', 'paid', 'refunded'],
         default: 'pending'
     },
+    paymentGateway: {
+        type: String,
+        enum: ['razorpay', 'stripe'],
+        default: 'razorpay'
+    },
+    razorpayOrderId: {
+        type: String
+    },
+    razorpayPaymentId: {
+        type: String
+    },
+    razorpaySignature: {
+        type: String
+    },
+    // Legacy Stripe fields kept for reference
     stripeSessionId: {
         type: String
     },

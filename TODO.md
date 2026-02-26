@@ -1,33 +1,41 @@
-# Email System Implementation TODO
+# Razorpay Integration Plan - COMPLETED
 
-## Phase 1: Setup & Dependencies
-- [x] 1. Install nodemailer package
+## Task: Replace Stripe with Razorpay for Indian Payments
 
-## Phase 2: Database Model Updates
-- [x] 2. Update User model - Add token fields (verificationToken, resetPasswordToken, resetPasswordExpires)
+### Steps Completed:
 
-## Phase 3: Email Utility
-- [x] 3. Create utils/email.js - Email sending utility with nodemailer
+1. [x] Install Razorpay package (`npm install razorpay`)
+2. [x] Create `config/razorpay.js` - Razorpay configuration
+3. [x] Update `models/booking.js` - Add paymentGateway field
+4. [x] Create `controllers/razorpay.js` - Razorpay payment controller
+5. [x] Create `routes/razorpay.js` - Razorpay routes
+6. [x] Update `routes/payment.js` - Redirect to Razorpay
+7. [x] Update `app.js` - Add Razorpay CSP and webhook
+8. [x] Create `views/payments/razorpay-checkout.ejs` - Payment page
+9. [x] Update `README.md` - Update payment setup instructions
+10. [x] Update `INCOMPLETE_FEATURES.md` - Mark payment as complete
 
-## Phase 4: Controller Updates
-- [x] 4. Update controllers/users.js
-  - [x] Modify signup to send verification email
-  - [x] Add verifyEmail controller
-  - [x] Add forgotPassword controller
-  - [x] Add resetPassword controller
-  - [x] Modify login to check isVerified
+### Files Created:
+- config/razorpay.js
+- controllers/razorpay.js
+- routes/razorpay.js
+- views/payments/razorpay-checkout.ejs
 
-## Phase 5: Route Updates
-- [x] 5. Update routes/user.js
-  - [x] Add verification routes (GET/POST /verify-email)
-  - [x] Add forgot password routes (GET/POST /forgot-password)
-  - [x] Add reset password route (GET/POST /reset-password/:token)
+### Files Modified:
+- models/booking.js
+- routes/payment.js
+- app.js
+- README.md
+- INCOMPLETE_FEATURES.md
 
-## Phase 6: View Updates
-- [x] 6. Update views/users/login.ejs - Add forgot password link
-- [x] 7. Create views/users/forgot-password.ejs - Forgot password page
-- [x] 8. Create views/users/reset-password.ejs - Reset password page
-- [x] 9. Update views/users/signup.ejs - Show verification message
+### Razorpay Features Supported:
+- UPI (Google Pay, PhonePe, Paytm, etc.)
+- Credit/Debit Cards
+- Net Banking
+- Wallets (Paytm, PhonePe, Mobikwik, etc.)
 
-## Phase 7: Environment Configuration
-- [x] 10. Add email configuration to .env.example
+### Environment Variables Required:
+Add these to your `.env` file:
+```
+RAZORPAY_KEY_ID=rzp_test_your_key_id_here
+RAZORPAY_KEY_SECRET=your_key_secret_here

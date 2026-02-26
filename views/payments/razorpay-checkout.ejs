@@ -1,0 +1,329 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+    .payment-container {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+    }
+    
+    .payment-card {
+        background: white;
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+    
+    .payment-header {
+        background: linear-gradient(135deg, #3399cc 0%, #247ba0 100%);
+        padding: 2rem;
+        text-align: center;
+        color: white;
+    }
+    
+    .payment-header h2 {
+        margin: 0;
+        font-size: 1.8rem;
+    }
+    
+    .payment-header p {
+        margin: 0.5rem 0 0 0;
+        opacity: 0.9;
+    }
+    
+    .payment-body {
+        padding: 2rem;
+    }
+    
+    .booking-summary {
+        background: linear-gradient(135deg, #f8f9fa, #fff);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .booking-summary h4 {
+        color: #003049;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+    }
+    
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .summary-row:last-child {
+        border-bottom: none;
+    }
+    
+    .summary-label {
+        color: #666;
+    }
+    
+    .summary-value {
+        font-weight: 600;
+        color: #003049;
+    }
+    
+    .total-row .summary-value {
+        color: #D62828;
+        font-size: 1.3rem;
+    }
+    
+    .razorpay-logo {
+        text-align: center;
+        margin: 1.5rem 0;
+    }
+    
+    .razorpay-logo img {
+        height: 40px;
+    }
+    
+    .pay-button {
+        background: linear-gradient(135deg, #3399cc 0%, #247ba0 100%);
+        border: none;
+        border-radius: 12px;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: white;
+        width: 100%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .pay-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(51, 153, 204, 0.4);
+    }
+    
+    .pay-button:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+    
+    .payment-methods {
+        text-align: center;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #eee;
+    }
+    
+    .payment-methods p {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .method-icons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        font-size: 1.5rem;
+        color: #666;
+    }
+    
+    .cancel-link {
+        text-align: center;
+        margin-top: 1rem;
+    }
+    
+    .cancel-link a {
+        color: #666;
+        text-decoration: none;
+    }
+    
+    .cancel-link a:hover {
+        text-decoration: underline;
+    }
+    
+    .loading-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .loading-spinner {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        text-align: center;
+    }
+    
+    .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3399cc;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 1rem;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+
+<div class="payment-container">
+    <div class="payment-card">
+        <div class="payment-header">
+            <h2><i class="fas fa-credit-card"></i> Complete Payment</h2>
+            <p>Secure payment via Razorpay</p>
+        </div>
+        
+        <div class="payment-body">
+            <!-- Booking Summary -->
+            <div class="booking-summary">
+                <h4><i class="fas fa-calendar-check"></i> Booking Summary</h4>
+                <div class="summary-row">
+                    <span class="summary-label">Property</span>
+                    <span class="summary-value"><%= listing.title %></span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Location</span>
+                    <span class="summary-value"><%= listing.location %>, <%= listing.country %></span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Duration</span>
+                    <span class="summary-value"><%= paymentData.nights %> night<%= paymentData.nights > 1 ? 's' : '' %></span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Guest</span>
+                    <span class="summary-value"><%= paymentData.guestName %></span>
+                </div>
+                <div class="summary-row total-row">
+                    <span class="summary-label">Total Amount</span>
+                    <span class="summary-value">₹<%= (paymentData.amount / 100).toLocaleString('en-IN') %></span>
+                </div>
+            </div>
+            
+            <!-- Hidden data elements for JavaScript -->
+            <span id="data-key-id" style="display:none"><%= keyId %></span>
+            <span id="data-order-id" style="display:none"><%= paymentData.orderId %></span>
+            <span id="data-amount" style="display:none"><%= paymentData.amount %></span>
+            <span id="data-listing-title" style="display:none"><%= listing.title %></span>
+            <span id="data-guest-name" style="display:none"><%= paymentData.guestName %></span>
+            <span id="data-guest-email" style="display:none"><%= paymentData.guestEmail %></span>
+            
+            <!-- Hidden form for payment verification -->
+            <form id="payment-form" action="/bookings/<%= booking._id %>/verify-payment" method="POST">
+                <input type="hidden" name="razorpay_order_id" id="razorpay_order_id" value="<%= paymentData.orderId %>">
+                <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id" value="">
+                <input type="hidden" name="razorpay_signature" id="razorpay_signature" value="">
+            </form>
+            
+            <!-- Pay Button -->
+            <button id="pay-button" class="pay-button">
+                <i class="fas fa-lock"></i> Pay ₹<%= (paymentData.amount / 100).toLocaleString('en-IN') %>
+            </button>
+            
+            <!-- Payment Methods Info -->
+            <div class="payment-methods">
+                <p>Accepted Payment Methods</p>
+                <div class="method-icons">
+                    <i class="fas fa-mobile-alt" title="UPI"></i>
+                    <i class="fas fa-credit-card" title="Cards"></i>
+                    <i class="fas fa-university" title="Net Banking"></i>
+                    <i class="fas fa-wallet" title="Wallets"></i>
+                </div>
+            </div>
+            
+            <!-- Cancel Link -->
+            <div class="cancel-link">
+                <a href="/bookings/<%= booking._id %>">
+                    <i class="fas fa-times"></i> Cancel Payment
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loading-overlay">
+    <div class="loading-spinner">
+        <div class="spinner"></div>
+        <p>Processing Payment...</p>
+    </div>
+</div>
+
+<!-- Razorpay Checkout Script -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    // Get data from hidden elements
+    function getData(id) {
+        return document.getElementById(id).textContent.trim();
+    }
+    
+    var razorpayData = {
+        keyId: getData('data-key-id'),
+        orderId: getData('data-order-id'),
+        amount: parseInt(getData('data-amount')),
+        listingTitle: getData('data-listing-title'),
+        guestName: getData('data-guest-name'),
+        guestEmail: getData('data-guest-email')
+    };
+    
+    var payButton = document.getElementById('pay-button');
+    var loadingOverlay = document.getElementById('loading-overlay');
+    
+    payButton.addEventListener('click', function() {
+        // Show loading overlay
+        loadingOverlay.style.display = 'flex';
+        
+        // Open Razorpay checkout
+        var options = {
+            key: razorpayData.keyId,
+            amount: razorpayData.amount,
+            currency: "INR",
+            name: "HostHaven",
+            description: "Booking Payment for " + razorpayData.listingTitle,
+            order_id: razorpayData.orderId,
+            handler: function(response) {
+                // Payment successful - fill the form and submit
+                document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;
+                document.getElementById('razorpay_signature').value = response.razorpay_signature;
+                
+                // Submit the form for verification
+                document.getElementById('payment-form').submit();
+            },
+            prefill: {
+                name: razorpayData.guestName,
+                email: razorpayData.guestEmail
+            },
+            theme: {
+                color: "#3399cc"
+            },
+            modal: {
+                ondismiss: function() {
+                    // Hide loading overlay when modal is dismissed
+                    loadingOverlay.style.display = 'none';
+                }
+            }
+        };
+        
+        var rzp1 = new Razorpay(options);
+        
+        rzp1.on('payment.failed', function(response) {
+            // Payment failed
+            loadingOverlay.style.display = 'none';
+            alert('Payment failed: ' + response.error.description);
+        });
+        
+        rzp1.open();
+    });
+</script>

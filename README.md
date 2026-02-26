@@ -71,33 +71,34 @@
 
 ---
 
-## 💳 Payment Setup (Stripe)
+## 💳 Payment Setup (Razorpay)
 
-To enable payment functionality, you need to configure Stripe API keys:
+To enable payment functionality, you need to configure Razorpay API keys:
 
-1. **Get your Stripe keys:**
-   - Go to [Stripe Dashboard](https://dashboard.stripe.com/test/apikeys)
-   - Get your **Secret Key** (starts with `sk_test_`)
-   - Get your **Publishable Key** (starts with `pk_test_`)
+1. **Get your Razorpay keys:**
+   - Go to [Razorpay Dashboard](https://dashboard.razorpay.com/app/keys)
+   - Get your **Key Id** (starts with `rzp_`)
+   - Get your **Key Secret**
 
 2. **Configure your `.env` file:**
    
 ```
-   STRIPE_SECRET_KEY=sk_test_your_secret_key_here
-   STRIPE_PUBLISHABLE_KEY=pk_test_your_publishable_key_here
-   STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret_here
+   RAZORPAY_KEY_ID=rzp_test_your_key_id_here
+   RAZORPAY_KEY_SECRET=your_key_secret_here
    
 ```
 
-3. **For local webhook testing:**
-   - Install Stripe CLI: `brew install stripe/stripe-cli/stripe`
-   - Run: `stripe listen --forward-to localhost:8080/webhook`
-   - Copy the webhook secret it gives you to `.env`
+**Supported Payment Methods:**
+- UPI (Google Pay, PhonePe, Paytm, etc.)
+- Credit/Debit Cards
+- Net Banking
+- Wallets (Paytm, PhonePe, Mobikwik, etc.)
 
-**Note:** The payment system is fully integrated. Once Stripe keys are configured, users can:
+**Note:** The payment system is fully integrated. Once Razorpay keys are configured, users can:
 - See payment status on booking details
-- Click "Pay Now" to complete payment via Stripe Checkout
+- Click "Pay Now" to complete payment via Razorpay Checkout
 - Receive payment confirmation and booking confirmation
+- Pay using UPI, Cards, Net Banking, or Wallets
 
 ---
 

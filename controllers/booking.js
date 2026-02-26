@@ -82,7 +82,7 @@ module.exports.createBooking = async (req, res, next) => {
             guestEmail,
             guestPhone,
             specialRequests,
-            status: 'confirmed',
+            status: 'pending',
             paymentStatus: 'pending'
         });
 

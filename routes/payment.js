@@ -1,22 +1,21 @@
 const express = require("express");
 const router = express.Router();
-const payment = require("../controllers/payment");
+const razorpay = require("../controllers/razorpay");
 const { isLoggedIn } = require("../middleware");
 
-// Initiate payment for a booking
-router.post("/bookings/:bookingId/pay", isLoggedIn, payment.initiatePayment);
+// Initiate Razorpay payment for a booking
+router.post("/bookings/:bookingId/pay", isLoggedIn, razorpay.initiatePayment);
+
+// Verify Razorpay payment
+router.post("/bookings/:bookingId/verify-payment", isLoggedIn, razorpay.verifyPayment);
 
 // Payment success callback
-router.get("/payments/success", isLoggedIn, payment.paymentSuccess);
+router.post("/payments/razorpay/success", isLoggedIn, razorpay.paymentSuccess);
 
 // Payment cancel callback
-router.get("/payments/cancel", payment.paymentCancel);
-
-// Stripe webhook (needs raw body, so should be before express.json middleware)
-// Note: This route should be registered before express.json() in app.js
-// For now, we'll handle it as a post route and adjust app.js accordingly
+router.post("/payments/razorpay/cancel", razorpay.paymentCancel);
 
 // Get payment status (API endpoint)
-router.get("/bookings/:bookingId/payment-status", isLoggedIn, payment.getPaymentStatus);
+router.get("/bookings/:bookingId/payment-status", isLoggedIn, razorpay.getPaymentStatus);
 
 module.exports = router;
