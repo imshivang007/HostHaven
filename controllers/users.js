@@ -131,14 +131,17 @@ module.exports.login = async (req, res, next) => {
             return res.redirect("/login");
         }
         
+        // If we reach here, authentication was successful
+        // Note: The actual authentication is handled by passport.authenticate middleware
+        // This code runs only after successful authentication
         req.flash("success", "Welcome back to HostHaven! You are logged in!");
         let redirectUrl = res.locals.redirectUrl || "/listings";
         return res.redirect(redirectUrl);
     } catch (error) {
-        // If user not found by username, let passport handle it
-        req.flash("success", "Welcome back to HostHaven! You are logged in!");
-        let redirectUrl = res.locals.redirectUrl || "/listings";
-        return res.redirect(redirectUrl);
+        // If there's an error, show error message and redirect to login
+        console.error("Login error:", error);
+        req.flash("error", "An error occurred during login. Please try again.");
+        return res.redirect("/login");
     }
 }
 

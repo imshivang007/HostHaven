@@ -157,6 +157,21 @@ store.on("error", (err) => {
     console.log("ERROR in MONGO SESSION STORE", err);
 });
 
+// Middleware to handle corrupted session data
+app.use((req, res, next) => {
+    // If there's a session ID but the session can't be loaded, create a new session
+    if (req.sessionID) {
+        req.session.regenerate((err) => {
+            if (err) {
+                console.log("Session regeneration error:", err);
+            }
+            next();
+        });
+    } else {
+        next();
+    }
+});
+
 const sessionOptions = {
     store,
     secret: sessionSecret,
@@ -185,7 +200,8 @@ app.use((req, res, next) => {
     // so we need to make them available as arrays
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
-    res.locals.currUser = req.user;
+    // Ensure currUser is always defined (even if not logged in)
+    res.locals.currUser = req.user || null;
     next();
 });
 

@@ -54,7 +54,4 @@ router.put("/profile", isLoggedIn, upload.single("profileImage"), validateProfil
 // User wishlist (full page)
 router.get("/my-wishlist", isLoggedIn, userController.getWishlist);
 
-// User all bookings
-router.get("/my-bookings", isLoggedIn, userController.getAllBookings);
-
 module.exports = router;
