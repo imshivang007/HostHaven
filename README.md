@@ -71,6 +71,36 @@
 
 ---
 
+## 💳 Payment Setup (Stripe)
+
+To enable payment functionality, you need to configure Stripe API keys:
+
+1. **Get your Stripe keys:**
+   - Go to [Stripe Dashboard](https://dashboard.stripe.com/test/apikeys)
+   - Get your **Secret Key** (starts with `sk_test_`)
+   - Get your **Publishable Key** (starts with `pk_test_`)
+
+2. **Configure your `.env` file:**
+   
+```
+   STRIPE_SECRET_KEY=sk_test_your_secret_key_here
+   STRIPE_PUBLISHABLE_KEY=pk_test_your_publishable_key_here
+   STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret_here
+   
+```
+
+3. **For local webhook testing:**
+   - Install Stripe CLI: `brew install stripe/stripe-cli/stripe`
+   - Run: `stripe listen --forward-to localhost:8080/webhook`
+   - Copy the webhook secret it gives you to `.env`
+
+**Note:** The payment system is fully integrated. Once Stripe keys are configured, users can:
+- See payment status on booking details
+- Click "Pay Now" to complete payment via Stripe Checkout
+- Receive payment confirmation and booking confirmation
+
+---
+
 ## 📞 Contact
 
 - **Email:** imshivang007@gmail.com

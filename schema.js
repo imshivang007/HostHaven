@@ -12,6 +12,11 @@ module.exports.listingSchema = Joi.object({
         price: Joi.number().required().min(0),
         image: Joi.string().allow("", null),
         category: Joi.string().valid('Trending', 'Rooms', 'Iconic_Cities', 'Mountains', 'Castles', 'Amazing_Pool', 'Camping', 'Farms', 'Arctic', 'Domes', 'House_Boats'),
+        // Property details
+        guests: Joi.number().integer().min(1).max(20),
+        bedrooms: Joi.number().integer().min(0).max(20),
+        beds: Joi.number().integer().min(0).max(20),
+        baths: Joi.number().integer().min(0).max(20),
         amenities: Joi.array().items(Joi.string()),
         availability: Joi.object({
             available: Joi.alternatives().try(Joi.boolean(), Joi.valid('on', 'true', 'false', '')),

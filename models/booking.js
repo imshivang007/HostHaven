@@ -39,6 +39,12 @@ const bookingSchema = new Schema({
         enum: ['pending', 'paid', 'refunded'],
         default: 'pending'
     },
+    stripeSessionId: {
+        type: String
+    },
+    paymentIntentId: {
+        type: String
+    },
     guestName: {
         type: String,
         required: true

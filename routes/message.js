@@ -12,6 +12,9 @@ router.get("/messages/inbox", isLoggedIn, messages.getInbox);
 // Get sent messages
 router.get("/messages/sent", isLoggedIn, messages.getSent);
 
+// Get unread message count (for navbar badge) - MUST be before :messageId route
+router.get("/messages/unread-count", isLoggedIn, messages.getUnreadCount);
+
 // Read a message
 router.get("/messages/:messageId", isLoggedIn, messages.readMessage);
 

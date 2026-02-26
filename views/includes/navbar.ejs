@@ -68,6 +68,28 @@
         color: white;
         font-weight: 600;
     }
+    .message-badge {
+        position: relative;
+        display: inline-block;
+    }
+    .unread-count-badge {
+        position: absolute;
+        top: -5px;
+        right: -8px;
+        background-color: #D62828;
+        color: white;
+        border-radius: 50%;
+        padding: 2px 6px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        min-width: 18px;
+        text-align: center;
+        border: 2px solid white;
+    }
+    .unread-count-badge:empty,
+    .unread-count-badge[data-count="0"] {
+        display: none;
+    }
 </style>
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
     <div class="container-fluid">
@@ -108,8 +130,11 @@
                 
                 <% if(currUser){%>
                     <!-- Messages Dropdown -->
-                    <a class="nav-link" href="/messages/inbox" title="Messages">
+                    <a class="nav-link message-badge" href="/messages/inbox" title="Messages">
                         <i class="fa-solid fa-envelope"></i>
+                        <span class="unread-count-badge" id="unread-badge" data-count="<%= typeof unreadCount !== 'undefined' ? unreadCount : 0 %>">
+                            <%= typeof unreadCount !== 'undefined' ? unreadCount : '' %>
+                        </span>
                     </a>
                     
                     <!-- Bookings Link -->
@@ -142,12 +167,113 @@
 
 <script type="module">
     let searchBtn = document.getElementById("search-btn");
+    let searchInput = document.getElementById("search");
+    
+    // Show toast function
+    function showToast(message) {
+        // Remove existing toast if any
+        const existingToast = document.getElementById('search-toast');
+        if (existingToast) {
+            existingToast.remove();
+        }
+        
+        // Create toast element
+        const toast = document.createElement('div');
+        toast.id = 'search-toast';
+        toast.className = 'toast-notification';
+        toast.textContent = message;
+        toast.style.cssText = `
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fcb69f;
+            color: #003049;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            z-index: 9999;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            animation: fadeInOut 3s ease-in-out forwards;
+        `;
+        document.body.appendChild(toast);
+        
+        // Remove after animation
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.remove();
+            }
+        }, 3000);
+    }
+    
+    // Add animation keyframes
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+            10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+        }
+    `;
+    document.head.appendChild(style);
+    
     searchBtn.addEventListener("click", (event) => {
         event.preventDefault();
-        let searchValue = document.getElementById("search").value;
+        let searchValue = searchInput.value;
         if (searchValue.trim() !== "") {
             var url = "/listings/?search=" + encodeURIComponent(searchValue);
             window.location.href = url;
+        } else {
+            // Show toast notification for empty search
+            showToast("Please enter a destination to search");
+            searchInput.focus();
         }
     });
+    
+    // Also handle Enter key
+    searchInput.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            let searchValue = searchInput.value;
+            if (searchValue.trim() !== "") {
+                var url = "/listings/?search=" + encodeURIComponent(searchValue);
+                window.location.href = url;
+            } else {
+                showToast("Please enter a destination to search");
+                searchInput.focus();
+            }
+        }
+    });
+    
+    // Fetch unread message count for navbar badge
+    async function updateUnreadCount() {
+        const badge = document.getElementById('unread-badge');
+        if (!badge) return;
+        
+        try {
+            const response = await fetch('/messages/unread-count');
+            const data = await response.json();
+            
+            if (data.unreadCount > 0) {
+                badge.textContent = data.unreadCount > 99 ? '99+' : data.unreadCount;
+                badge.setAttribute('data-count', data.unreadCount);
+                badge.style.display = 'inline-block';
+            } else {
+                badge.textContent = '';
+                badge.setAttribute('data-count', '0');
+                badge.style.display = 'none';
+            }
+        } catch (error) {
+            console.error('Error fetching unread count:', error);
+        }
+    }
+    
+    // Update unread count on page load (if user is logged in)
+    if (document.getElementById('unread-badge')) {
+        updateUnreadCount();
+        
+        // Poll for new messages every 30 seconds
+        setInterval(updateUnreadCount, 30000);
+    }
 </script>

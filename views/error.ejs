@@ -1,11 +1,93 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
+<style>
+    .error-container {
+        text-align: center;
+        padding: 60px 20px;
+    }
+    .error-code {
+        font-size: 120px;
+        font-weight: 700;
+        color: #003049;
+        margin: 0;
+        line-height: 1;
+    }
+    .error-title {
+        font-size: 28px;
+        color: #003049;
+        margin: 20px 0;
+    }
+    .error-message {
+        font-size: 18px;
+        color: #666;
+        margin-bottom: 30px;
+    }
+    .error-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .btn-error {
+        padding: 12px 30px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    .btn-primary-error {
+        background-color: #003049;
+        color: white;
+    }
+    .btn-primary-error:hover {
+        background-color: #F77F00;
+        transform: scale(1.02);
+    }
+    .btn-outline-error {
+        border: 2px solid #003049;
+        color: #003049;
+    }
+    .btn-outline-error:hover {
+        background-color: #003049;
+        color: white;
+    }
+    .error-icon {
+        font-size: 60px;
+        color: #F77F00;
+        margin-bottom: 20px;
+    }
+</style>
+
 <div class="row">
-    <div class="alert alert-danger col-6 offset-3" role="alert">
-        
-        <h4 class="alert-heading"><%= err.message %></h4> 
-    
+    <div class="col-12">
+        <div class="error-container">
+            <% if(err.status === 404) { %>
+                <div class="error-icon">
+                    <i class="fa-solid fa-compass"></i>
+                </div>
+                <h1 class="error-code">404</h1>
+                <h2 class="error-title">Page Not Found</h2>
+                <p class="error-message">Oops! The page you're looking for seems to have wandered off the map.</p>
+            <% } else { %>
+                <div class="error-icon">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <h1 class="error-code"><%= err.status || 500 %></h1>
+                <h2 class="error-title">Something Went Wrong</h2>
+                <p class="error-message"><%= err.message %></p>
+            <% } %>
+            
+            <div class="error-actions">
+                <a href="/" class="btn-error btn-primary-error">
+                    <i class="fa-solid fa-home"></i> Go Home
+                </a>
+                <a href="/listings" class="btn-error btn-outline-error">
+                    <i class="fa-solid fa-compass"></i> Browse Listings
+                </a>
+                <a href="javascript:history.back()" class="btn-error btn-outline-error">
+                    <i class="fa-solid fa-arrow-left"></i> Go Back
+                </a>
+            </div>
+        </div>
     </div>
 </div>
-
-

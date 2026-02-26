@@ -28,6 +28,29 @@ const listingSchema = new Schema({
     country: {
         type: String
     },
+    
+    // Property details
+    guests: {
+        type: Number,
+        default: 1,
+        min: 1
+    },
+    bedrooms: {
+        type: Number,
+        default: 1,
+        min: 0
+    },
+    beds: {
+        type: Number,
+        default: 1,
+        min: 0
+    },
+    baths: {
+        type: Number,
+        default: 1,
+        min: 0
+    },
+    
     reviews: [{
         type: Schema.Types.ObjectId,
         ref: "Review"

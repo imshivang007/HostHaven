@@ -175,3 +175,22 @@ module.exports.replyMessage = async (req, res) => {
         return res.redirect("/messages/inbox");
     }
 };
+
+// Get unread message count (for navbar badge)
+module.exports.getUnreadCount = async (req, res) => {
+    try {
+        if (!req.user) {
+            return res.json({ unreadCount: 0 });
+        }
+        
+        const unreadCount = await Message.countDocuments({
+            recipient: req.user._id,
+            isRead: false
+        });
+        
+        res.json({ unreadCount });
+    } catch (error) {
+        console.error("Error fetching unread count:", error);
+        res.json({ unreadCount: 0 });
+    }
+};

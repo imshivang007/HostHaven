@@ -515,6 +515,7 @@
     .form-section:nth-child(3) { animation-delay: 0.3s; }
     .form-section:nth-child(4) { animation-delay: 0.4s; }
     .form-section:nth-child(5) { animation-delay: 0.5s; }
+    .form-section:nth-child(6) { animation-delay: 0.6s; }
     
     /* Background Pattern */
     .bg-pattern {
@@ -666,7 +667,43 @@
             </div>
         </div>
 
-        <!-- Section 4: Amenities -->
+        <!-- Section 4: Property Details -->
+        <div class="form-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-bed"></i>
+                </div>
+                <div class="section-title-group">
+                    <h3>Property Details</h3>
+                    <p>Specify the capacity and room details</p>
+                </div>
+            </div>
+            
+            <div class="four-column-grid">
+                <div class="mb-3">
+                    <label for="guests" class="form-label"><i class="fas fa-users"></i> Guests</label>
+                    <input type="number" name="listing[guests]" placeholder="Max guests" class="form-control" value="1" min="1" max="20" required>
+                    <div class="invalid-feedback">Number of guests is required</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="bedrooms" class="form-label"><i class="fas fa-door-open"></i> Bedrooms</label>
+                    <input type="number" name="listing[bedrooms]" placeholder="Number of bedrooms" class="form-control" value="1" min="0" max="20">
+                </div>
+
+                <div class="mb-3">
+                    <label for="beds" class="form-label"><i class="fas fa-bed"></i> Beds</label>
+                    <input type="number" name="listing[beds]" placeholder="Number of beds" class="form-control" value="1" min="0" max="20">
+                </div>
+
+                <div class="mb-3">
+                    <label for="baths" class="form-label"><i class="fas fa-bath"></i> Baths</label>
+                    <input type="number" name="listing[baths]" placeholder="Number of baths" class="form-control" value="1" min="0" max="20" step="0.5">
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Amenities -->
         <div class="form-section">
             <div class="section-header">
                 <div class="section-icon">
@@ -770,7 +807,7 @@
             </div>
         </div>
 
-        <!-- Section 5: Availability Settings -->
+        <!-- Section 6: Availability Settings -->
         <div class="form-section">
             <div class="section-header">
                 <div class="section-icon">

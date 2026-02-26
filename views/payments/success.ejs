@@ -1,0 +1,192 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+    .page-wrapper {
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .full-width-container {
+        max-width: 100%;
+        padding: 2rem 3rem;
+        background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+        min-height: calc(100vh - 80px);
+    }
+    
+    .page-header {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 50%, #28a745 100%);
+        padding: 3rem 3rem;
+        margin: -2rem -3rem 2rem -3rem;
+        border-radius: 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .page-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/></svg>');
+        background-size: 200px 200px;
+        opacity: 0.5;
+    }
+    
+    .page-header h1 {
+        color: white;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .page-header p {
+        color: rgba(255,255,255,0.85);
+        font-size: 1.1rem;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .success-icon {
+        position: absolute;
+        right: 3rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 8rem;
+        color: rgba(255,255,255,0.2);
+    }
+    
+    .success-card {
+        background: white;
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        overflow: hidden;
+        padding: 2rem;
+    }
+    
+    .success-icon-large {
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(135deg, #d4edda, #c3e6cb);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+    }
+    
+    .success-icon-large i {
+        font-size: 3rem;
+        color: #28a745;
+    }
+    
+    .btn-primary-custom {
+        background: linear-gradient(135deg, #D62828, #F77F00) !important;
+        border: none !important;
+        border-radius: 12px;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(214, 40, 40, 0.4);
+    }
+    
+    .btn-outline-custom {
+        border: 2px solid #003049 !important;
+        color: #003049 !important;
+        border-radius: 12px;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-outline-custom:hover {
+        background: #003049 !important;
+        color: white !important;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .success-card {
+        animation: fadeInUp 0.5s ease forwards;
+    }
+    
+    @media (max-width: 768px) {
+        .full-width-container {
+            padding: 1.5rem;
+        }
+        
+        .page-header {
+            padding: 2rem 1.5rem;
+            margin: -1.5rem -1.5rem 1.5rem -1.5rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2rem;
+        }
+    }
+</style>
+
+<div class="bg-pattern" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; background-image: radial-gradient(circle at 20% 80%, rgba(40, 167, 69, 0.03) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(0, 48, 73, 0.03) 0%, transparent 50%);"></div>
+
+<div class="full-width-container">
+    <!-- Hero Header -->
+    <div class="page-header">
+        <i class="fas fa-check-circle success-icon"></i>
+        <h1><i class="fas fa-check"></i> Payment Successful!</h1>
+        <p>Thank you for your booking. Your reservation is confirmed.</p>
+    </div>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="success-card text-center">
+                <div class="success-icon-large">
+                    <i class="fas fa-check"></i>
+                </div>
+                
+                <h2 style="color: #003049; margin-bottom: 1rem;">Booking Confirmed!</h2>
+                
+                <p style="color: #666; font-size: 1.1rem; margin-bottom: 2rem;">
+                    Your payment has been processed successfully. A confirmation email has been sent to your email address.
+                </p>
+                
+                <% if(booking) { %>
+                    <div class="text-start" style="background: #f8f9fa; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem;">
+                        <h5 style="color: #003049; margin-bottom: 1rem;">Booking Details</h5>
+                        <p style="margin-bottom: 0.5rem;"><strong>Booking ID:</strong> <span class="text-muted"><%= booking._id %></span></p>
+                        <p style="margin-bottom: 0.5rem;"><strong>Property:</strong> <%= booking.listing ? booking.listing.title : 'N/A' %></p>
+                        <p style="margin-bottom: 0.5rem;"><strong>Check-in:</strong> <%= new Date(booking.checkIn).toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+                        <p style="margin-bottom: 0.5rem;"><strong>Check-out:</strong> <%= new Date(booking.checkOut).toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+                        <p style="margin-bottom: 0;"><strong>Total Paid:</strong> <span style="color: #D62828; font-weight: 700;">₹<%= booking.totalPrice ? booking.totalPrice.toLocaleString('en-IN') : 0 %></span></p>
+                    </div>
+                <% } %>
+                
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="/my-bookings" class="btn btn-primary-custom">
+                        <i class="fas fa-calendar-alt"></i> View My Bookings
+                    </a>
+                    <a href="/listings" class="btn btn-outline-custom">
+                        <i class="fas fa-home"></i> Browse More Listings
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

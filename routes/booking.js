@@ -21,4 +21,7 @@ router.get("/host-bookings", isLoggedIn, booking.hostBookings);
 // Cancel booking
 router.post("/bookings/:bookingId/cancel", isLoggedIn, booking.cancelBooking);
 
+// Initiate payment for a booking
+router.post("/bookings/:bookingId/pay", isLoggedIn, require("../controllers/payment").initiatePayment);
+
 module.exports = router;

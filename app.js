@@ -16,6 +16,8 @@ const userRouter = require("./routes/user");
 const wishlistRouter = require("./routes/wishlist");
 const bookingRouter = require("./routes/booking");
 const messageRouter = require("./routes/message");
+const paymentRouter = require("./routes/payment");
+const payment = require("./controllers/payment");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
@@ -178,10 +180,81 @@ app.use((req, res, next) => {
 
 app.get("/", (req, res) => { res.redirect("/listings"); });
 
+// SEO: Robots.txt
+app.get("/robots.txt", (req, res) => {
+    res.type("text/plain");
+    res.send(`User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: ${req.protocol}://${req.get("host")}/sitemap.xml
+`);
+});
+
+// SEO: Sitemap.xml
+app.get("/sitemap.xml", async (req, res) => {
+    try {
+        const Listing = require("./models/listing");
+        const baseUrl = `${req.protocol}://${req.get("host")}`;
+        
+        // Get all listings
+        const listings = await Listing.find({}, "updatedAt");
+        
+        // Create sitemap XML
+        let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>${baseUrl}/</loc>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>${baseUrl}/listings</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>${baseUrl}/login</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>${baseUrl}/signup</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+`;
+        
+        // Add all listing URLs
+        for (const listing of listings) {
+            sitemap += `    <url>
+        <loc>${baseUrl}/listings/${listing._id}</loc>
+        <lastmod>${listing.updatedAt ? listing.updatedAt.toISOString() : new Date().toISOString()}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+`;
+        }
+        
+        sitemap += "</urlset>";
+        
+        res.type("application/xml");
+        res.send(sitemap);
+    } catch (error) {
+        console.error("Error generating sitemap:", error);
+        res.status(500).send("Error generating sitemap");
+    }
+});
+
 // New feature routes
 app.use("/", wishlistRouter);
 app.use("/", bookingRouter);
 app.use("/", messageRouter);
+app.use("/", paymentRouter);
+
+// Stripe webhook - must be before express.json() middleware
+// This needs raw body for signature verification
+app.post("/webhook", express.raw({ type: "application/json" }), payment.handleWebhook);
 
 // Existing routes
 app.use("/listings", listingRouter);

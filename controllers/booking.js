@@ -92,7 +92,8 @@ module.exports.createBooking = async (req, res, next) => {
         listing.bookingCount += 1;
         await listing.save();
 
-        req.flash("success", "Booking created successfully!");
+// Redirect to booking details page where user can pay
+        req.flash("success", "Booking created! Please complete your payment.");
         res.redirect(`/bookings/${booking._id}`);
     } catch (error) {
         console.error("Error creating booking:", error);

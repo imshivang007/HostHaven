@@ -10,6 +10,7 @@ const upload = multer({ storage });
 
 const userController = require("../controllers/users");
 
+// Authentication routes
 router
     .route("/signup")
     .get(userController.renderSignupForm)
@@ -28,6 +29,23 @@ router
     );
 
 router.get("/logout", userController.logout);
+
+// Email verification routes
+router.get("/verify-email-sent", userController.renderVerifyEmailSent);
+router.get("/verify-email/:token", wrapAsync(userController.verifyEmail));
+router.get("/resend-verification", userController.renderResendVerification);
+router.post("/resend-verification", wrapAsync(userController.resendVerification));
+
+// Password reset routes
+router
+    .route("/forgot-password")
+    .get(userController.renderForgotPassword)
+    .post(wrapAsync(userController.forgotPassword));
+
+router
+    .route("/reset-password/:token")
+    .get(userController.renderResetPassword)
+    .post(wrapAsync(userController.resetPassword));
 
 // User profile routes
 router.get("/profile", isLoggedIn, userController.renderProfile);
