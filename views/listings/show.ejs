@@ -369,8 +369,8 @@ if (listing.owner && listing.owner.createdAt) {
                     
                     <% if(currUser && listing.owner && !listing.owner._id.equals(currUser._id) && listing.availability && listing.availability.available !== false) { %>
                         <form action="/listings/<%= listing._id %>/book" method="POST" id="bookingForm">
-                            <div class="mb-3"><label class="form-label">Check-in</label><input type="date" class="form-control" name="checkIn" required min="<%= new Date().toISOString().split('T')[0] %>"></div>
-                            <div class="mb-3"><label class="form-label">Check-out</label><input type="date" class="form-control" name="checkOut" required min="<%= new Date().toISOString().split('T')[0] %>"></div>
+                            <div class="mb-3"><label class="form-label">Check-in</label><input type="date" class="form-control" name="checkIn" id="checkIn" required></div>
+                            <div class="mb-3"><label class="form-label">Check-out</label><input type="date" class="form-control" name="checkOut" id="checkOut" required></div>
                             <div class="mb-3"><label class="form-label">Guests</label><select class="form-control" name="guests"><% for(let i = 1; i <= (listing.guests || 10); i++) { %><option value="<%= i %>"><%= i %> <%= i === 1 ? 'guest' : 'guests' %></option><% } %></select></div>
                             <div class="mb-3"><label class="form-label">Your Name</label><input type="text" class="form-control" name="guestName" required placeholder="Full name"></div>
                             <div class="mb-3"><label class="form-label">Email</label><input type="email" class="form-control" name="guestEmail" required placeholder="your@email.com"></div>
@@ -444,17 +444,97 @@ if (listing.owner && listing.owner.createdAt) {
         }
     }
     
-    const bookingForm = document.getElementById('bookingForm');
-    if (bookingForm) {
-        bookingForm.addEventListener('submit', function(e) {
-            const checkIn = new Date(this.checkIn.value);
-            const checkOut = new Date(this.checkOut.value);
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            if (checkIn < today) { e.preventDefault(); alert('Check-in date cannot be in the past'); return; }
-            if (checkOut <= checkIn) { e.preventDefault(); alert('Check-out must be after check-in'); return; }
-        });
-    }
+    // Booking calendar - fetch unavailable dates from backend
+    (function() {
+        const checkInInput = document.getElementById('checkIn');
+        const checkOutInput = document.getElementById('checkOut');
+        const listingId = '<%= listing._id %>';
+        let unavailableDates = [];
+        
+        // Fetch unavailable dates from backend
+        async function fetchUnavailableDates() {
+            try {
+                const response = await fetch(`/listings/${listingId}/availability`);
+                const data = await response.json();
+                if (data.unavailableDates) {
+                    unavailableDates = data.unavailableDates.map(d => new Date(d));
+                }
+                configureDatePickers();
+            } catch (error) {
+                console.error('Error fetching unavailable dates:', error);
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                checkInInput.min = tomorrow.toISOString().split('T')[0];
+                checkOutInput.min = tomorrow.toISOString().split('T')[0];
+            }
+        }
+        
+        function configureDatePickers() {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const tomorrowStr = tomorrow.toISOString().split('T')[0];
+            
+            checkInInput.min = tomorrowStr;
+            checkOutInput.min = tomorrowStr;
+            
+            checkInInput.addEventListener('change', function() {
+                if (this.value) {
+                    const checkInDate = new Date(this.value);
+                    const minCheckOut = new Date(checkInDate);
+                    minCheckOut.setDate(minCheckOut.getDate() + 1);
+                    
+                    if (minCheckOut < tomorrow) {
+                        minCheckOut = tomorrow;
+                        minCheckOut.setDate(minCheckOut.getDate() + 1);
+                    }
+                    
+                    checkOutInput.min = minCheckOut.toISOString().split('T')[0];
+                    
+                    if (checkOutInput.value && new Date(checkOutInput.value) <= checkInDate) {
+                        checkOutInput.value = minCheckOut.toISOString().split('T')[0];
+                    }
+                }
+            });
+        }
+        
+        if (checkInInput && checkOutInput) {
+            fetchUnavailableDates();
+        }
+        
+        const bookingForm = document.getElementById('bookingForm');
+        if (bookingForm) {
+            bookingForm.addEventListener('submit', function(e) {
+                const checkIn = new Date(this.checkIn.value);
+                const checkOut = new Date(this.checkOut.value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                if (checkIn < today) { 
+                    e.preventDefault(); 
+                    alert('Check-in date cannot be in the past'); 
+                    return; 
+                }
+                if (checkOut <= checkIn) { 
+                    e.preventDefault(); 
+                    alert('Check-out must be after check-in'); 
+                    return; 
+                }
+                
+                let currentDate = new Date(checkIn);
+                while (currentDate < checkOut) {
+                    const isUnavailable = unavailableDates.some(unavailable => 
+                        unavailable.toDateString() === currentDate.toDateString()
+                    );
+                    if (isUnavailable) {
+                        e.preventDefault();
+                        alert('Some dates in your selection are not available. Please choose different dates.');
+                        return;
+                    }
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+            });
+        }
+    })();
 </script>
 </parameter>
 </invoke>
