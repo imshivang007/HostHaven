@@ -846,3 +846,88 @@ html {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--color-orange);
 }
+
+/* ============================================
+   PAGE HEADER HERO STYLES (Applied to All Pages)
+   ============================================ */
+
+.page-header {
+    background: linear-gradient(135deg, #003049 0%, #1a5276 50%, #003049 100%);
+    padding: 3rem 3rem;
+    margin: -2rem -3rem 2rem -3rem;
+    border-radius: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.page-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/></svg>');
+    background-size: 200px 200px;
+    opacity: 0.5;
+}
+
+.page-header h1 {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+    text-shadow: 2px 2px 8px rgba(0, 48, 73, 0.5);
+    animation: fadeInDown 0.8s ease forwards;
+}
+
+.page-header p {
+    color: rgba(255,255,255,0.85);
+    font-size: 1.1rem;
+    position: relative;
+    z-index: 1;
+    text-shadow: 1px 1px 4px rgba(0, 48, 73, 0.3);
+    animation: fadeInUp 0.8s ease forwards;
+    animation-delay: 0.2s;
+    opacity: 0;
+}
+
+.page-header .header-icon {
+    position: absolute;
+    right: 3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 8rem;
+    color: rgba(255,255,255,0.1);
+    animation: iconFloat 4s ease-in-out infinite;
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes iconFloat {
+    0%, 100% { transform: translateY(-50%) translateX(0); }
+    50% { transform: translateY(-60%) translateX(10px); }
+}
+
+@media (max-width: 992px) {
+    .page-header {
+        padding: 2rem 1.5rem;
+        margin: -1.5rem -1.5rem 1.5rem -1.5rem;
+    }
+    .page-header h1 { font-size: 2rem; }
+    .page-header .header-icon { display: none; }
+}
+
+@media (max-width: 768px) {
+    .page-header h1 { font-size: 1.5rem; }
+}
