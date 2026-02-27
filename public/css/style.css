@@ -469,11 +469,111 @@ body {
 
 .wishlist-btn:hover {
     transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(214, 40, 40, 0.5);
 }
 
 .wishlist-btn i {
     color: var(--color-red);
     font-size: 1.2rem;
+}
+
+/* Wishlist Button - In Wishlist State with Pulse Animation */
+.wishlist-btn.in-wishlist {
+    animation: pulse 2s infinite;
+}
+
+.wishlist-btn.in-wishlist:hover {
+    animation: none;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(214, 40, 40, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(214, 40, 40, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(214, 40, 40, 0);
+    }
+}
+
+/* Wishlist Badge with HeartBeat Animation on Hover */
+.wishlist-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.wishlist-badge:hover {
+    transform: scale(1.1);
+    animation: heartBeat 1s infinite;
+}
+
+.wishlist-badge i {
+    color: #D62828;
+    font-size: 1.1rem;
+}
+
+@keyframes heartBeat {
+    0% {
+        transform: scale(1);
+    }
+    14% {
+        transform: scale(1.3);
+    }
+    28% {
+        transform: scale(1);
+    }
+    42% {
+        transform: scale(1.3);
+    }
+    70% {
+        transform: scale(1);
+    }
+}
+
+/* Hero Section Overlay Enhancements */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(0, 48, 73, 0.3) 0%, 
+        rgba(0, 48, 73, 0.1) 50%, 
+        rgba(214, 40, 40, 0.1) 100%);
+    pointer-events: none;
+}
+
+.hero-shine {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+    animation: shine 8s infinite linear;
+}
+
+@keyframes shine {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Booking Card */
