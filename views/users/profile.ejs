@@ -502,35 +502,31 @@
                 <h4 class="section-title mb-0">My Bookings</h4>
                 <a href="/my-bookings" class="btn btn-view">View All</a>
             </div>
-            <% if(bookings.length > 0) { %>
-                <% for(let booking of bookings.slice(0, 3)) { %>
-                    <% if(booking && booking.listing && booking.listing.image) { %>
-                    <div class="card booking-card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-md-2">
-                                    <img src="<%= booking.listing.image.url %>" alt="listing" style="width: 100%; height: 80px; object-fit: cover; border-radius: 12px;">
-                                </div>
-                                <div class="col-md-6">
-                                    <h6><%= booking.listing.title %></h6>
-                                    <small class="text-muted">
-                                        <i class="fas fa-calendar"></i> 
+            <% if(bookings && bookings.length > 0) { %>
+                <div class="row">
+                    <% for(let booking of bookings) { %>
+                        <% if(booking && booking.listing && booking.listing.image) { %>
+                        <div class="col-md-4 mb-4">
+                            <div class="card listing-card h-100">
+                                <img src="<%= booking.listing.image.url %>" class="card-img-top" alt="listing">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= booking.listing.title %></h5>
+                                    <p class="card-text">
+                                        <i class="fas fa-calendar me-1"></i>
                                         <%= new Date(booking.checkIn).toLocaleDateString() %> - 
                                         <%= new Date(booking.checkOut).toLocaleDateString() %>
-                                    </small>
-                                </div>
-                                <div class="col-md-2 text-center">
-                                    <span class="status-badge status-<%= booking.status %>"><%= booking.status %></span>
-                                </div>
-                                <div class="col-md-2 text-end">
-                                    <strong>₹<%= booking.totalPrice ? booking.totalPrice.toLocaleString() : 0 %></strong>
-                                    <a href="/bookings/<%= booking._id %>" class="d-block btn btn-view btn-sm mt-2">Details</a>
+                                    </p>
+                                    <p class="price">₹<%= booking.totalPrice ? booking.totalPrice.toLocaleString() : 0 %></p>
+                                    <span class="status-badge status-<%= booking.status %> mb-2 d-inline-block"><%= booking.status %></span>
+                                    <div class="d-flex gap-2 mt-2">
+                                        <a href="/bookings/<%= booking._id %>" class="btn btn-view">View Details</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <% } %>
                     <% } %>
-                <% } %>
+                </div>
             <% } else { %>
                 <p class="empty-text">You haven't made any bookings yet.</p>
             <% } %>
@@ -542,8 +538,26 @@
                 <h4 class="section-title mb-0">My Wishlist</h4>
                 <a href="/my-wishlist" class="btn btn-view">View All</a>
             </div>
-            <% if(wishlistCount > 0) { %>
-                <p>You have <%= wishlistCount %> listings in your wishlist.</p>
+            <% if(wishlistItems && wishlistItems.length > 0) { %>
+                <div class="row">
+                    <% for(let listing of wishlistItems) { %>
+                        <% if(listing && listing.image) { %>
+                        <div class="col-md-4 mb-4">
+                            <div class="card listing-card h-100">
+                                <img src="<%= listing.image.url %>" class="card-img-top" alt="listing">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= listing.title %></h5>
+                                    <p class="card-text"><i class="fas fa-map-marker-alt me-1"></i><%= listing.location %></p>
+                                    <p class="price">₹<%= listing.price ? listing.price.toLocaleString() : 0 %> / night</p>
+                                    <div class="d-flex gap-2">
+                                        <a href="/listings/<%= listing._id %>" class="btn btn-view">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                    <% } %>
+                </div>
             <% } else { %>
                 <p class="empty-text">Your wishlist is empty. Start adding listings you like!</p>
             <% } %>
@@ -551,27 +565,31 @@
 
         <!-- Reviews -->
         <div class="tab-pane fade" id="reviews" role="tabpanel">
-            <h4 class="section-title mb-3">My Reviews</h4>
-            <% if(reviews.length > 0) { %>
-                <% for(let review of reviews) { %>
-                    <% if(review.listing && review.listing.image) { %>
-                    <div class="card review-card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <img src="<%= review.listing.image.url %>" alt="listing" style="width: 100%; height: 80px; object-fit: cover; border-radius: 12px;">
-                                </div>
-                                <div class="col-md-10">
-                                    <h6><%= review.listing.title %></h6>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="section-title mb-0">My Reviews</h4>
+                <a href="/listings" class="btn btn-view">Explore Listings</a>
+            </div>
+            <% if(reviews && reviews.length > 0) { %>
+                <div class="row">
+                    <% for(let review of reviews) { %>
+                        <% if(review && review.listing && review.listing.image) { %>
+                        <div class="col-md-4 mb-4">
+                            <div class="card listing-card h-100">
+                                <img src="<%= review.listing.image.url %>" class="card-img-top" alt="listing">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= review.listing.title %></h5>
                                     <p class="starability-result" data-rating="<%= review.rating %>"></p>
-                                    <p class="mb-1"><%= review.comment %></p>
+                                    <p class="card-text"><%= review.comment %></p>
                                     <small class="text-muted"><%= new Date(review.created).toLocaleDateString() %></small>
+                                    <div class="d-flex gap-2 mt-2">
+                                        <a href="/listings/<%= review.listing._id %>" class="btn btn-view">View Listing</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <% } %>
                     <% } %>
-                <% } %>
+                </div>
             <% } else { %>
                 <p class="empty-text">You haven't written any reviews yet.</p>
             <% } %>

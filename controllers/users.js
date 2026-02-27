@@ -277,14 +277,22 @@ module.exports.renderProfile = async (req, res) => {
             .sort({ createdAt: -1 })
             .limit(5);
         
-        // Get wishlist count
-        const wishlistCount = user.wishlist.length;
+        // Get user's wishlist with populated listings
+        const wishlist = await User.findById(req.user._id)
+            .populate({
+                path: "wishlist",
+                strictPopulate: false
+            });
+        
+        const wishlistItems = wishlist ? wishlist.wishlist : [];
+        const wishlistCount = wishlistItems.length;
 
         res.render("users/profile.ejs", {
             user,
             listings,
             bookings,
             reviews,
+            wishlistItems,
             wishlistCount
         });
     } catch (error) {
