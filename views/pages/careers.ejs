@@ -1,0 +1,254 @@
+<% layout("/layouts/boilerplate") %>
+
+<%- include("../includes/flash") %>
+
+<style>
+    .careers-hero {
+        background: linear-gradient(135deg, #003049 0%, #023e63 100%);
+        padding: 4rem 2rem;
+        text-align: center;
+        color: #EAE2B7;
+    }
+    .careers-hero h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #FCBF49;
+    }
+    .careers-hero p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .careers-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+    }
+    .careers-section {
+        margin-bottom: 3rem;
+    }
+    .careers-section h2 {
+        color: #003049;
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        border-bottom: 3px solid #FCBF49;
+        display: inline-block;
+        padding-bottom: 0.5rem;
+    }
+    .careers-section p {
+        color: #555;
+        line-height: 1.8;
+        font-size: 1.05rem;
+    }
+    .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+    .benefit-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+    .benefit-card:hover {
+        transform: translateY(-5px);
+    }
+    .benefit-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    .benefit-card h3 {
+        color: #003049;
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+    }
+    .benefit-card p {
+        color: #666;
+        font-size: 0.9rem;
+    }
+    .job-listings {
+        margin-top: 2rem;
+    }
+    .job-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    .job-info h3 {
+        color: #003049;
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+    .job-meta {
+        display: flex;
+        gap: 1rem;
+        color: #666;
+        font-size: 0.9rem;
+    }
+    .job-meta span {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+    .apply-btn {
+        background: #FCBF49;
+        color: #003049;
+        padding: 0.6rem 1.5rem;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    .apply-btn:hover {
+        background: #f5a623;
+        transform: translateY(-2px);
+    }
+    .cta-section {
+        background: linear-gradient(135deg, #003049 0%, #023e63 100%);
+        padding: 3rem 2rem;
+        border-radius: 10px;
+        text-align: center;
+        color: #EAE2B7;
+        margin-top: 2rem;
+    }
+    .cta-section h2 {
+        color: #FCBF49;
+        margin-bottom: 1rem;
+    }
+    .cta-section p {
+        color: #EAE2B7;
+        margin-bottom: 1.5rem;
+    }
+    .cta-email {
+        color: #FCBF49;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+</style>
+
+<div class="careers-hero">
+    <h1>Join Our Team</h1>
+    <p>Help us revolutionize the vacation rental industry and create amazing travel experiences for millions of people worldwide.</p>
+</div>
+
+<div class="careers-content">
+    <div class="careers-section">
+        <h2>Why Work With Us</h2>
+        <p>At HostHaven, we believe in creating a workplace where innovation thrives, diversity is celebrated, and every team member has the opportunity to grow. Join us in building the future of travel.</p>
+        
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">🏖️</div>
+                <h3>Flexible Work</h3>
+                <p>Work from anywhere with our flexible remote and hybrid policies.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">💰</div>
+                <h3>Competitive Pay</h3>
+                <p>Industry-leading salaries with equity options for eligible positions.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">🏥</div>
+                <h3>Health & Wellness</h3>
+                <p>Comprehensive health insurance including mental health support.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">📚</div>
+                <h3>Learning Budget</h3>
+                <p>Annual learning budget for courses, conferences, and books.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">🎉</div>
+                <h3>Unlimited PTO</h3>
+                <p>Take the time you need to recharge and stay productive.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">🌍</div>
+                <h3>Travel Perks</h3>
+                <p>Stay at HostHaven properties around the world for free.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="careers-section">
+        <h2>Open Positions</h2>
+        <p>We're always looking for talented individuals to join our team. Check out our current openings below.</p>
+        
+        <div class="job-listings">
+            <div class="job-card">
+                <div class="job-info">
+                    <h3>Senior Full Stack Developer</h3>
+                    <div class="job-meta">
+                        <span>📍 Remote</span>
+                        <span>⏰ Full-time</span>
+                    </div>
+                </div>
+                <a href="mailto:careers@hosthaven.com?subject=Application for Senior Full Stack Developer" class="apply-btn">Apply Now</a>
+            </div>
+            
+            <div class="job-card">
+                <div class="job-info">
+                    <h3>Product Manager</h3>
+                    <div class="job-meta">
+                        <span>📍 Remote</span>
+                        <span>⏰ Full-time</span>
+                    </div>
+                </div>
+                <a href="mailto:careers@hosthaven.com?subject=Application for Product Manager" class="apply-btn">Apply Now</a>
+            </div>
+            
+            <div class="job-card">
+                <div class="job-info">
+                    <h3>Customer Success Manager</h3>
+                    <div class="job-meta">
+                        <span>📍 Remote</span>
+                        <span>⏰ Full-time</span>
+                    </div>
+                </div>
+                <a href="mailto:careers@hosthaven.com?subject=Application for Customer Success Manager" class="apply-btn">Apply Now</a>
+            </div>
+            
+            <div class="job-card">
+                <div class="job-info">
+                    <h3>UX/UI Designer</h3>
+                    <div class="job-meta">
+                        <span>📍 Remote</span>
+                        <span>⏰ Full-time</span>
+                    </div>
+                </div>
+                <a href="mailto:careers@hosthaven.com?subject=Application for UX/UI Designer" class="apply-btn">Apply Now</a>
+            </div>
+            
+            <div class="job-card">
+                <div class="job-info">
+                    <h3>Marketing Specialist</h3>
+                    <div class="job-meta">
+                        <span>📍 Remote</span>
+                        <span>⏰ Full-time</span>
+                    </div>
+                </div>
+                <a href="mailto:careers@hosthaven.com?subject=Application for Marketing Specialist" class="apply-btn">Apply Now</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="cta-section">
+        <h2>Don't See the Right Role?</h2>
+        <p>We're always interested in connecting with talented people. Send us your resume and tell us how you can contribute to our mission.</p>
+        <a href="mailto:careers@hosthaven.com?subject=General Application" class="apply-btn">Send General Application</a>
+        <p style="margin-top: 1rem;" class="cta-email">careers@hosthaven.com</p>
+    </div>
+</div>

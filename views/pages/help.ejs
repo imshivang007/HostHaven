@@ -1,0 +1,253 @@
+<% layout("/layouts/boilerplate") %>
+
+<%- include("../includes/flash") %>
+
+<style>
+    .help-hero {
+        background: linear-gradient(135deg, #003049 0%, #023e63 100%);
+        padding: 4rem 2rem;
+        text-align: center;
+        color: #EAE2B7;
+    }
+    .help-hero h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #FCBF49;
+    }
+    .help-hero p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .help-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+    }
+    .help-search {
+        margin-bottom: 3rem;
+    }
+    .help-search-box {
+        max-width: 600px;
+        margin: 0 auto 2rem;
+        position: relative;
+    }
+    .help-search-box input {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 50px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+    .help-search-box input:focus {
+        outline: none;
+        border-color: #FCBF49;
+    }
+    .help-categories {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    .help-category {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-decoration: none;
+        display: block;
+    }
+    .help-category:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+    .category-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    .help-category h3 {
+        color: #003049;
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+    .help-category p {
+        color: #666;
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    .contact-section {
+        margin-top: 3rem;
+    }
+    .contact-section h2 {
+        color: #003049;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+    .contact-options {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+    .contact-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+    .contact-card:hover {
+        transform: translateY(-5px);
+    }
+    .contact-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    .contact-card h3 {
+        color: #003049;
+        margin-bottom: 0.5rem;
+    }
+    .contact-card p {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+    .contact-link {
+        color: #FCBF49;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    .contact-link:hover {
+        text-decoration: underline;
+    }
+    .emergency-section {
+        background: #fff3cd;
+        border: 1px solid #ffc107;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-top: 2rem;
+    }
+    .emergency-section h3 {
+        color: #856404;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .emergency-section p {
+        color: #856404;
+        margin-bottom: 0.5rem;
+    }
+    .emergency-section a {
+        color: #003049;
+        font-weight: 600;
+    }
+    .response-time {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-top: 2rem;
+        text-align: center;
+    }
+    .response-time h4 {
+        color: #003049;
+        margin-bottom: 0.5rem;
+    }
+    .response-time p {
+        color: #666;
+        font-size: 0.9rem;
+    }
+</style>
+
+<div class="help-hero">
+    <h1>Help Center</h1>
+    <p>We're here to help! Find answers to your questions or get in touch with our support team.</p>
+</div>
+
+<div class="help-content">
+    <div class="help-search">
+        <div class="help-search-box">
+            <input type="text" placeholder="Search for help..." id="helpSearchInput">
+        </div>
+    </div>
+
+    <div class="help-categories">
+        <a href="/faq" class="help-category">
+            <div class="category-icon">❓</div>
+            <h3>FAQs</h3>
+            <p>Find answers to the most commonly asked questions about bookings, payments, and more.</p>
+        </a>
+        
+        <a href="/listings" class="help-category">
+            <div class="category-icon">🏠</div>
+            <h3>Booking Help</h3>
+            <p>Learn how to search, book, and manage your vacation rental reservations.</p>
+        </a>
+        
+        <a href="/my-bookings" class="help-category">
+            <div class="category-icon">📋</div>
+            <h3>My Bookings</h3>
+            <p>View and manage your current and past bookings, modify reservations.</p>
+        </a>
+        
+        <a href="/faq#payments" class="help-category">
+            <div class="category-icon">💳</div>
+            <h3>Payments & Refunds</h3>
+            <p>Understand payment processing, refund policies, and billing questions.</p>
+        </a>
+        
+        <a href="/faq#hosts" class="help-category">
+            <div class="category-icon">🔑</div>
+            <h3>Host Support</h3>
+            <p>Resources for property owners including listing management and payouts.</p>
+        </a>
+        
+        <a href="/privacy" class="help-category">
+            <div class="category-icon">🔒</div>
+            <h3>Privacy & Security</h3>
+            <p>Learn how we protect your data and ensure a secure experience.</p>
+        </a>
+    </div>
+
+    <div class="contact-section">
+        <h2>Contact Us</h2>
+        <div class="contact-options">
+            <div class="contact-card">
+                <div class="contact-icon">💬</div>
+                <h3>Live Chat</h3>
+                <p>Chat with our support team in real-time for immediate assistance.</p>
+                <a href="#" class="contact-link" onclick="alert('Live chat feature coming soon!')">Start Chat</a>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-icon">📧</div>
+                <h3>Email Support</h3>
+                <p>Send us an email and we'll respond within 24 hours.</p>
+                <a href="mailto:support@hosthaven.com" class="contact-link">support@hosthaven.com</a>
+            </div>
+            
+            <div class="contact-card">
+                <div class="contact-icon">📞</div>
+                <h3>Phone Support</h3>
+                <p>Call us for urgent matters during business hours.</p>
+                <a href="tel:+15551234567" class="contact-link">+91 8795671049</a>
+            </div>
+        </div>
+
+        <div class="emergency-section">
+            <h3>🚨 Emergency Assistance</h3>
+            <p>For immediate emergencies requiring police, fire, or medical services, please dial your local emergency number first.</p>
+            <p>For urgent safety concerns related to your HostHaven booking, call: <a href="tel:+91 8795671049">+91 8795671049</a></p>
+        </div>
+
+        <div class="response-time">
+            <h4>Average Response Time</h4>
+            <p>📧 Email: Within 24 hours | 💬 Live Chat: Immediate | 📞 Phone: During business hours (9 AM - 6 PM IST)</p>
+        </div>
+    </div>
+</div>

@@ -207,6 +207,31 @@ app.use((req, res, next) => {
 
 app.get("/", (req, res) => { res.redirect("/listings"); });
 
+// Static Pages
+app.get("/about", (req, res) => {
+    res.render("pages/about.ejs");
+});
+
+app.get("/careers", (req, res) => {
+    res.render("pages/careers.ejs");
+});
+
+app.get("/faq", (req, res) => {
+    res.render("pages/faq.ejs");
+});
+
+app.get("/help", (req, res) => {
+    res.render("pages/help.ejs");
+});
+
+app.get("/privacy", (req, res) => {
+    res.render("pages/privacy.ejs");
+});
+
+app.get("/terms", (req, res) => {
+    res.render("pages/terms.ejs");
+});
+
 // SEO: Robots.txt
 app.get("/robots.txt", (req, res) => {
     res.type("text/plain");

@@ -1,0 +1,264 @@
+<% layout("/layouts/boilerplate") %>
+
+<%- include("../includes/flash") %>
+
+<style>
+    .terms-hero {
+        background: linear-gradient(135deg, #003049 0%, #023e63 100%);
+        padding: 4rem 2rem;
+        text-align: center;
+        color: #EAE2B7;
+    }
+    .terms-hero h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #FCBF49;
+    }
+    .terms-hero p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .terms-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+    }
+    .terms-section {
+        margin-bottom: 2.5rem;
+    }
+    .terms-section h2 {
+        color: #003049;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid #FCBF49;
+        padding-bottom: 0.5rem;
+    }
+    .terms-section h3 {
+        color: #003049;
+        font-size: 1.2rem;
+        margin: 1.5rem 0 0.75rem;
+    }
+    .terms-section p {
+        color: #555;
+        line-height: 1.8;
+        font-size: 1rem;
+    }
+    .terms-section ul {
+        color: #555;
+        line-height: 1.8;
+        padding-left: 1.5rem;
+    }
+    .terms-section li {
+        margin-bottom: 0.5rem;
+    }
+    .last-updated {
+        color: #666;
+        font-style: italic;
+        margin-bottom: 2rem;
+    }
+    .acceptance-box {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-top: 2rem;
+        border-left: 4px solid #FCBF49;
+    }
+    .acceptance-box h3 {
+        color: #003049;
+        margin-bottom: 0.5rem;
+    }
+    .contact-box {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-top: 2rem;
+    }
+    .contact-box h3 {
+        color: #003049;
+        margin-bottom: 0.5rem;
+    }
+    .contact-box a {
+        color: #FCBF49;
+        font-weight: 600;
+    }
+</style>
+
+<div class="terms-hero">
+    <h1>Terms of Service</h1>
+    <p>Please read these terms carefully before using our platform. By using HostHaven, you agree to these terms.</p>
+</div>
+
+<div class="terms-content">
+    <p class="last-updated">Last Updated: <%= new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+
+    <div class="terms-section">
+        <h2>1. Acceptance of Terms</h2>
+        <p>By accessing and using the HostHaven platform ("Platform"), you accept and agree to be bound by the terms and provision of this Agreement. If you do not agree to abide by these terms, please do not use this service.</p>
+    </div>
+
+    <div class="terms-section">
+        <h2>2. Description of Service</h2>
+        <p>HostHaven provides an online marketplace that connects travelers with property owners (hosts) who list vacation rentals. Our platform enables users to:</p>
+        <ul>
+            <li>Browse and search vacation rental listings</li>
+            <li>Make reservations for stays</li>
+            <li>List properties for rent (for hosts)</li>
+            <li>Leave reviews and ratings</li>
+            <li>Communicate with hosts and guests</li>
+        </ul>
+    </div>
+
+    <div class="terms-section">
+        <h2>3. User Accounts</h2>
+        <p>To use certain features of our Platform, you must create an account. You agree to:</p>
+        <ul>
+            <li>Provide accurate and complete registration information</li>
+            <li>Maintain the security of your account credentials</li>
+            <li>Accept responsibility for all activities under your account</li>
+            <li>Notify us immediately of any unauthorized use</li>
+            <li>Be at least 18 years of age</li>
+        </ul>
+    </div>
+
+    <div class="terms-section">
+        <h2>4. Guest Terms</h2>
+        <h3>Booking and Payment</h3>
+        <p>When you book a property through HostHaven:</p>
+        <ul>
+            <li>You agree to pay all fees associated with your reservation</li>
+            <li>Payments are processed through our secure payment partners</li>
+            <li>You agree to the host's cancellation policy</li>
+            <li>You are responsible for any damages beyond normal wear and tear</li>
+        </ul>
+        
+        <h3>Code of Conduct</h3>
+        <p>As a guest, you agree to:</p>
+        <ul>
+            <li>Respect the property and follow house rules</li>
+            <li>Not exceed the maximum number of guests specified</li>
+            <li>Not host parties or events without host permission</li>
+            <li>Not smoke in non-smoking properties</li>
+            <li>Not bring pets unless explicitly allowed</li>
+        </ul>
+    </div>
+
+    <div class="terms-section">
+        <h2>5. Host Terms</h2>
+        <h3>Listing Your Property</h3>
+        <p>As a host, you agree to:</p>
+        <ul>
+            <li>Provide accurate and complete listing information</li>
+            <li>Maintain the property in good condition</li>
+            <li>Respond to guest inquiries promptly</li>
+            <li>Honor confirmed reservations</li>
+            <li>Comply with all local laws and regulations</li>
+        </ul>
+        
+        <h3>Host Responsibilities</h3>
+        <ul>
+            <li>Ensure the property meets safety standards</li>
+            <li>Provide accurate location and property details</li>
+            <li>Handle check-in and check-out procedures</li>
+            <li>Report any issues or concerns immediately</li>
+        </ul>
+    </div>
+
+    <div class="terms-section">
+        <h2>6. Fees and Payments</h2>
+        <p>HostHaven charges service fees for using our platform:</p>
+        <ul>
+            <li><strong>Guest Service Fee:</strong> A percentage of the booking subtotal</li>
+            <li><strong>Host Service Fee:</strong> A percentage of the host's earnings</li>
+            <li>All fees are clearly disclosed before completing a booking</li>
+            <li>Refunds are processed according to the applicable cancellation policy</li>
+        </ul>
+    </div>
+
+    <div class="terms-section">
+        <h2>7. Cancellations and Refunds</h2>
+        <p>Cancellation policies vary by listing:</p>
+        <ul>
+            <li><strong>Flexible:</strong> Full refund if cancelled at least 24 hours before check-in</li>
+            <li><strong>Moderate:</strong> Full refund if cancelled at least 5 days before check-in</li>
+            <li><strong>Strict:</strong> 50% refund if cancelled at least 7 days before check-in</li>
+        </ul>
+        <p>No refunds for cancellations made less than 24 hours before check-in (unless host agrees).</p>
+    </div>
+
+    <div class="terms-section">
+        <h2>8. Intellectual Property</h2>
+        <p>The HostHaven platform and its original content, features, and functionality are owned by HostHaven and are protected by international copyright, trademark, patent, trade secret, and other intellectual property laws.</p>
+    </div>
+
+    <div class="terms-section">
+        <h2>9. User Content</h2>
+        <p>Users may submit content such as reviews, photos, and comments. By submitting content, you:</p>
+        <ul>
+            <li>Grant HostHaven a perpetual, irrevocable license to use, reproduce, and display the content</li>
+            <li>Warrant that you own or have the right to use any content you submit</li>
+            <li>Agree that content must be accurate and not violate any rights</li>
+        </ul>
+    </div>
+
+    <div class="terms-section">
+        <h2>10. Disclaimers</h2>
+        <p>HostHaven provides the platform "as is" without any warranties:</p>
+        <ul>
+            <li>We do not guarantee the accuracy of listings</li>
+            <li>We are not responsible for host or guest conduct</li>
+            <li>We do not warrant that the service will be uninterrupted or error-free</li>
+            <li>Users use the platform at their own risk</li>
+        </ul>
+    </div>
+
+    <div class="terms-section">
+        <h2>11. Limitation of Liability</h2>
+        <p>HostHaven shall not be liable for:</p>
+        <ul>
+            <li>Indirect, incidental, or consequential damages</li>
+            <li>Loss of profits, data, or business opportunities</li>
+            <li>Property damage or personal injury during stays</li>
+            <li>Any disruption or inability to use the service</li>
+        </ul>
+    </div>
+
+    <div class="terms-section">
+        <h2>12. Indemnification</h2>
+        <p>You agree to indemnify, defend, and hold harmless HostHaven and its officers, directors, employees, and agents from any claims, damages, losses, or expenses arising from:</p>
+        <ul>
+            <li>Your use of the platform</li>
+            <li>Your violation of these terms</li>
+            <li>Your violation of any third-party rights</li>
+            <li>Your content or user submissions</li>
+        </ul>
+    </div>
+
+    <div class="terms-section">
+        <h2>13. Termination</h2>
+        <p>We may terminate or suspend your account immediately, without prior notice, for any reason including breach of these Terms. Upon termination, your right to use the platform will immediately cease.</p>
+    </div>
+
+    <div class="terms-section">
+        <h2>14. Governing Law</h2>
+        <p>These Terms shall be governed by and construed in accordance with the laws of the jurisdiction in which HostHaven operates, without regard to its conflict of law provisions.</p>
+    </div>
+
+    <div class="terms-section">
+        <h2>15. Changes to Terms</h2>
+        <p>We reserve the right to modify these terms at any time. We will provide notice of material changes. Your continued use of the platform after such changes constitutes acceptance of the new terms.</p>
+    </div>
+
+    <div class="acceptance-box">
+        <h3>Acceptance</h3>
+        <p>By using the HostHaven platform, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services.</p>
+    </div>
+
+    <div class="contact-box">
+        <h3>Contact Us</h3>
+        <p>If you have questions about these Terms of Service, please contact us at:</p>
+        <p>Email: <a href="mailto:legal@hosthaven.com">legal@hosthaven.com</a></p>
+    </div>
+</div>

@@ -1,58 +1,132 @@
 <style>
     .footer {
         background-color: #003049;
-        padding: 2rem 0;
+        padding: 3rem 0 1.5rem;
         margin-top: auto;
     }
     .f-info {
-        text-align: center;
+        text-align: left;
         height: auto;
         min-height: auto;
         background-color: transparent;
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        gap: 1.5rem;
-        padding: 0;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 2rem;
+        padding: 0 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
     }
-    .f-info-links a {
+    .f-info-logo {
+        flex: 1;
+        min-width: 200px;
+    }
+    .f-info-logo h3 {
+        color: #FCBF49;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+    }
+    .f-info-logo p {
+        color: #EAE2B7;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        opacity: 0.9;
+    }
+    .f-info-column {
+        flex: 1;
+        min-width: 150px;
+    }
+    .f-info-column h4 {
+        color: #FCBF49;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+    .f-info-column a {
+        display: block;
         text-decoration: none;
         color: #EAE2B7;
-        margin: 0 1rem;
+        margin-bottom: 0.5rem;
         font-weight: 500;
+        font-size: 0.9rem;
         transition: all 0.3s ease;
-        position: relative;
     }
-    .f-info-links a::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 2px;
-        bottom: -4px;
-        left: 0;
-        background-color: #FCBF49;
-        transition: width 0.3s ease;
-    }
-    .f-info-links a:hover {
+    .f-info-column a:hover {
         color: #FCBF49;
+        transform: translateX(5px);
     }
-    .f-info-links a:hover::after {
-        width: 100%;
+    .f-info-contact p {
+        color: #EAE2B7;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .f-info-contact i {
+        color: #FCBF49;
+        width: 20px;
+    }
+    .f-info-newsletter {
+        flex: 1.5;
+        min-width: 250px;
+    }
+    .f-info-newsletter h4 {
+        color: #FCBF49;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+    }
+    .f-info-newsletter p {
+        color: #EAE2B7;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        opacity: 0.9;
+    }
+    .newsletter-form {
+        display: flex;
+        gap: 0.5rem;
+    }
+    .newsletter-form input {
+        flex: 1;
+        padding: 0.6rem 1rem;
+        border: none;
+        border-radius: 4px;
+        background-color: rgba(255,255,255,0.1);
+        color: #EAE2B7;
+        font-size: 0.9rem;
+    }
+    .newsletter-form input::placeholder {
+        color: rgba(234, 226, 183, 0.6);
+    }
+    .newsletter-form button {
+        padding: 0.6rem 1.2rem;
+        background-color: #FCBF49;
+        color: #003049;
+        border: none;
+        border-radius: 4px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .newsletter-form button:hover {
+        background-color: #f5a623;
+        transform: translateY(-2px);
     }
     .f-info-socials {
         display: flex;
         align-items: center;
-        justify-content: center;
-        gap: 1.2rem;
-        width: 100%;
+        gap: 1rem;
+        margin-top: 1rem;
     }
     .f-info-socials a {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
         background-color: rgba(255,255,255,0.1);
         transition: all 0.3s ease;
@@ -64,7 +138,7 @@
         box-shadow: 0 4px 12px rgba(252, 191, 73, 0.4);
     }
     .f-info-socials i {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         color: #EAE2B7;
         margin: 0;
         transition: all 0.3s ease;
@@ -72,43 +146,140 @@
     .f-info-socials a:hover i {
         color: #003049;
     }
-    .f-info-brand {
+    .f-info-bottom {
         width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(234, 226, 183, 0.2);
+    }
+    .f-info-brand {
         color: #EAE2B7;
         font-weight: 500;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
     }
-    .footer-divider {
-        width: 50px;
-        height: 1px;
-        background-color: #EAE2B7;
-        opacity: 0.3;
+    .f-info-payments {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    .f-info-payments span {
+        color: #EAE2B7;
+        font-size: 0.85rem;
+        margin-right: 0.5rem;
+    }
+    .f-info-payments i {
+        font-size: 1.5rem;
+        color: #EAE2B7;
+        opacity: 0.8;
+    }
+    .f-info-payments i:hover {
+        opacity: 1;
+    }
+    @media (max-width: 768px) {
+        .f-info {
+            flex-direction: column;
+            text-align: center;
+            padding: 0 1rem;
+        }
+        .f-info-column, .f-info-logo, .f-info-newsletter {
+            width: 100%;
+        }
+        .f-info-contact p {
+            justify-content: center;
+        }
+        .f-info-socials {
+            justify-content: center;
+        }
+        .f-info-bottom {
+            flex-direction: column;
+            text-align: center;
+        }
     }
 </style>
 
 <footer class="footer">
     <div class="f-info">
-        <div class="f-info-socials">
-            <a href="https://github.com/imshivang007" title="GitHub" target="_blank">
-                <i class="fa-brands fa-github"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/shivang-gupta-65744a225" title="LinkedIn" target="_blank">
-                <i class="fa-brands fa-linkedin"></i>
-            </a>
-            <a href="https://www.instagram.com/shivang_._21/" title="Instagram" target="_blank">
-                <i class="fa-brands fa-square-instagram"></i>
-            </a>
+        <!-- Company Info Column -->
+        <div class="f-info-logo">
+            <h3>HostHaven</h3>
+            <p>Your perfect vacation rental platform. Discover unique stays and experiences around the world.</p>
+            <div class="f-info-socials">
+                <a href="https://github.com/imshivang007" title="GitHub" target="_blank">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/shivang-gupta-65744a225" title="LinkedIn" target="_blank">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
+                <a href="https://www.instagram.com/shivang_._21/" title="Instagram" target="_blank">
+                    <i class="fa-brands fa-square-instagram"></i>
+                </a>
+                <a href="https://twitter.com" title="Twitter" target="_blank">
+                    <i class="fa-brands fa-x-twitter"></i>
+                </a>
+                <a href="https://facebook.com" title="Facebook" target="_blank">
+                    <i class="fa-brands fa-facebook"></i>
+                </a>
+            </div>
         </div>
         
-        
-        <div class="f-info-links">
-            <a href="/privacy">Privacy</a>
-            <a href="/terms">Terms</a>
-            <a href="/sitemap.xml">Sitemap</a>
+        <!-- Quick Links Column -->
+        <div class="f-info-column">
+            <h4>Quick Links</h4>
+            <a href="/listings">Browse Stays</a>
+            <a href="/listings/new">List Your Property</a>
+            <a href="/my-bookings">My Bookings</a>
+            <a href="/wishlist">Wishlist</a>
         </div>
         
-        <div class="f-info-brand">
-            &copy; <%= new Date().getFullYear() %> HostHaven Private Limited
+        <!-- Company Column -->
+        <div class="f-info-column">
+            <h4>Company</h4>
+            <a href="/about">About Us</a>
+            <a href="/careers">Careers</a>
+            <a href="/faq">FAQ</a>
+            <a href="/help">Help Center</a>
+        </div>
+        
+        <!-- Contact Column -->
+        <div class="f-info-column f-info-contact">
+            <h4>Contact Us</h4>
+            <p><i class="fa-solid fa-envelope"></i> support@hosthaven.com</p>
+            <p><i class="fa-solid fa-phone"></i> +91 8795671049</p>
+            <p><i class="fa-solid fa-location-dot"></i> India</p>
+        </div>
+        
+        <!-- Newsletter Column -->
+        <div class="f-info-newsletter">
+            <h4>Stay Updated</h4>
+            <p>Subscribe to our newsletter for exclusive deals and travel inspiration!</p>
+            <form class="newsletter-form" action="/newsletter" method="POST">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+        
+        <!-- Bottom Section -->
+        <div class="f-info-bottom">
+            <div class="f-info-brand">
+                &copy; <%= new Date().getFullYear() %> HostHaven Private Limited. All rights reserved.
+            </div>
+            <div class="f-info-links" style="display: flex; gap: 1.5rem;">
+                <a href="/privacy">Privacy Policy</a>
+                <a href="/terms">Terms of Service</a>
+                <a href="/sitemap.xml">Sitemap</a>
+            </div>
+            <div class="f-info-payments">
+                <span>We Accept:</span>
+                <i class="fa-brands fa-cc-visa" title="Visa"></i>
+                <i class="fa-brands fa-cc-mastercard" title="Mastercard"></i>
+                <i class="fa-brands fa-cc-amex" title="American Express"></i>
+                <i class="fa-brands fa-cc-paypal" title="PayPal"></i>
+            </div>
         </div>
     </div>
 </footer>

@@ -1,0 +1,204 @@
+<% layout("/layouts/boilerplate") %>
+
+<%- include("../includes/flash") %>
+
+<style>
+    .about-hero {
+        background: linear-gradient(135deg, #003049 0%, #023e63 100%);
+        padding: 4rem 2rem;
+        text-align: center;
+        color: #EAE2B7;
+    }
+    .about-hero h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #FCBF49;
+    }
+    .about-hero p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .about-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+    }
+    .about-section {
+        margin-bottom: 3rem;
+    }
+    .about-section h2 {
+        color: #003049;
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        border-bottom: 3px solid #FCBF49;
+        display: inline-block;
+        padding-bottom: 0.5rem;
+    }
+    .about-section p {
+        color: #555;
+        line-height: 1.8;
+        font-size: 1.05rem;
+    }
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin: 2rem 0;
+    }
+    .stat-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #FCBF49;
+    }
+    .stat-label {
+        color: #003049;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-top: 0.5rem;
+    }
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+    .team-member {
+        text-align: center;
+        padding: 1.5rem;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .team-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #003049, #023e63);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 2.5rem;
+        color: #FCBF49;
+    }
+    .team-name {
+        color: #003049;
+        font-weight: 600;
+        font-size: 1.2rem;
+        margin-bottom: 0.25rem;
+    }
+    .team-role {
+        color: #666;
+        font-size: 0.9rem;
+    }
+    .values-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+    .value-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        border-left: 4px solid #FCBF49;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    .value-card h3 {
+        color: #003049;
+        margin-bottom: 0.5rem;
+    }
+    .value-card p {
+        color: #666;
+        font-size: 0.95rem;
+    }
+</style>
+
+<div class="about-hero">
+    <h1>About HostHaven</h1>
+    <p>Your trusted platform for unique vacation rentals and unforgettable travel experiences around the world.</p>
+</div>
+
+<div class="about-content">
+    <div class="about-section">
+        <h2>Our Story</h2>
+        <p>Founded in 2023, HostHaven was born from a simple idea: everyone deserves a place that feels like home, no matter where they travel. We believe that the best travel experiences come from staying in unique, welcoming spaces that go beyond traditional hotels.</p>
+        <p>What started as a small collection of vacation rentals has grown into a global community of travelers and property owners, all united by a shared passion for authentic travel experiences.</p>
+    </div>
+
+    <div class="about-section">
+        <h2>Our Mission</h2>
+        <p>At HostHaven, we're committed to creating meaningful connections between travelers and hosts. We strive to make vacation rentals accessible, trustworthy, and enjoyable for everyone. Our platform empowers property owners to share their unique spaces while giving travelers the opportunity to experience destinations like locals.</p>
+    </div>
+
+    <div class="about-section">
+        <h2>By The Numbers</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">50K+</div>
+                <div class="stat-label">Active Listings</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Countries</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">1M+</div>
+                <div class="stat-label">Happy Guests</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">25K+</div>
+                <div class="stat-label">Host Partners</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="about-section">
+        <h2>Our Core Values</h2>
+        <div class="values-grid">
+            <div class="value-card">
+                <h3>Trust & Safety</h3>
+                <p>We prioritize the safety and security of our community with verified listings, secure payments, and reviews from real guests.</p>
+            </div>
+            <div class="value-card">
+                <h3>Authentic Experiences</h3>
+                <p>We believe in travel that connects you to local cultures, traditions, and communities for truly memorable stays.</p>
+            </div>
+            <div class="value-card">
+                <h3>Community First</h3>
+                <p>Our community of hosts and guests is at the heart of everything we do. We're here to support each other.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="about-section">
+        <h2>Meet Our Team</h2>
+        <p>We're a passionate team of travel enthusiasts, tech innovators, and customer service experts working together to revolutionize the vacation rental industry.</p>
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="team-avatar">👨‍💼</div>
+                <div class="team-name">Shivang Gupta</div>
+                <div class="team-role">Founder & CEO</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="about-section">
+        <h2>Join Our Journey</h2>
+        <p>Whether you're a traveler looking for your next adventure or a property owner wanting to share your space, HostHaven is here to make it happen. Join our growing community today and experience travel differently.</p>
+    </div>
+</div>

@@ -1,0 +1,257 @@
+<% layout("/layouts/boilerplate") %>
+
+<%- include("../includes/flash") %>
+
+<style>
+    .faq-hero {
+        background: linear-gradient(135deg, #003049 0%, #023e63 100%);
+        padding: 4rem 2rem;
+        text-align: center;
+        color: #EAE2B7;
+    }
+    .faq-hero h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #FCBF49;
+    }
+    .faq-hero p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .faq-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+    }
+    .faq-category {
+        margin-bottom: 2.5rem;
+    }
+    .faq-category h2 {
+        color: #003049;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #FCBF49;
+    }
+    .faq-item {
+        background: white;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+    .faq-question {
+        padding: 1.25rem 1.5rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        color: #003049;
+        transition: background 0.3s ease;
+    }
+    .faq-question:hover {
+        background: rgba(252, 191, 73, 0.1);
+    }
+    .faq-question::after {
+        content: '+';
+        font-size: 1.5rem;
+        color: #FCBF49;
+        transition: transform 0.3s ease;
+    }
+    .faq-item.active .faq-question::after {
+        transform: rotate(45deg);
+    }
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+    .faq-item.active .faq-answer {
+        max-height: 500px;
+        padding: 0 1.5rem 1.25rem;
+    }
+    .faq-answer p {
+        color: #555;
+        line-height: 1.7;
+    }
+    .faq-answer a {
+        color: #FCBF49;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    .faq-answer a:hover {
+        text-decoration: underline;
+    }
+    .contact-support {
+        background: linear-gradient(135deg, #003049 0%, #023e63 100%);
+        padding: 2rem;
+        border-radius: 10px;
+        text-align: center;
+        color: #EAE2B7;
+        margin-top: 2rem;
+    }
+    .contact-support h3 {
+        color: #FCBF49;
+        margin-bottom: 0.5rem;
+    }
+    .contact-support p {
+        margin-bottom: 1rem;
+    }
+    .contact-btn {
+        display: inline-block;
+        background: #FCBF49;
+        color: #003049;
+        padding: 0.75rem 2rem;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    .contact-btn:hover {
+        background: #f5a623;
+        transform: translateY(-2px);
+    }
+    .search-box {
+        max-width: 600px;
+        margin: 2rem auto;
+        position: relative;
+    }
+    .search-box input {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 50px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+    .search-box input:focus {
+        outline: none;
+        border-color: #FCBF49;
+    }
+</style>
+
+<div class="faq-hero">
+    <h1>Frequently Asked Questions</h1>
+    <p>Find answers to the most common questions about HostHaven. Can't find what you're looking for? Contact our support team.</p>
+</div>
+
+<div class="faq-content">
+    <div class="faq-category">
+        <h2>Getting Started</h2>
+        
+        <div class="faq-item">
+            <div class="faq-question">How do I create an account?</div>
+            <div class="faq-answer">
+                <p>Creating an account is easy! Click on the "Sign Up" button in the top right corner of our homepage. You can sign up using your email address or connect through your Google or Facebook account. Once registered, you'll have access to browse listings, make bookings, and manage your profile.</p>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">How do I search for vacation rentals?</div>
+            <div class="faq-answer">
+                <p>Use our search bar on the homepage to enter your destination, check-in and check-out dates, and number of guests. You can also filters to narrow down results by price use, property type, amenities, and more. Browse through the listings and click on any property to see full details.</p>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">What information do I need to book a property?</div>
+            <div class="faq-answer">
+                <p>To book a property, you'll need to create an account and provide your personal details including full name, email address, and phone number. You'll also need a valid payment method. Some hosts may require additional verification or information.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-category">
+        <h2>Booking & Payments</h2>
+        
+        <div class="faq-item">
+            <div class="faq-question">How does the payment process work?</div>
+            <div class="faq-answer">
+                <p>We offer secure payment processing through Razorpay. When you book a property, you'll be charged the total amount including the rental price and any applicable fees. Your payment is held securely until check-in, giving you peace of mind.</p>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">Can I get a refund if I cancel my booking?</div>
+            <div class="faq-answer">
+                <p>Refund policies vary by property and host. Each listing displays its cancellation policy (Flexible, Moderate, or Strict). You can cancel your booking from your account dashboard. Refunds are processed according to the applicable policy and typically take 5-10 business days to reflect in your account.</p>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">What payment methods are accepted?</div>
+            <div class="faq-answer">
+                <p>We accept all major credit and debit cards including Visa, Mastercard, and American Express. We also support UPI payments and net banking options. All transactions are secure and encrypted.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-category">
+        <h2>For Hosts</h2>
+        
+        <div class="faq-item">
+            <div class="faq-question">How do I list my property?</div>
+            <div class="faq-answer">
+                <p>To list your property, click on "List Your Property" in the navigation menu. You'll need to provide detailed information about your property including photos, description, amenities, pricing, and house rules. Once submitted, our team will review your listing within 24-48 hours.</p>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">How much does it cost to list my property?</div>
+            <div class="faq-answer">
+                <p>Listing your property on HostHaven is free! We charge a small service fee to guests when they book. As a host, you keep the majority of your rental income. There are no upfront costs or subscription fees required.</p>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">When do I get paid for bookings?</div>
+            <div class="faq-answer">
+                <p>Host payments are processed 24 hours after the guest checks in successfully. Funds are transferred to your registered bank account. You can track all your earnings and payouts from your host dashboard.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-category">
+        <h2>Safety & Support</h2>
+        
+        <div class="faq-item">
+            <div class="faq-question">How is my personal information protected?</div>
+            <div class="faq-answer">
+                <p>We take data privacy seriously. Your personal information is encrypted and stored securely. We never share your details with hosts or other guests without your consent. For more information, please read our <a href="/privacy">Privacy Policy</a>.</p>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">What should I do if something goes wrong during my stay?</div>
+            <div class="faq-answer">
+                <p>If you encounter any issues during your stay, first try to communicate with your host through our secure messaging system. If the issue can't be resolved, contact our 24/7 customer support team immediately. We're here to help ensure your stay is safe and enjoyable.</p>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">How do I report a problem or suspicious activity?</div>
+            <div class="faq-answer">
+                <p>If you notice anything suspicious or have concerns about safety, please report it immediately through our platform or contact our support team. We take all reports seriously and will investigate promptly. In case of emergency, please contact local authorities first.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact-support">
+        <h3>Still Have Questions?</h3>
+        <p>Our support team is available 24/7 to help you with any queries.</p>
+        <a href="/help" class="contact-btn">Contact Support</a>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+            const item = question.parentElement;
+            item.classList.toggle('active');
+        });
+    });
+</script>
