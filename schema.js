@@ -22,6 +22,11 @@ module.exports.listingSchema = Joi.object({
             available: Joi.alternatives().try(Joi.boolean(), Joi.valid('on', 'true', 'false', '')),
             minNights: Joi.number().min(1).max(365),
             maxNights: Joi.number().min(1).max(365)
+        }),
+        // Location coordinates for map
+        geometry: Joi.object({
+            type: Joi.string().valid('Point').default('Point'),
+            coordinates: Joi.array().items(Joi.number())
         })
     }).required()
 })

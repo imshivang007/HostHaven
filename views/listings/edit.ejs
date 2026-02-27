@@ -534,6 +534,20 @@
                     <input type="text" name="listing[location]" value="<%= listing.location %>" class="form-control" required>
                 </div>
             </div>
+            
+            <!-- Location Map Picker -->
+            <div class="mb-3 mt-3">
+                <label class="form-label">Pick Location on Map</label>
+                <small class="text-muted d-block mb-2">Click on the map to update your exact location</small>
+                <div id="picker-map" style="height: 350px; width: 100%; border-radius: 12px; z-index: 1;"></div>
+                <input type="hidden" id="geometryType" name="listing[geometry][type]" value="Point">
+                <input type="hidden" id="latitude" name="listing[geometry][coordinates][1]" value="<%= listing.geometry && listing.geometry.coordinates ? listing.geometry.coordinates[1] : 20.5937 %>">
+                <input type="hidden" id="longitude" name="listing[geometry][coordinates][0]" value="<%= listing.geometry && listing.geometry.coordinates ? listing.geometry.coordinates[0] : 78.9629 %>">
+                <small class="text-muted mt-2 d-block">
+                    <i class="fas fa-info-circle"></i> Coordinates: 
+                    <span id="coordinatesDisplay">Lat: <%= listing.geometry && listing.geometry.coordinates ? listing.geometry.coordinates[1].toFixed(6) : '20.5937' %>, Lng: <%= listing.geometry && listing.geometry.coordinates ? listing.geometry.coordinates[0].toFixed(6) : '78.9629' %></span>
+                </small>
+            </div>
         </div>
 
         <!-- Section 4: Property Details -->
@@ -675,7 +689,7 @@
             </div>
         </div>
 
-        <!-- Section 5: Availability Settings -->
+        <!-- Section 6: Availability Settings -->
         <div class="form-section">
             <div class="section-header">
                 <div class="section-icon">

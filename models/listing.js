@@ -29,6 +29,19 @@ const listingSchema = new Schema({
         type: String
     },
     
+    // Geometry for map (GeoJSON format)
+    geometry: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            default: 'Point'
+        },
+        coordinates: {
+            type: [Number],  // [longitude, latitude]
+            default: [0, 0]
+        }
+    },
+    
     // Property details
     guests: {
         type: Number,

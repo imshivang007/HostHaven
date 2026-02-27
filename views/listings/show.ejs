@@ -292,6 +292,19 @@ if (listing.owner && listing.owner.createdAt) {
                     <% } %>
                 </div>
                 
+                <!-- Map Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon"><i class="fas fa-map-marked-alt"></i></div>
+                        <div class="section-title-group">
+                            <h3>Location</h3>
+                            <p><%= listing.location %>, <%= listing.country %></p>
+                        </div>
+                    </div>
+                    <div id="map" data-listing='<%- JSON.stringify(listing) %>' style="height: 400px; width: 100%; border-radius: 12px; z-index: 1; background-color: #f0f0f0;"></div>
+                    <small class="text-muted mt-2 d-block"><i class="fas fa-info-circle"></i> Exact location will be provided after booking</small>
+                </div>
+                
                 <% if(listing.amenities && listing.amenities.length > 0) { %>
                     <div class="form-section amenities-section">
                         <div class="section-header">

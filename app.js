@@ -48,13 +48,15 @@ const scriptSrcUrls = [
     "https://cdnjs.cloudflare.com",
     "https://cdn.jsdelivr.net",
     "https://checkout.razorpay.com",
-    "https://*.razorpay.com"
+    "https://*.razorpay.com",
+    "https://unpkg.com"
 ];
 const styleSrcUrls = [
     "https://api.tiles.mapbox.com",
     "https://api.mapbox.com",
     "https://cdn.jsdelivr.net",
-    "https://cdnjs.cloudflare.com"
+    "https://cdnjs.cloudflare.com",
+    "https://unpkg.com"
 ];
 const connectSrcUrls = [
     "https://api.mapbox.com",
@@ -62,7 +64,10 @@ const connectSrcUrls = [
     "events.mapbox.com",
     "https://api.razorpay.com",
     "https://*.razorpay.com",
-    "https://api.razorpay.com"
+    "https://api.razorpay.com",
+    "https://*.tile.openstreetmap.org",
+    "https://openstreetmap.org",
+    "https://nominatim.openstreetmap.org"
 ];
 const fontSrcUrls = ["cdnjs.cloudflare.com", "fonts.gstatic.com", "fonts.googleapis.com", "'self'", "'unsafe-eval'"];
 const frameSrcUrls = ["https://checkout.razorpay.com", "https://*.razorpay.com"];

@@ -646,13 +646,13 @@
             <div class="three-column-grid">
                 <div class="mb-3">
                     <label for="location" class="form-label">Location</label>
-                    <input type="text" name="listing[location]" placeholder="City, State" class="form-control" required>
+                    <input type="text" name="listing[location]" id="locationInput" placeholder="City, State" class="form-control" required>
                     <div class="invalid-feedback">Location is required</div>
                 </div>
 
                 <div class="mb-3">
                     <label for="country" class="form-label">Country</label>
-                    <input type="text" name="listing[country]" placeholder="Country" class="form-control" required>
+                    <input type="text" name="listing[country]" id="countryInput" placeholder="Country" class="form-control" required>
                     <div class="invalid-feedback">Country is required</div>
                 </div>
 
@@ -664,6 +664,20 @@
                     </div>
                     <div class="invalid-feedback">Price is required</div>
                 </div>
+            </div>
+            
+            <!-- Location Map Picker -->
+            <div class="mb-3 mt-3">
+                <label class="form-label">Pick Location on Map</label>
+                <small class="text-muted d-block mb-2">Click on the map to set your exact location</small>
+                <div id="picker-map" style="height: 350px; width: 100%; border-radius: 12px; z-index: 1;"></div>
+                <input type="hidden" id="geometryType" name="listing[geometry][type]" value="Point">
+                <input type="hidden" id="latitude" name="listing[geometry][coordinates][1]" value="20.5937">
+                <input type="hidden" id="longitude" name="listing[geometry][coordinates][0]" value="78.9629">
+                <small class="text-muted mt-2 d-block">
+                    <i class="fas fa-info-circle"></i> Coordinates: 
+                    <span id="coordinatesDisplay">Lat: 20.5937, Lng: 78.9629</span>
+                </small>
             </div>
         </div>
 

@@ -433,6 +433,51 @@
         animation: fadeInUp 0.5s ease forwards;
     }
     
+    /* Section Styles for Map */
+    .form-section {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        border: 1px solid #eee;
+        transition: all 0.3s ease;
+    }
+    
+    .section-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #f0f0f0;
+    }
+    
+    .section-icon {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #D62828 0%, #F77F00 100%);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        color: white;
+        font-size: 1.3rem;
+    }
+    
+    .section-title-group h3 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #003049;
+        margin: 0;
+    }
+    
+    .section-title-group p {
+        font-size: 0.9rem;
+        color: #666;
+        margin: 0;
+    }
+    
     /* Responsive */
     @media (max-width: 992px) {
         .full-width-container {
@@ -576,13 +621,6 @@
                     </a>
                 </div>
             </div>
-            
-            <!-- <div class="tax-toggle">
-                <div class="form-check form-switch m-0">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Show total prices</label>
-                </div>
-            </div> -->
         </div>
     </div>
 
@@ -621,6 +659,20 @@
             </a>
         <% } %>
     </div>
+
+    <!-- Map Section showing all listings -->
+    <% if (allListings && allListings.length > 0) { %>
+    <div class="form-section mt-4">
+        <div class="section-header">
+            <div class="section-icon"><i class="fas fa-map"></i></div>
+            <div class="section-title-group">
+                <h3>Explore on Map</h3>
+                <p>View all <%= allListings.length %> listings on the map</p>
+            </div>
+        </div>
+        <div id="index-map" data-listings='<%- JSON.stringify(allListings.map(l => ({ _id: l._id, title: l.title, location: l.location, country: l.country, price: l.price, image: l.image, geometry: l.geometry }))) %>' style="height: 500px; width: 100%; border-radius: 12px; z-index: 1;"></div>
+    </div>
+    <% } %>
 
     <% if (typeof totalPages !== 'undefined' && totalPages > 1) { %>
         <div class="pagination">
