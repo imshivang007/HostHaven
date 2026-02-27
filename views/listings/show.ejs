@@ -224,6 +224,13 @@ if (listing.owner && listing.owner.createdAt) {
         <div class="row">
             <div class="col-lg-8">
                 <div class="form-section">
+                    <h1 class="listing-title"><%= listing.title %></h1>
+                    <div class="listing-meta">
+                        <div class="listing-meta-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span><%= listing.location %>, <%= listing.country %></span>
+                        </div>
+                    </div>
                     <div class="stats-row" style="border: none; margin: 0; padding: 0;">
                         <% if(listing.guests) { %><div class="stat-item"><i class="fas fa-users"></i><span><%= listing.guests %> guests</span></div><% } %>
                         <% if(listing.bedrooms) { %><div class="stat-item"><i class="fas fa-bed"></i><span><%= listing.bedrooms %> bedrooms</span></div><% } %>
