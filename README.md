@@ -8,7 +8,7 @@
   <img src="https://img.shields.io/badge/Razorpay-Payment-purple?style=for-the-badge" alt="Razorpay">
 </p>
 
-HostHaven is a full-stack vacation rental platform similar to Airbnb, built with the MERN stack (MongoDB, Express, React - replaced with EJS, Node.js). It enables users to list, discover, and book unique accommodations around the world.
+HostHaven is a full-stack vacation rental platform similar to Airbnb, built with Node.js, Express, MongoDB, and EJS. It enables users to list, discover, and book unique accommodations around the world.
 
 ---
 
