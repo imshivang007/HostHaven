@@ -10,6 +10,8 @@
 
 HostHaven is a full-stack vacation rental platform similar to Airbnb, built with Node.js, Express, MongoDB, and EJS. It enables users to list, discover, and book unique accommodations around the world.
 
+**Live Demo:** https://hosthaven.onrender.com
+
 ---
 
 ## ✨ Features
