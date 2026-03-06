@@ -1,112 +1,102 @@
-# HostHaven
+# 🏠 HostHaven - Vacation Rental Platform
 
-**Welcome to HostHaven**, your premier platform for booking unique accommodations around the world. Whether you're looking for a cozy apartment, a luxurious villa, or a unique experience, HostHaven connects hosts and travelers in a seamless and secure environment.
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-20.12.2-green?style=for-the-badge&logo=node.js" alt="Node.js">
+  <img src="https://img.shields.io/badge/Express.js-4.19.2-blue?style=for-the-badge&logo=express" alt="Express.js">
+  <img src="https://img.shields.io/badge/MongoDB-8.5.1-green?style=for-the-badge&logo=mongodb" alt="MongoDB">
+  <img src="https://img.shields.io/badge/EJS-Templates-orange?style=for-the-badge" alt="EJS">
+  <img src="https://img.shields.io/badge/Razorpay-Payment-purple?style=for-the-badge" alt="Razorpay">
+</p>
 
-**Live URL:** https://hosthaven.onrender.com
-
----
-
-## 🚀 Tech Stack
-
-| Category | Technology |
-|----------|------------|
-| **Runtime** | Node.js (v20.12.2) |
-| **Framework** | Express.js |
-| **Database** | MongoDB / Mongoose |
-| **Templating** | EJS / EJS-Mate |
-| **Authentication** | Passport.js (Local Strategy) |
-| **Image Storage** | Cloudinary |
-| **Security** | Helmet, express-rate-limit, express-mongo-sanitize |
-| **Session** | express-session, connect-mongo |
-| **Utilities** | Method-override, Multer, Joi, Dotenv, Compression |
+HostHaven is a full-stack vacation rental platform similar to Airbnb, built with the MERN stack (MongoDB, Express, React - replaced with EJS, Node.js). It enables users to list, discover, and book unique accommodations around the world.
 
 ---
 
 ## ✨ Features
 
-### 🏠 Listings
-- Browse diverse property listings worldwide
-- Create, edit, and delete listings (owners only)
-- Multiple image uploads with Cloudinary integration
-- Property categories: Trending, Rooms, Iconic Cities, Mountains, Castles, Amazing Pools, Camping, Farms, Arctic, Domes, House Boats
-- Advanced amenities: WiFi, Kitchen, Parking, Pool, AC, Heating, Washer, Dryer, TV, Gym, Hot Tub, Pets Allowed, Beachfront, Mountain View, City View, and more
-- Search functionality with text indexing
-- Map integration for location viewing
+### 👤 User Management
+- **Authentication**: Secure user registration and login using Passport.js
+- **Email Verification**: Account verification via email tokens
+- **Password Reset**: Forgot and reset password functionality
+- **Profile Management**: User profiles with avatars and bio
 
-### ⭐ Reviews
-- Leave reviews after stays
-- Star ratings (1-5)
-- Automatic average rating calculation
-- Cascading deletion of reviews when listings are removed
+### 🏡 Listing Management
+- **Create Listings**: Host can list their properties with multiple images
+- **Image Upload**: Cloudinary integration for image storage
+- **Categories**: Filter by Trending, Rooms, Iconic Cities, Mountains, Castles, Amazing Pools, Camping, Farms, Arctic, Domes, House Boats
+- **Amenities**: WiFi, Kitchen, Parking, Pool, AC, Heating, and more
+- **Map Integration**: Interactive maps showing listing locations (MapBox/OpenStreetMap)
+- **Search & Filter**: Search by location, filter by category
 
-### 📅 Bookings
-- Check-in / Check-out date selection
-- Guest count specification
-- Automatic price calculation
-- Booking status tracking: Pending → Confirmed → Completed
-- Payment status tracking: Pending → Paid → Refunded
-- Special requests field
-- Booking history management
+### 📅 Booking System
+- **Date Selection**: Check-in and check-out date picker
+- **Guest Management**: Specify number of guests
+- **Payment Integration**: Razorpay payment gateway
+- **Booking Status**: Track pending, confirmed, cancelled, and completed bookings
+- **Booking History**: View all past and upcoming bookings
 
-### ❤️ Wishlists
-- Save favorite listings
-- Personal wishlist management
-- Quick add/remove functionality
+### ⭐ Reviews & Ratings
+- **Rating System**: 5-star rating with average calculation
+- **Review Comments**: Detailed reviews for listings
+- **Cascading Deletion**: Automatic cleanup of reviews when listing is deleted
+
+### 💝 Wishlist
+- **Save Favorites**: Add listings to personal wishlist
+- **Quick Access**: View all saved listings in one place
 
 ### 💬 Messaging
-- Inbox for received messages
-- Sent messages archive
-- Direct communication between users and hosts
+- **Inbox**: View received messages
+- **Sent Messages**: View sent messages
+- **Real-time Updates**: Unread message badge in navbar
+
+### 🛡️ Security Features
+- **Helmet**: HTTP security headers
+- **Rate Limiting**: Prevent brute-force attacks
+- **Mongo Sanitize**: Prevent NoSQL injection
+- **Session Management**: Secure cookies with httpOnly and sameSite
+- **CSRF Protection**: Cross-site request forgery prevention
+
+### ⚡ Performance & SEO
+- **Compression**: Brotli and Gzip compression
+- **Sitemap**: Dynamic XML sitemap generation
+- **Robots.txt**: Search engine crawling configuration
 
 ---
 
-## 🔒 Security
+## 🖼️ Listing Categories
 
-- **Content Security Policy (CSP)** - Configured via Helmet
-- **Rate Limiting** - 100 requests per 15 minutes per IP
-- **NoSQL Injection Prevention** - MongoDB sanitization
-- **Session Security** - HttpOnly cookies, strict same-site policy
-- **Password Hashing** - Automatic via passport-local-mongoose
-- **Input Validation** - Joi schema validation
-
----
-
-## 💳 Payment Setup (Razorpay)
-
-To enable payment functionality, you need to configure Razorpay API keys:
-
-1. **Get your Razorpay keys:**
-   - Go to [Razorpay Dashboard](https://dashboard.razorpay.com/app/keys)
-   - Get your **Key Id** (starts with `rzp_`)
-   - Get your **Key Secret**
-
-2. **Configure your `.env` file:**
-   
-```
-   RAZORPAY_KEY_ID=rzp_test_your_key_id_here
-   RAZORPAY_KEY_SECRET=your_key_secret_here
-   
-```
-
-**Supported Payment Methods:**
-- UPI (Google Pay, PhonePe, Paytm, etc.)
-- Credit/Debit Cards
-- Net Banking
-- Wallets (Paytm, PhonePe, Mobikwik, etc.)
-
-**Note:** The payment system is fully integrated. Once Razorpay keys are configured, users can:
-- See payment status on booking details
-- Click "Pay Now" to complete payment via Razorpay Checkout
-- Receive payment confirmation and booking confirmation
-- Pay using UPI, Cards, Net Banking, or Wallets
+| Category | Icon | Description |
+|----------|------|-------------|
+| Trending | 🔥 | Popular listings |
+| Rooms | 🛏️ | Private rooms |
+| Iconic Cities | 🏙️ | City center locations |
+| Mountains | ⛰️ | Mountain retreats |
+| Castles | 🏰 | Historic castles |
+| Amazing Pools | 🏊 | Properties with pools |
+| Camping | ⛺ | Camping sites |
+| Farms | 🐄 | Farm stays |
+| Arctic | ❄️ | Arctic experiences |
+| Domes | 🛖 | Unique dome stays |
+| House Boats | 🚢 | Waterfront living |
 
 ---
 
-## 📞 Contact
+## 📄 License
 
-- **Email:** imshivang007@gmail.com
-- **Phone:** +91 8795671049
+ISC License - © 2024 Shivang
 
 ---
 
-### Thank you for choosing HostHaven! We are excited to connect hosts and travelers around the world. 🌍🏡
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+---
+
+## 📞 Support
+
+For issues or questions, please check the FAQ page or help section in the application.
+
+---
+
+<p align="center">Made with ❤️ by Shivang</p>
